@@ -3,96 +3,119 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>เรทราคางานป้าย</title>
-    <!-- เรียกใช้ฟอนต์ Kanit จาก Google Fonts ให้ดูทันสมัยและน่ารัก -->
-    <link href="https://fonts.googleapis.com/css2?family=Kanit:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <title>รายการสินค้าและราคางานป้าย</title>
+    <!-- เรียกใช้ฟอนต์ Mitr และ Prompt จาก Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Mitr:wght@300;400;500&family=Prompt:wght@300;400;500;600&display=swap" rel="stylesheet">
     <style>
         :root {
-            --bg-color: #fff0f5; /* สีพื้นหลังชมพูอ่อนมาก */
-            --card-bg: #ffffff;
-            --text-main: #5a4b50;
-            --text-light: #8a7b80;
-            --accent-pink: #ffb6c1;
-            --accent-pink-dark: #ff91a4;
-            --price-bg: #ffe4e8;
+            --bg-color: #FFF0F6;
+            --main-pink: #F6A5C9;
+            --dark-pink: #E889B5;
+            --text-mauve: #E889B5;
+            --text-mauve-dark: #C46793;
+            --white: #FFFFFF;
+            
+            --font-thai: 'Mitr', sans-serif;
+            --font-eng: 'Prompt', sans-serif;
         }
 
         * {
             box-sizing: border-box;
             margin: 0;
             padding: 0;
-            font-family: 'Kanit', sans-serif;
         }
 
         body {
-            background: linear-gradient(135deg, #fff0f5 0%, #ffe4e8 100%);
-            color: var(--text-main);
-            padding: 40px 20px;
-            min-height: 100vh;
+            background-color: var(--bg-color);
+            font-family: var(--font-eng);
+            color: var(--text-mauve-dark);
+            padding: 50px 20px;
+            line-height: 1.6;
         }
 
-        /* คอนเทนเนอร์หลัก */
         .container {
-            max-width: 1200px;
+            max-width: 1100px;
             margin: 0 auto;
         }
 
-        /* จัดเรียงการ์ด 3 คอลัมน์ */
-        .pricing-grid {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 24px;
-            justify-content: center;
-            margin-bottom: 30px;
+        /* หัวข้อหน้าเว็บ */
+        .page-title {
+            text-align: center;
+            font-family: var(--font-thai);
+            color: var(--text-mauve-dark);
+            font-size: 2.2rem;
+            margin-bottom: 40px;
+            font-weight: 500;
         }
 
-        /* สไตล์ของการ์ดแต่ละใบ */
+        /* Grid จัดเรียงการ์ด */
+        .pricing-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 30px;
+            margin-bottom: 50px;
+        }
+
+        /* สไตล์ของการ์ด */
         .pricing-card {
-            background-color: var(--card-bg);
-            border-radius: 20px;
-            padding: 24px;
-            width: 100%;
-            max-width: 350px;
-            box-shadow: 0 10px 30px rgba(255, 182, 193, 0.2);
-            border: 2px solid #fff;
-            transition: transform 0.3s ease;
+            background-color: var(--white);
+            border-radius: 24px;
+            padding: 30px 25px;
+            box-shadow: 0 15px 35px rgba(232, 137, 181, 0.15);
+            border: 1px solid rgba(246, 165, 201, 0.4);
+            transition: all 0.4s ease;
+            display: flex;
+            flex-direction: column;
         }
 
         .pricing-card:hover {
-            transform: translateY(-5px);
+            transform: translateY(-8px);
+            box-shadow: 0 20px 45px rgba(232, 137, 181, 0.25);
+            border-color: var(--main-pink);
         }
 
-        /* หัวข้อการ์ด */
+        /* หัวข้อในการ์ด */
         .card-header {
             text-align: center;
-            margin-bottom: 20px;
-            padding-bottom: 15px;
-            border-bottom: 2px dashed var(--accent-pink);
+            margin-bottom: 25px;
+            padding-bottom: 20px;
+            border-bottom: 2px dashed var(--main-pink);
         }
 
         .card-header h2 {
-            font-size: 1.4rem;
-            color: var(--accent-pink-dark);
-            font-weight: 600;
+            font-family: var(--font-thai);
+            font-size: 1.6rem;
+            color: var(--text-mauve-dark);
+            font-weight: 500;
         }
 
-        .card-header .icon {
-            font-size: 2rem;
-            margin-bottom: 10px;
+        .icon-circle {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 60px;
+            height: 60px;
+            background: linear-gradient(135deg, var(--main-pink), var(--dark-pink));
+            border-radius: 50%;
+            font-size: 1.8rem;
+            margin-bottom: 15px;
+            box-shadow: 0 8px 20px rgba(232, 137, 181, 0.3);
         }
 
         /* รายการสินค้า */
         .item-list {
             list-style: none;
+            flex-grow: 1;
         }
 
         .item-list li {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            padding: 8px 0;
+            padding: 10px 0;
+            border-bottom: 1px solid rgba(246, 165, 201, 0.2);
             font-size: 0.95rem;
-            border-bottom: 1px solid #f9f0f2;
+            font-weight: 400;
         }
 
         .item-list li:last-child {
@@ -102,59 +125,81 @@
         .item-name {
             display: flex;
             flex-direction: column;
+            color: var(--text-mauve-dark);
         }
 
         .item-note {
-            font-size: 0.75rem;
-            color: var(--text-light);
+            font-size: 0.8rem;
+            color: var(--text-mauve);
+            margin-top: 2px;
         }
 
         /* ป้ายราคา */
         .price-tag {
-            background-color: var(--price-bg);
-            color: var(--accent-pink-dark);
-            padding: 4px 12px;
+            background: linear-gradient(135deg, var(--main-pink), var(--dark-pink));
+            color: var(--white);
+            padding: 4px 14px;
             border-radius: 20px;
-            font-weight: 600;
-            font-size: 0.9rem;
+            font-weight: 500;
+            font-size: 0.95rem;
+            box-shadow: 0 4px 10px rgba(232, 137, 181, 0.2);
+            letter-spacing: 0.5px;
         }
 
-        /* ส่วนหมายเหตุด้านล่าง (Footer) */
+        /* ส่วนหมายเหตุด้านล่าง */
         .footer-note {
-            background-color: var(--card-bg);
-            border-radius: 15px;
-            padding: 20px;
+            background-color: var(--white);
+            border-radius: 20px;
+            padding: 30px;
             text-align: center;
-            box-shadow: 0 5px 20px rgba(255, 182, 193, 0.15);
+            box-shadow: 0 10px 30px rgba(232, 137, 181, 0.1);
             max-width: 800px;
             margin: 0 auto;
+            border: 1px solid rgba(246, 165, 201, 0.3);
         }
 
         .footer-note p {
-            margin-bottom: 10px;
-            line-height: 1.6;
+            margin-bottom: 12px;
+            font-weight: 400;
+        }
+
+        .highlight-text {
+            color: var(--dark-pink);
+            font-weight: 500;
         }
 
         .contact-btn {
-            display: inline-block;
-            background-color: var(--accent-pink-dark);
-            color: white;
-            padding: 8px 20px;
-            border-radius: 20px;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: linear-gradient(135deg, var(--main-pink), var(--dark-pink));
+            color: var(--white);
+            padding: 12px 28px;
+            border-radius: 30px;
             text-decoration: none;
+            font-family: var(--font-thai);
             font-weight: 500;
-            margin-top: 10px;
-            transition: background-color 0.3s;
+            font-size: 1.1rem;
+            margin-top: 15px;
+            transition: all 0.3s ease;
+            box-shadow: 0 6px 15px rgba(232, 137, 181, 0.3);
         }
 
         .contact-btn:hover {
-            background-color: #ff7aa5;
+            transform: translateY(-3px);
+            box-shadow: 0 10px 20px rgba(232, 137, 181, 0.4);
         }
 
-        /* สำหรับหน้าจอมือถือ */
+        /* Responsive มือถือ */
         @media (max-width: 768px) {
+            body {
+                padding: 30px 15px;
+            }
+            .page-title {
+                font-size: 1.8rem;
+            }
             .pricing-card {
-                max-width: 100%;
+                padding: 25px 20px;
             }
         }
     </style>
@@ -163,12 +208,14 @@
 
     <div class="container">
         
+        <h1 class="page-title">✨ เรทราคางานป้าย ✨</h1>
+
         <div class="pricing-grid">
             
             <!-- การ์ด 1: แนวน่ารัก -->
             <div class="pricing-card">
                 <div class="card-header">
-                    <div class="icon">🌸</div>
+                    <div class="icon-circle">🌸</div>
                     <h2>แนวน่ารัก</h2>
                 </div>
                 <ul class="item-list">
@@ -202,7 +249,7 @@
             <!-- การ์ด 2: แนวออโรร่า -->
             <div class="pricing-card">
                 <div class="card-header">
-                    <div class="icon">✨</div>
+                    <div class="icon-circle">✨</div>
                     <h2>แนวออโรร่า</h2>
                 </div>
                 <ul class="item-list">
@@ -238,7 +285,7 @@
             <!-- การ์ด 3: แนวเพิร์ลเวฟ -->
             <div class="pricing-card">
                 <div class="card-header">
-                    <div class="icon">🐚</div>
+                    <div class="icon-circle">🐚</div>
                     <h2>แนวเพิร์ลเวฟ</h2>
                 </div>
                 <ul class="item-list">
@@ -275,9 +322,12 @@
 
         <!-- หมายเหตุด้านล่าง -->
         <div class="footer-note">
-            <p>💡 <strong>หมายเหตุ:</strong> งานอื่นๆ สามารถสอบถามได้นะคะ ขึ้นอยู่กับข้อมูลของลูกค้าเลยค่ะ สามารถทำให้ได้หมดเลย <br>(ยกเว้นงานระบบที่เจาะลึกมากเกินไป)</p>
-            <p>แต่ถ้าเป็นแนว <strong>ลิงก์ไบโอ (Link in Bio)</strong> สามารถเนรมิตให้ได้หมดเลยค่า 🥰💙</p>
-            <a href="#" class="contact-btn">📸 ตัวอย่างงาน: สามารถดูได้จากอัลบั้มในเพจ Facebook เลยนะคะ ✨</a>
+            <p>💡 <span class="highlight-text">หมายเหตุ:</span> งานอื่นๆ สามารถสอบถามได้นะคะ ขึ้นอยู่กับข้อมูลของลูกค้าเลยค่ะ</p>
+            <p>สามารถทำให้ได้หมดเลย (ยกเว้นงานระบบที่เจาะลึกมากเกินไป)</p>
+            <p>แต่ถ้าเป็นแนว <span class="highlight-text">ลิงก์ไบโอ (Link in Bio)</span> สามารถเนรมิตให้ได้หมดเลยค่า 🥰💙</p>
+            <a href="#" class="contact-btn">
+                📸 ดูตัวอย่างงานเพิ่มเติม
+            </a>
         </div>
 
     </div>
