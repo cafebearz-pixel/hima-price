@@ -3,21 +3,21 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>HIMA PRICE - เรทราคางานป้ายร้านฮิมาวาริ (พาสเทล)</title>
+    <title>HIMA PRICE - เรทราคางานป้ายร้านฮิมาวาริ (พาสเทลละมุน)</title>
     <link href="https://fonts.googleapis.com/css2?family=Mitr:wght@300;400;500;600&family=Prompt:wght@400;500;600;700&display=swap" rel="stylesheet">
     <style>
         :root {
-            /* โทนสีพาสเทลที่กำหนด */
+            /* โทนสีพาสเทลอ่อนๆ ละมุนตามรูป image_5.png */
             --white: #ffffff;
-            --soft-pink: #FFDFE5; /* ชมพูอ่อน */
-            --blue: #C5E0F5;      /* ฟ้าพาสเทล */
             --cream-yellow: #FFFBE0; /* เหลืองครีม */
             --pastel-purple: #E5D9F2; /* ม่วงพาสเทล */
+            --soft-pink: #FFDFE5;      /* ชมพูอ่อน */
+            --pastel-blue: #C5E0F5;      /* ฟ้าพาสเทล */
             
-            /* สีสำหรับข้อความและขอบ */
-            --text-dark: #2a2a2a; /* สีเทาเข้มเกือบดำ */
-            --text-muted: #666666; /* สีเทาจาง */
-            --border-color: #ddd;
+            /* สีสำหรับข้อความและเส้นขอบ */
+            --text-dark: #2a2a2a; /* สีดำเข้ม (ใช้สำหรับชื่อร้านและหัวข้อ) */
+            --text-muted: #666666; /* สีเทาเข้ม (ใช้สำหรับรายละเอียดและข้อความย่อย) */
+            --border-light: #ddd; /* สีขอบจาง (ใช้สำหรับรายการปกติ) */
             
             /* การตั้งค่าฟอนต์ stack: ภาษาอังกฤษ/ตัวเลขใช้ Prompt (ลำดับแรก), ภาษาไทยใช้ Mitr */
             --font-stack: 'Prompt', 'Mitr', sans-serif;
@@ -57,20 +57,24 @@
             justify-content: center;
             padding: 20px;
             gap: 15px;
-            border-bottom: 1px solid var(--border-color);
+            border-bottom: 1px solid rgba(0,0,0,0.05); /* เส้นขอบอ่อนๆ */
         }
 
         .logo {
             width: 50px;
             height: 50px;
-            background-color: var(--pastel-purple); /* เปลี่ยนสีโลโก้เป็นม่วงพาสเทล */
-            color: var(--text-dark);
+            background-color: var(--pastel-purple); /* สีโลโก้เป็นม่วงพาสเทล */
             border-radius: 50%;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-weight: bold;
-            font-size: 14px;
+            overflow: hidden; /* ให้รูปอยู่ภายในวงกลม */
+        }
+
+        .logo img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover; /* ให้รูปโลโก้ครอบคลุมวงกลม */
         }
 
         .title-container h1 {
@@ -90,7 +94,7 @@
         /* --- Navigation --- */
         nav {
             display: flex;
-            background-color: var(--pastel-purple); /* เปลี่ยนสีแถบเมนูเป็นม่วงพาสเทล */
+            background-color: var(--pastel-purple); /* สีแถบเมนูเป็นม่วงพาสเทล */
         }
 
         nav button {
@@ -132,21 +136,26 @@
         }
 
         /* --- Page 1: หน้าแรก --- */
+        /* การ์ดสไตล์ (ใช้ nth-child สลับสีขอบตามรูป image_5.png) */
         .style-card {
             background-color: var(--white);
-            color: var(--text-dark);
             border-radius: 15px;
             padding: 15px 20px;
             margin-bottom: 10px;
             display: flex;
             align-items: center;
             gap: 15px;
-            border: 2px solid var(--pastel-purple); /* ขอบสีม่วงพาสเทลแทนพื้นดำ */
+            border: 2px solid var(--pastel-purple); /* สีขอบสลับกัน */
         }
+        
+        /* สลับสีขอบการ์ด ม่วง, ชมพู, ฟ้า */
+        .style-card:nth-child(2) { border-color: var(--soft-pink); }
+        .style-card:nth-child(3) { border-color: var(--pastel-blue); }
+        .style-card:nth-child(4) { border-color: var(--pastel-purple); } /* ตัวที่ 4 เป็นม่วง */
 
         .icon-circle {
-            background-color: var(--pastel-purple);
-            border: 2px solid var(--text-dark);
+            background-color: var(--pastel-purple); /* วงกลมไอคอนเป็นม่วง */
+            border: 2px solid var(--text-dark); /* เส้นขอบไอคอนเป็นดำ */
             border-radius: 50%;
             width: 35px;
             height: 35px;
@@ -159,6 +168,7 @@
         .style-info h3 {
             font-size: 18px;
             margin-bottom: 2px;
+            color: var(--text-dark);
         }
 
         .style-info p {
@@ -173,13 +183,14 @@
             display: flex;
             align-items: center;
             gap: 5px;
+            color: var(--text-dark);
         }
 
         .price-box {
-            border: 2px solid var(--blue); /* ขอบกล่องราคาเป็นสีฟ้า */
+            border: 2px solid var(--pastel-blue); /* ขอบกล่องราคาเป็นฟ้า */
             border-radius: 20px;
             padding: 15px;
-            background-color: var(--cream-yellow); /* พื้นกล่องราคาเป็นสีเหลืองครีม */
+            background-color: var(--cream-yellow); /* พื้นกล่องราคาเป็นเหลืองครีม */
         }
 
         .price-row {
@@ -187,9 +198,10 @@
             justify-content: space-between;
             align-items: center;
             padding: 8px 0;
-            border-bottom: 1px solid rgba(0,0,0,0.05);
+            border-bottom: 1px solid rgba(0,0,0,0.05); /* เส้นคั่นอ่อนๆ */
             font-size: 14px;
             font-weight: 500;
+            color: var(--text-dark);
         }
 
         .price-row:last-child {
@@ -197,11 +209,12 @@
         }
 
         .price-tag {
-            background-color: var(--soft-pink); /* เปลี่ยนสีป้ายราคาเป็นชมพูอ่อน */
+            background-color: var(--soft-pink); /* สีป้ายราคาเป็นชมพูอ่อน */
             color: var(--text-dark);
             padding: 4px 12px;
             border-radius: 15px;
             font-size: 13px;
+            font-weight: 600;
         }
 
         /* --- Page 2: งานที่รับทำ --- */
@@ -214,7 +227,7 @@
         .service-header-line {
             width: 5px;
             height: 30px;
-            background-color: var(--pastel-purple); /* หัวข้อเส้นสีม่วง */
+            background-color: var(--pastel-purple); /* เส้นสีม่วง */
             margin-right: 10px;
         }
 
@@ -225,6 +238,7 @@
             font-weight: 600;
             border-radius: 0 10px 10px 0;
             width: fit-content;
+            color: var(--text-dark);
         }
 
         .service-grid {
@@ -237,10 +251,11 @@
             font-size: 14px;
             font-weight: 500;
             padding-bottom: 5px;
-            border-bottom: 1px solid var(--border-color);
+            border-bottom: 1px solid rgba(0,0,0,0.05);
             display: flex;
             align-items: center;
             gap: 5px;
+            color: var(--text-dark);
         }
         
         .service-item::before {
@@ -266,7 +281,6 @@
 
         .bulk-card {
             background-color: var(--white); /* การ์ดเล็กเป็นสีขาว */
-            color: var(--text-dark);
             border-radius: 20px;
             padding: 15px;
             text-align: center;
@@ -300,10 +314,11 @@
             display: flex;
             gap: 8px;
             font-weight: 500;
+            color: var(--text-dark);
         }
 
         .details-list li span.num {
-            background-color: var(--pastel-purple); /* เปลี่ยนสีเลขลำดับเป็นม่วง */
+            background-color: var(--pastel-purple); /* สีเลขลำดับเป็นม่วง */
             color: var(--text-dark);
             width: 20px;
             height: 20px;
@@ -313,14 +328,14 @@
             border-radius: 50%;
             flex-shrink: 0;
             font-size: 12px;
+            font-weight: 600;
         }
 
         .warning-box {
             background-color: var(--white);
-            color: var(--text-dark);
             padding: 10px 15px;
             border-radius: 20px;
-            border: 2px solid var(--soft-pink);
+            border: 2px solid var(--soft-pink); /* ขอบชมพูอ่อน */
             font-size: 13px;
             text-align: center;
             margin-top: 20px;
@@ -328,6 +343,7 @@
             align-items: center;
             justify-content: center;
             gap: 5px;
+            color: var(--text-dark);
         }
 
         /* --- Footer --- */
@@ -343,12 +359,12 @@
         }
 
         .social-btn {
-            background-color: var(--white);
+            background-color: var(--white); /* ปุ่มติดต่อพื้นขาว */
             color: var(--text-dark);
             text-decoration: none;
             padding: 8px 15px;
             border-radius: 20px;
-            border: 2px solid var(--pastel-purple); /* ปุ่มติดต่อมีขอบสีม่วง */
+            border: 2px solid var(--pastel-purple); /* ขอบสีม่วงพาสเทลอ่อน */
             font-size: 12px;
             font-weight: 600;
             flex: 1;
@@ -357,7 +373,7 @@
         }
 
         .social-btn:hover {
-            background-color: var(--pastel-purple);
+            background-color: var(--pastel-purple); /* ชี้แล้วเปลี่ยนเป็นม่วงพาสเทล */
         }
 
     </style>
@@ -367,10 +383,12 @@
 <div class="app-container">
     
     <header>
-        <div class="logo">Logo</div>
+        <div class="logo">
+            <img src="Logo.png" alt="Hima Logo">
+        </div>
         <div class="title-container">
             <h1>HIMA PRICE</h1>
-            <p>เรทราคางานป้ายร้านฮิมาวาริ (พาสเทล)</p>
+            <p>เรทราคางานป้ายร้านฮิมาวาริ (พาสเทลละมุน)</p>
         </div>
     </header>
 
@@ -526,7 +544,7 @@
                     </div>
                 </div>
 
-                <h3 style="font-size: 18px; margin-bottom: 10px;">รายละเอียด</h3>
+                <h3 style="font-size: 18px; margin-bottom: 10px; color: var(--text-dark);">รายละเอียด</h3>
                 <ul class="details-list">
                     <li><span class="num">1</span> ราคาเหมาคิด%จากราคางานทั้งหมด</li>
                     <li><span class="num">2</span> งานเหมาจะต้องโอนจองคิวทีเดียวทุกป้าย</li>
@@ -536,7 +554,8 @@
                 </ul>
 
                 <div class="warning-box">
-                    <span style="color: #ffd966; font-size: 16px;">⚠️</span> หมายเหตุ : ยกเลิกงานไม่คืนเงินทุกกรณี
+                    <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="black" stroke-width="2"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"></path><line x1="12" y1="9" x2="12" y2="13"></line><line x1="12" y1="17" x2="12.01" y2="17"></line></svg>
+                    หมายเหตุ : ยกเลิกงานไม่คืนเงินทุกกรณี
                 </div>
             </div>
         </section>
