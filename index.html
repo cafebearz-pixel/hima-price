@@ -3,8 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>รายการสินค้าและราคางานป้าย</title>
-    <!-- เรียกใช้ฟอนต์ Mitr และ Prompt จาก Google Fonts -->
+    <title>Dashboard เรทราคางานป้าย</title>
+    <!-- เรียกใช้ฟอนต์ Mitr และ Prompt -->
     <link href="https://fonts.googleapis.com/css2?family=Mitr:wght@300;400;500&family=Prompt:wght@300;400;500;600&display=swap" rel="stylesheet">
     <style>
         :root {
@@ -29,97 +29,155 @@
             background-color: var(--bg-color);
             font-family: var(--font-eng);
             color: var(--text-mauve-dark);
-            padding: 50px 20px;
-            line-height: 1.6;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 40px 20px;
         }
 
         .container {
-            max-width: 1100px;
-            margin: 0 auto;
+            width: 100%;
+            max-width: 1000px;
         }
 
-        /* หัวข้อหน้าเว็บ */
-        .page-title {
+        /* -----------------------------------
+           สไตล์หน้า Dashboard (หน้าแรก)
+           ----------------------------------- */
+        #dashboard-view {
             text-align: center;
+            animation: fadeIn 0.5s ease-in-out;
+        }
+
+        .header-title {
             font-family: var(--font-thai);
+            font-size: 2.5rem;
             color: var(--text-mauve-dark);
-            font-size: 2.2rem;
-            margin-bottom: 40px;
+            margin-bottom: 10px;
             font-weight: 500;
         }
 
-        /* Grid จัดเรียงการ์ด */
-        .pricing-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
-            gap: 30px;
+        .header-subtitle {
+            font-size: 1.1rem;
+            color: var(--text-mauve);
             margin-bottom: 50px;
         }
 
-        /* สไตล์ของการ์ด */
-        .pricing-card {
+        .dashboard-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 30px;
+        }
+
+        .dash-card {
             background-color: var(--white);
-            border-radius: 24px;
-            padding: 30px 25px;
-            box-shadow: 0 15px 35px rgba(232, 137, 181, 0.15);
-            border: 1px solid rgba(246, 165, 201, 0.4);
-            transition: all 0.4s ease;
+            border-radius: 30px;
+            padding: 50px 30px;
+            cursor: pointer;
+            box-shadow: 0 10px 30px rgba(232, 137, 181, 0.1);
+            border: 2px solid transparent;
+            transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
             display: flex;
             flex-direction: column;
+            align-items: center;
         }
 
-        .pricing-card:hover {
-            transform: translateY(-8px);
-            box-shadow: 0 20px 45px rgba(232, 137, 181, 0.25);
+        .dash-card:hover {
+            transform: translateY(-10px);
             border-color: var(--main-pink);
+            box-shadow: 0 20px 40px rgba(232, 137, 181, 0.25);
         }
 
-        /* หัวข้อในการ์ด */
-        .card-header {
-            text-align: center;
-            margin-bottom: 25px;
-            padding-bottom: 20px;
-            border-bottom: 2px dashed var(--main-pink);
+        .dash-icon {
+            font-size: 4rem;
+            margin-bottom: 20px;
+            filter: drop-shadow(0 10px 10px rgba(232, 137, 181, 0.3));
+            transition: transform 0.3s ease;
         }
 
-        .card-header h2 {
+        .dash-card:hover .dash-icon {
+            transform: scale(1.1);
+        }
+
+        .dash-card h2 {
             font-family: var(--font-thai);
             font-size: 1.6rem;
             color: var(--text-mauve-dark);
-            font-weight: 500;
-        }
-
-        .icon-circle {
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            width: 60px;
-            height: 60px;
-            background: linear-gradient(135deg, var(--main-pink), var(--dark-pink));
-            border-radius: 50%;
-            font-size: 1.8rem;
             margin-bottom: 15px;
-            box-shadow: 0 8px 20px rgba(232, 137, 181, 0.3);
         }
 
-        /* รายการสินค้า */
+        .dash-btn {
+            background: linear-gradient(135deg, var(--main-pink), var(--dark-pink));
+            color: var(--white);
+            padding: 10px 25px;
+            border-radius: 25px;
+            font-family: var(--font-thai);
+            font-size: 1rem;
+            font-weight: 400;
+            pointer-events: none; /* ให้คลิกที่การ์ดแทน */
+        }
+
+        /* -----------------------------------
+           สไตล์หน้ารายการราคา (เมื่อกดเข้ามา)
+           ----------------------------------- */
+        #pricing-view {
+            display: none; /* ซ่อนไว้ก่อน */
+            background-color: var(--white);
+            border-radius: 30px;
+            padding: 40px;
+            box-shadow: 0 15px 40px rgba(232, 137, 181, 0.15);
+            animation: fadeIn 0.4s ease-in-out;
+            position: relative;
+        }
+
+        .back-btn {
+            position: absolute;
+            top: 40px;
+            left: 40px;
+            background: none;
+            border: none;
+            color: var(--text-mauve-dark);
+            font-family: var(--font-thai);
+            font-size: 1.1rem;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            transition: color 0.3s ease;
+        }
+
+        .back-btn:hover {
+            color: var(--dark-pink);
+        }
+
+        .pricing-header {
+            text-align: center;
+            margin-bottom: 40px;
+            padding-bottom: 20px;
+            border-bottom: 2px dashed var(--main-pink);
+            margin-top: 20px;
+        }
+
+        .pricing-header h2 {
+            font-family: var(--font-thai);
+            font-size: 2.2rem;
+            color: var(--text-mauve-dark);
+        }
+
         .item-list {
             list-style: none;
-            flex-grow: 1;
+            column-count: 2; /* แบ่งเป็น 2 คอลัมน์ให้ดูไม่ยาวเกินไป */
+            column-gap: 50px;
         }
 
         .item-list li {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            padding: 10px 0;
+            padding: 12px 0;
             border-bottom: 1px solid rgba(246, 165, 201, 0.2);
-            font-size: 0.95rem;
-            font-weight: 400;
-        }
-
-        .item-list li:last-child {
-            border-bottom: none;
+            font-size: 1rem;
+            break-inside: avoid;
         }
 
         .item-name {
@@ -131,75 +189,45 @@
         .item-note {
             font-size: 0.8rem;
             color: var(--text-mauve);
-            margin-top: 2px;
         }
 
-        /* ป้ายราคา */
         .price-tag {
-            background: linear-gradient(135deg, var(--main-pink), var(--dark-pink));
-            color: var(--white);
-            padding: 4px 14px;
+            background: var(--bg-color);
+            color: var(--text-mauve-dark);
+            padding: 4px 16px;
             border-radius: 20px;
             font-weight: 500;
-            font-size: 0.95rem;
-            box-shadow: 0 4px 10px rgba(232, 137, 181, 0.2);
-            letter-spacing: 0.5px;
+            border: 1px solid var(--main-pink);
         }
 
-        /* ส่วนหมายเหตุด้านล่าง */
-        .footer-note {
-            background-color: var(--white);
-            border-radius: 20px;
-            padding: 30px;
-            text-align: center;
-            box-shadow: 0 10px 30px rgba(232, 137, 181, 0.1);
-            max-width: 800px;
-            margin: 0 auto;
-            border: 1px solid rgba(246, 165, 201, 0.3);
+        /* จัดการแสดงผลกลุ่มราคา */
+        .price-category {
+            display: none;
         }
 
-        .footer-note p {
-            margin-bottom: 12px;
-            font-weight: 400;
+        .price-category.active {
+            display: block;
         }
 
-        .highlight-text {
-            color: var(--dark-pink);
-            font-weight: 500;
+        /* Animation */
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(15px); }
+            to { opacity: 1; transform: translateY(0); }
         }
 
-        .contact-btn {
-            display: inline-flex;
-            align-items: center;
-            gap: 8px;
-            background: linear-gradient(135deg, var(--main-pink), var(--dark-pink));
-            color: var(--white);
-            padding: 12px 28px;
-            border-radius: 30px;
-            text-decoration: none;
-            font-family: var(--font-thai);
-            font-weight: 500;
-            font-size: 1.1rem;
-            margin-top: 15px;
-            transition: all 0.3s ease;
-            box-shadow: 0 6px 15px rgba(232, 137, 181, 0.3);
-        }
-
-        .contact-btn:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 10px 20px rgba(232, 137, 181, 0.4);
-        }
-
-        /* Responsive มือถือ */
+        /* Responsive */
         @media (max-width: 768px) {
-            body {
-                padding: 30px 15px;
+            .item-list {
+                column-count: 1;
             }
-            .page-title {
-                font-size: 1.8rem;
+            .back-btn {
+                position: relative;
+                top: 0;
+                left: 0;
+                margin-bottom: 20px;
             }
-            .pricing-card {
-                padding: 25px 20px;
+            #pricing-view {
+                padding: 30px 20px;
             }
         }
     </style>
@@ -208,16 +236,48 @@
 
     <div class="container">
         
-        <h1 class="page-title">✨ เรทราคางานป้าย ✨</h1>
+        <!-- =================หน้า DASHBOARD================= -->
+        <div id="dashboard-view">
+            <h1 class="header-title">✨ ยินดีต้อนรับ ✨</h1>
+            <p class="header-subtitle">เลือกสไตล์งานป้ายที่คุณสนใจเพื่อดูเรทราคาได้เลยค่ะ</p>
 
-        <div class="pricing-grid">
-            
-            <!-- การ์ด 1: แนวน่ารัก -->
-            <div class="pricing-card">
-                <div class="card-header">
-                    <div class="icon-circle">🌸</div>
+            <div class="dashboard-grid">
+                <!-- การ์ด 1 -->
+                <div class="dash-card" onclick="showPricing('cute', '🌸 แนวน่ารัก')">
+                    <div class="dash-icon">🌸</div>
                     <h2>แนวน่ารัก</h2>
+                    <div class="dash-btn">ดูเรทราคา</div>
                 </div>
+
+                <!-- การ์ด 2 -->
+                <div class="dash-card" onclick="showPricing('aurora', '✨ แนวออโรร่า')">
+                    <div class="dash-icon">✨</div>
+                    <h2>แนวออโรร่า</h2>
+                    <div class="dash-btn">ดูเรทราคา</div>
+                </div>
+
+                <!-- การ์ด 3 -->
+                <div class="dash-card" onclick="showPricing('pearl', '🐚 แนวเพิร์ลเวฟ')">
+                    <div class="dash-icon">🐚</div>
+                    <h2>แนวเพิร์ลเวฟ</h2>
+                    <div class="dash-btn">ดูเรทราคา</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- =================หน้ารายละเอียดราคา================= -->
+        <div id="pricing-view">
+            <button class="back-btn" onclick="goBack()">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
+                กลับไปเลือกสไตล์
+            </button>
+
+            <div class="pricing-header">
+                <h2 id="dynamic-title">เรทราคา</h2>
+            </div>
+
+            <!-- กลุ่มข้อมูล: แนวน่ารัก -->
+            <div id="cat-cute" class="price-category">
                 <ul class="item-list">
                     <li><span class="item-name">โลโก้</span> <span class="price-tag">89.-</span></li>
                     <li><span class="item-name">เครดิต +1</span> <span class="price-tag">89.-</span></li>
@@ -246,12 +306,8 @@
                 </ul>
             </div>
 
-            <!-- การ์ด 2: แนวออโรร่า -->
-            <div class="pricing-card">
-                <div class="card-header">
-                    <div class="icon-circle">✨</div>
-                    <h2>แนวออโรร่า</h2>
-                </div>
+            <!-- กลุ่มข้อมูล: แนวออโรร่า -->
+            <div id="cat-aurora" class="price-category">
                 <ul class="item-list">
                     <li><span class="item-name">โลโก้</span> <span class="price-tag">119.-</span></li>
                     <li><span class="item-name">กรอบรีวิว</span> <span class="price-tag">99.-</span></li>
@@ -282,12 +338,8 @@
                 </ul>
             </div>
 
-            <!-- การ์ด 3: แนวเพิร์ลเวฟ -->
-            <div class="pricing-card">
-                <div class="card-header">
-                    <div class="icon-circle">🐚</div>
-                    <h2>แนวเพิร์ลเวฟ</h2>
-                </div>
+            <!-- กลุ่มข้อมูล: แนวเพิร์ลเวฟ -->
+            <div id="cat-pearl" class="price-category">
                 <ul class="item-list">
                     <li><span class="item-name">โลโก้</span> <span class="price-tag">119.-</span></li>
                     <li><span class="item-name">กรอบรีวิว</span> <span class="price-tag">99.-</span></li>
@@ -317,20 +369,46 @@
                     <li><span class="item-name">ป้ายกลุ่ม+กรอบ</span> <span class="price-tag">199.-</span></li>
                 </ul>
             </div>
-
-        </div>
-
-        <!-- หมายเหตุด้านล่าง -->
-        <div class="footer-note">
-            <p>💡 <span class="highlight-text">หมายเหตุ:</span> งานอื่นๆ สามารถสอบถามได้นะคะ ขึ้นอยู่กับข้อมูลของลูกค้าเลยค่ะ</p>
-            <p>สามารถทำให้ได้หมดเลย (ยกเว้นงานระบบที่เจาะลึกมากเกินไป)</p>
-            <p>แต่ถ้าเป็นแนว <span class="highlight-text">ลิงก์ไบโอ (Link in Bio)</span> สามารถเนรมิตให้ได้หมดเลยค่า 🥰💙</p>
-            <a href="#" class="contact-btn">
-                📸 ดูตัวอย่างงานเพิ่มเติม
-            </a>
         </div>
 
     </div>
 
+    <!-- Script สำหรับควบคุมการเปลี่ยนหน้า -->
+    <script>
+        function showPricing(category, titleText) {
+            // ซ่อนหน้า Dashboard
+            document.getElementById('dashboard-view').style.display = 'none';
+            
+            // แสดงหน้าราคา
+            const pricingView = document.getElementById('pricing-view');
+            pricingView.style.display = 'block';
+            
+            // เปลี่ยนชื่อหัวข้อตามที่กด
+            document.getElementById('dynamic-title').innerText = titleText;
+
+            // ซ่อนราคาทุกกลุ่มก่อน
+            const categories = document.getElementsByClassName('price-category');
+            for (let i = 0; i < categories.length; i++) {
+                categories[i].classList.remove('active');
+            }
+
+            // แสดงเฉพาะกลุ่มที่เลือก
+            document.getElementById('cat-' + category).classList.add('active');
+            
+            // เลื่อนจอกลับไปด้านบน
+            window.scrollTo(0, 0);
+        }
+
+        function goBack() {
+            // ซ่อนหน้าราคา
+            document.getElementById('pricing-view').style.display = 'none';
+            
+            // แสดงหน้า Dashboard
+            document.getElementById('dashboard-view').style.display = 'block';
+            
+            // เลื่อนจอกลับไปด้านบน
+            window.scrollTo(0, 0);
+        }
+    </script>
 </body>
 </html>
