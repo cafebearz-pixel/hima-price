@@ -3,23 +3,21 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>HIMA PRICE - เรทราคางานป้ายร้านฮิมาวาริ (พาสเทลละมุน)</title>
-    <link href="https://fonts.googleapis.com/css2?family=Mitr:wght@300;400;500;600&family=Prompt:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <title>HIMA PRICE - เรทราคางานป้าย</title>
+    <link href="https://fonts.googleapis.com/css2?family=Mitr:wght@300;400;500;600&family=Prompt:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     <style>
         :root {
-            /* โทนสีพาสเทลอ่อนๆ ละมุนตามรูป image_5.png */
-            --white: #ffffff;
-            --cream-yellow: #FFFBE0; /* เหลืองครีม */
-            --pastel-purple: #E5D9F2; /* ม่วงพาสเทล */
-            --soft-pink: #FFDFE5;      /* ชมพูอ่อน */
-            --pastel-blue: #C5E0F5;      /* ฟ้าพาสเทล */
+            /* โทนสีหลักสำหรับข้อความและลูกเล่น */
+            --text-main: #6B4E71; /* สีม่วงเข้มอมเทา ดูละมุนแต่อ่านง่าย */
+            --text-sub: #8A738F;
+            --pink-pop: #FF8FAB; /* ชมพูเข้มขึ้นมานิดนึงไว้เน้นจุดสำคัญ */
+            --blue-pop: #70D6FF;
             
-            /* สีสำหรับข้อความและเส้นขอบ */
-            --text-dark: #2a2a2a; /* สีดำเข้ม (ใช้สำหรับชื่อร้านและหัวข้อ) */
-            --text-muted: #666666; /* สีเทาเข้ม (ใช้สำหรับรายละเอียดและข้อความย่อย) */
-            --border-light: #ddd; /* สีขอบจาง (ใช้สำหรับรายการปกติ) */
+            /* สีการ์ดแบบกระจก */
+            --glass-bg: rgba(255, 255, 255, 0.75);
+            --glass-border: rgba(255, 255, 255, 0.5);
+            --glass-shadow: 0 8px 32px 0 rgba(138, 115, 143, 0.15);
             
-            /* การตั้งค่าฟอนต์ stack: ภาษาอังกฤษ/ตัวเลขใช้ Prompt (ลำดับแรก), ภาษาไทยใช้ Mitr */
             --font-stack: 'Prompt', 'Mitr', sans-serif;
         }
 
@@ -27,323 +25,357 @@
             box-sizing: border-box;
             margin: 0;
             padding: 0;
-            /* ใช้ font-stack ที่กำหนดไว้ */
             font-family: var(--font-stack);
-            color: var(--text-dark);
+            color: var(--text-main);
             -webkit-font-smoothing: antialiased;
         }
 
+        /* --- พื้นหลังอนิเมชั่นไล่สีพาสเทล --- */
         body {
-            background-color: #f9f9f9; /* สีพื้นหลังนอกมือถืออ่อนๆ */
+            background: linear-gradient(-45deg, #FFDFE5, #E5D9F2, #C5E0F5, #FFFBE0);
+            background-size: 400% 400%;
+            animation: gradientBG 15s ease infinite;
             display: flex;
             justify-content: center;
+            min-height: 100vh;
+        }
+
+        @keyframes gradientBG {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
         }
 
         .app-container {
             width: 100%;
-            max-width: 480px; /* ขนาดจำลองมือถือ */
-            background-color: var(--white); /* พื้นหลังแอพเป็นสีขาวตามคำขอ */
+            max-width: 480px;
             min-height: 100vh;
             display: flex;
             flex-direction: column;
-            box-shadow: 0 0 15px rgba(0,0,0,0.05);
             position: relative;
+            background: rgba(255, 255, 255, 0.3); /* ซ้อนทับให้พื้นหลังดรอปลงนิดนึง */
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
         }
 
-        /* --- Header --- */
+        /* --- Header มีมิติ --- */
         header {
             display: flex;
             align-items: center;
             justify-content: center;
-            padding: 20px;
+            padding: 30px 20px 20px;
             gap: 15px;
-            border-bottom: 1px solid rgba(0,0,0,0.05); /* เส้นขอบอ่อนๆ */
         }
 
         .logo {
-            width: 50px;
-            height: 50px;
-            background-color: var(--pastel-purple); /* สีโลโก้เป็นม่วงพาสเทล */
+            width: 60px;
+            height: 60px;
+            background-color: #fff;
             border-radius: 50%;
             display: flex;
             align-items: center;
             justify-content: center;
-            overflow: hidden; /* ให้รูปอยู่ภายในวงกลม */
+            overflow: hidden;
+            box-shadow: 0 4px 15px rgba(255, 143, 171, 0.3);
+            border: 3px solid #fff;
         }
 
         .logo img {
             width: 100%;
             height: 100%;
-            object-fit: cover; /* ให้รูปโลโก้ครอบคลุมวงกลม */
+            object-fit: cover;
         }
 
         .title-container h1 {
-            font-size: 28px;
+            font-size: 32px;
             font-style: italic;
             font-weight: 800;
             line-height: 1;
-            color: var(--text-dark);
+            /* เล่นสี Gradient ที่ตัวอักษร */
+            background: linear-gradient(45deg, #FF8FAB, #8338EC);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.05); /* เพิ่มเงาให้ตัวอักษรลอย */
         }
 
         .title-container p {
             font-size: 14px;
-            font-weight: 400;
-            color: var(--text-muted);
+            font-weight: 500;
+            margin-top: 5px;
+            color: var(--text-sub);
         }
 
-        /* --- Navigation --- */
+        /* --- Navigation แบบปุ่มลอย --- */
         nav {
             display: flex;
-            background-color: var(--pastel-purple); /* สีแถบเมนูเป็นม่วงพาสเทล */
+            padding: 0 15px;
+            gap: 8px;
+            overflow-x: auto;
+            scrollbar-width: none; /* ซ่อน scrollbar */
         }
+        nav::-webkit-scrollbar { display: none; }
 
         nav button {
             flex: 1;
-            background: none;
-            border: none;
-            color: var(--text-dark);
-            padding: 12px 5px;
+            white-space: nowrap;
+            background: var(--glass-bg);
+            border: 1px solid var(--glass-border);
+            color: var(--text-main);
+            padding: 10px 15px;
+            border-radius: 20px;
             font-size: 14px;
-            font-weight: 500;
+            font-weight: 600;
             cursor: pointer;
-            transition: background 0.3s;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.02);
+            transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
         }
 
         nav button.active {
-            background-color: var(--white); /* ปุ่มที่เลือกเป็นสีขาวให้เด่น */
-            font-weight: 600;
+            background: linear-gradient(135deg, #FFDFE5, #E5D9F2);
+            color: #6B4E71;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 15px rgba(229, 217, 242, 0.5);
+            border-color: #fff;
         }
 
         /* --- Main Content --- */
         main {
-            padding: 20px;
+            padding: 20px 15px;
             flex-grow: 1;
-            padding-bottom: 80px; /* เผื่อที่ให้ Footer */
+            padding-bottom: 90px;
         }
 
         .tab-content {
             display: none;
-            animation: fadeIn 0.3s ease;
+            animation: slideUp 0.4s ease forwards;
+            opacity: 0;
+            transform: translateY(10px);
         }
 
         .tab-content.active {
             display: block;
         }
 
-        @keyframes fadeIn {
-            from { opacity: 0; }
-            to { opacity: 1; }
+        @keyframes slideUp {
+            to { opacity: 1; transform: translateY(0); }
         }
 
-        /* --- Page 1: หน้าแรก --- */
-        /* การ์ดสไตล์ (ใช้ nth-child สลับสีขอบตามรูป image_5.png) */
+        /* --- Page 1: หน้าแรก (การ์ดสไตล์มีมิติ) --- */
         .style-card {
-            background-color: var(--white);
-            border-radius: 15px;
-            padding: 15px 20px;
-            margin-bottom: 10px;
+            background: var(--glass-bg);
+            border-radius: 20px;
+            padding: 15px;
+            margin-bottom: 15px;
             display: flex;
             align-items: center;
             gap: 15px;
-            border: 2px solid var(--pastel-purple); /* สีขอบสลับกัน */
+            border: 1px solid var(--glass-border);
+            box-shadow: var(--glass-shadow);
+            transition: transform 0.2s;
         }
-        
-        /* สลับสีขอบการ์ด ม่วง, ชมพู, ฟ้า */
-        .style-card:nth-child(2) { border-color: var(--soft-pink); }
-        .style-card:nth-child(3) { border-color: var(--pastel-blue); }
-        .style-card:nth-child(4) { border-color: var(--pastel-purple); } /* ตัวที่ 4 เป็นม่วง */
+
+        .style-card:hover {
+            transform: scale(1.02);
+        }
+
+        /* เล่นสีไอคอนแต่ละอัน */
+        .style-card:nth-child(1) .icon-circle { background: #FFDFE5; color: #FF8FAB; }
+        .style-card:nth-child(2) .icon-circle { background: #E5D9F2; color: #8338EC; }
+        .style-card:nth-child(3) .icon-circle { background: #C5E0F5; color: #3A86FF; }
+        .style-card:nth-child(4) .icon-circle { background: #FFFBE0; color: #FFBE0B; }
 
         .icon-circle {
-            background-color: var(--pastel-purple); /* วงกลมไอคอนเป็นม่วง */
-            border: 2px solid var(--text-dark); /* เส้นขอบไอคอนเป็นดำ */
+            width: 45px;
+            height: 45px;
             border-radius: 50%;
-            width: 35px;
-            height: 35px;
             display: flex;
             align-items: center;
             justify-content: center;
             flex-shrink: 0;
+            font-size: 20px;
+            box-shadow: inset 0 -2px 5px rgba(0,0,0,0.05);
         }
 
         .style-info h3 {
             font-size: 18px;
             margin-bottom: 2px;
-            color: var(--text-dark);
+            font-weight: 700;
         }
 
         .style-info p {
             font-size: 12px;
-            color: var(--text-muted);
+            color: var(--text-sub);
+            line-height: 1.4;
         }
 
         .section-title {
             font-size: 16px;
-            font-weight: 600;
-            margin: 20px 0 10px 0;
+            font-weight: 700;
+            margin: 25px 0 15px 5px;
             display: flex;
             align-items: center;
-            gap: 5px;
-            color: var(--text-dark);
+            gap: 8px;
+            color: var(--text-main);
         }
 
+        /* กล่องราคาแบบใหม่ */
         .price-box {
-            border: 2px solid var(--pastel-blue); /* ขอบกล่องราคาเป็นฟ้า */
-            border-radius: 20px;
-            padding: 15px;
-            background-color: var(--cream-yellow); /* พื้นกล่องราคาเป็นเหลืองครีม */
+            background: var(--glass-bg);
+            border-radius: 25px;
+            padding: 20px;
+            border: 1px solid var(--glass-border);
+            box-shadow: var(--glass-shadow);
         }
 
         .price-row {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            padding: 8px 0;
-            border-bottom: 1px solid rgba(0,0,0,0.05); /* เส้นคั่นอ่อนๆ */
+            padding: 10px 0;
+            border-bottom: 1px dashed rgba(107, 78, 113, 0.2);
             font-size: 14px;
             font-weight: 500;
-            color: var(--text-dark);
         }
 
-        .price-row:last-child {
-            border-bottom: none;
-        }
+        .price-row:last-child { border-bottom: none; }
 
         .price-tag {
-            background-color: var(--soft-pink); /* สีป้ายราคาเป็นชมพูอ่อน */
-            color: var(--text-dark);
-            padding: 4px 12px;
-            border-radius: 15px;
+            background: #fff;
+            color: var(--pink-pop);
+            padding: 5px 12px;
+            border-radius: 20px;
             font-size: 13px;
-            font-weight: 600;
+            font-weight: 700;
+            box-shadow: 0 2px 8px rgba(255, 143, 171, 0.2);
         }
 
-        /* --- Page 2: งานที่รับทำ --- */
-        .service-header {
-            display: flex;
-            align-items: center;
-            margin-bottom: 20px;
-        }
-
-        .service-header-line {
-            width: 5px;
-            height: 30px;
-            background-color: var(--pastel-purple); /* เส้นสีม่วง */
-            margin-right: 10px;
-        }
-
-        .service-header-title {
-            background-color: var(--cream-yellow); /* พื้นหัวข้อเหลืองครีม */
-            padding: 5px 15px;
-            font-size: 18px;
-            font-weight: 600;
-            border-radius: 0 10px 10px 0;
-            width: fit-content;
-            color: var(--text-dark);
-        }
-
+        /* --- Page 2: งานที่รับทำ (ปรับเป็นป้าย Tag น่ารักๆ แทนรายการยาวๆ) --- */
         .service-grid {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 15px;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            justify-content: center;
+            margin-top: 10px;
         }
 
-        .service-item {
+        .service-tag {
+            background: var(--glass-bg);
+            border: 1px solid var(--glass-border);
+            padding: 10px 15px;
+            border-radius: 25px;
             font-size: 14px;
             font-weight: 500;
-            padding-bottom: 5px;
-            border-bottom: 1px solid rgba(0,0,0,0.05);
-            display: flex;
-            align-items: center;
-            gap: 5px;
-            color: var(--text-dark);
+            box-shadow: var(--glass-shadow);
+            transition: all 0.2s;
         }
-        
-        .service-item::before {
-            content: '•';
-            font-size: 20px;
-            color: var(--soft-pink); /* สีจุดรายการเป็นชมพู */
+
+        .service-tag:hover {
+            background: linear-gradient(135deg, #fff, #f0f0f0);
+            transform: translateY(-2px);
+            color: var(--pink-pop);
         }
 
         /* --- Page 3: ราคาเหมา --- */
-        .bulk-container {
-            border: 3px solid var(--pastel-purple); /* ขอบกล่องใหญ่สีม่วงพาสเทล */
-            border-radius: 30px;
-            padding: 20px;
-            background-color: var(--cream-yellow); /* พื้นหลังกล่องเป็นสีเหลืองครีม */
-        }
-
         .bulk-grid {
             display: grid;
             grid-template-columns: 1fr 1fr;
             gap: 15px;
-            margin-bottom: 20px;
+            margin-bottom: 25px;
         }
 
         .bulk-card {
-            background-color: var(--white); /* การ์ดเล็กเป็นสีขาว */
-            border-radius: 20px;
-            padding: 15px;
+            background: linear-gradient(135deg, #ffffff 0%, #fefefe 100%);
+            border-radius: 25px;
+            padding: 20px 10px;
             text-align: center;
-            border: 2px solid var(--soft-pink); /* ขอบการ์ดเล็กชมพู */
+            border: 1px solid var(--glass-border);
+            box-shadow: var(--glass-shadow);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        /* ใส่แสงสะท้อนให้การ์ดโปรโมชั่น */
+        .bulk-card::after {
+            content: '';
+            position: absolute;
+            top: 0; left: -100%; width: 50%; height: 100%;
+            background: linear-gradient(to right, rgba(255,255,255,0) 0%, rgba(255,255,255,0.8) 50%, rgba(255,255,255,0) 100%);
+            transform: skewX(-25deg);
+            animation: shine 6s infinite;
+        }
+        @keyframes shine {
+            0% { left: -100%; }
+            20% { left: 200%; }
+            100% { left: 200%; }
         }
 
         .bulk-card h3 {
-            font-size: 22px;
-            margin-bottom: 5px;
-            color: var(--text-dark);
+            font-size: 24px;
+            margin-bottom: 8px;
+            font-weight: 800;
+            color: #6B4E71;
         }
 
         .bulk-card .discount {
-            background-color: var(--soft-pink); /* ป้ายส่วนลดชมพูอ่อน */
-            color: var(--text-dark);
-            padding: 5px 10px;
-            border-radius: 15px;
-            font-weight: 600;
+            background: linear-gradient(45deg, #FF8FAB, #FFB3C6);
+            color: #fff;
+            padding: 5px 15px;
+            border-radius: 20px;
+            font-weight: 700;
             font-size: 14px;
             display: inline-block;
+            box-shadow: 0 4px 10px rgba(255, 143, 171, 0.3);
+        }
+
+        .details-box {
+            background: var(--glass-bg);
+            border-radius: 25px;
+            padding: 20px;
+            border: 1px solid var(--glass-border);
         }
 
         .details-list {
             list-style: none;
-            margin-top: 15px;
         }
 
         .details-list li {
             font-size: 13px;
-            margin-bottom: 10px;
+            margin-bottom: 12px;
             display: flex;
-            gap: 8px;
-            font-weight: 500;
-            color: var(--text-dark);
+            gap: 10px;
+            align-items: flex-start;
+            line-height: 1.5;
         }
 
         .details-list li span.num {
-            background-color: var(--pastel-purple); /* สีเลขลำดับเป็นม่วง */
-            color: var(--text-dark);
-            width: 20px;
-            height: 20px;
+            background: var(--pink-pop);
+            color: #fff;
+            width: 22px;
+            height: 22px;
             display: flex;
             align-items: center;
             justify-content: center;
             border-radius: 50%;
             flex-shrink: 0;
             font-size: 12px;
-            font-weight: 600;
+            font-weight: 700;
+            box-shadow: 0 2px 5px rgba(255, 143, 171, 0.4);
         }
 
         .warning-box {
-            background-color: var(--white);
-            padding: 10px 15px;
-            border-radius: 20px;
-            border: 2px solid var(--soft-pink); /* ขอบชมพูอ่อน */
+            background: rgba(255, 255, 255, 0.9);
+            padding: 12px 15px;
+            border-radius: 15px;
             font-size: 13px;
+            font-weight: 600;
             text-align: center;
             margin-top: 20px;
             display: flex;
             align-items: center;
             justify-content: center;
-            gap: 5px;
-            color: var(--text-dark);
+            gap: 8px;
+            border-left: 4px solid #FFBE0B;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
         }
 
         /* --- Footer --- */
@@ -354,26 +386,29 @@
             width: 100%;
             display: flex;
             justify-content: center;
-            gap: 10px;
+            gap: 15px;
             padding: 0 20px;
         }
 
         .social-btn {
-            background-color: var(--white); /* ปุ่มติดต่อพื้นขาว */
-            color: var(--text-dark);
+            background: #fff;
+            color: var(--text-main);
             text-decoration: none;
-            padding: 8px 15px;
-            border-radius: 20px;
-            border: 2px solid var(--pastel-purple); /* ขอบสีม่วงพาสเทลอ่อน */
-            font-size: 12px;
-            font-weight: 600;
+            padding: 12px 0;
+            border-radius: 25px;
+            font-size: 13px;
+            font-weight: 700;
             flex: 1;
             text-align: center;
-            transition: background 0.3s;
+            border: 1px solid var(--glass-border);
+            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+            transition: all 0.3s;
         }
 
         .social-btn:hover {
-            background-color: var(--pastel-purple); /* ชี้แล้วเปลี่ยนเป็นม่วงพาสเทล */
+            transform: translateY(-3px);
+            background: linear-gradient(135deg, #FFDFE5, #E5D9F2);
+            border-color: #fff;
         }
 
     </style>
@@ -384,11 +419,12 @@
     
     <header>
         <div class="logo">
-            <img src="Logo.png" alt="Hima Logo">
+            <!-- ใส่รูปโลโก้ตรงนี้ -->
+            <img src="Logo.png" alt="Logo" onerror="this.style.display='none'">
         </div>
         <div class="title-container">
             <h1>HIMA PRICE</h1>
-            <p>เรทราคางานป้ายร้านฮิมาวาริ (พาสเทลละมุน)</p>
+            <p>เรทราคางานป้ายร้านฮิมาวาริ</p>
         </div>
     </header>
 
@@ -401,44 +437,37 @@
 
     <main>
         
+        <!-- Tab 1: หน้าแรก -->
         <section id="tab1" class="tab-content active">
             <div class="style-card">
-                <div class="icon-circle">
-                    <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="black" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"></polyline></svg>
-                </div>
+                <div class="icon-circle">✨</div>
                 <div class="style-info">
                     <h3>แนวน่ารัก</h3>
-                    <p>• ตกแต่งด้วยของตกแต่งน่ารักๆ ใช้ฟอนต์ลายมือ</p>
+                    <p>ตกแต่งด้วยของตกแต่งน่ารักๆ ใช้ฟอนต์ลายมือ</p>
                 </div>
             </div>
             
             <div class="style-card">
-                <div class="icon-circle">
-                    <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="black" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"></polyline></svg>
-                </div>
+                <div class="icon-circle">🌸</div>
                 <div class="style-info">
                     <h3>แนวออโรร่า</h3>
-                    <p>• มีความเจ้าหญิง เน้นดอกไม้ แสงเหนือ ใช้ฟอนต์หัวมน</p>
+                    <p>มีความเจ้าหญิง เน้นดอกไม้ แสงเหนือ ใช้ฟอนต์หัวมน</p>
                 </div>
             </div>
 
             <div class="style-card">
-                <div class="icon-circle">
-                    <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="black" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"></polyline></svg>
-                </div>
+                <div class="icon-circle">🫧</div>
                 <div class="style-info">
                     <h3>แนวเพิร์ลเวฟ</h3>
-                    <p>• ละมุนฟุ้งติดแกลม ไข่มุก คลื่นเวฟ แนวนี้ขายดีมาก</p>
+                    <p>ละมุนฟุ้งติดแกลม ไข่มุก คลื่นเวฟ แนวนี้ขายดีมาก</p>
                 </div>
             </div>
 
             <div class="style-card">
-                <div class="icon-circle">
-                    <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="black" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"></polyline></svg>
-                </div>
+                <div class="icon-circle">💼</div>
                 <div class="style-info">
-                    <h3>แนวADS</h3>
-                    <p>• มีความทางการ เช่น ป้ายโฆษณาตามเพจต่าง ๆ</p>
+                    <h3>แนว ADS</h3>
+                    <p>มีความทางการ เช่น ป้ายโฆษณาตามเพจต่าง ๆ</p>
                 </div>
             </div>
 
@@ -454,11 +483,11 @@
                 </div>
                 <div class="price-row">
                     <span>ร้านทำผิดบรีฟ</span>
-                    <span class="price-tag">แก้ฟรี</span>
+                    <span class="price-tag" style="background: #E5D9F2; color: #8338EC;">แก้ฟรี</span>
                 </div>
                 <div class="price-row">
-                    <span>เปลี่ยนการ์ตูน/โทนสีทั้งป้าย</span>
-                    <span class="price-tag">สั่งทำใหม่</span>
+                    <span>เปลี่ยนการ์ตูน/โทนสี</span>
+                    <span class="price-tag" style="background: #FFDFE5;">สั่งทำใหม่</span>
                 </div>
             </div>
 
@@ -478,90 +507,91 @@
                 </div>
                 <div class="price-row">
                     <span>เปลี่ยนบล็อก</span>
-                    <span class="price-tag">สั่งทำใหม่</span>
+                    <span class="price-tag" style="background: #FFDFE5;">สั่งทำใหม่</span>
                 </div>
             </div>
         </section>
 
+        <!-- Tab 2: งานที่รับทำ -->
         <section id="tab2" class="tab-content">
-            <div class="service-header">
-                <div class="service-header-line"></div>
-                <div class="service-header-title">ประเภทงานที่รับทำ</div>
-            </div>
-
+            <h3 class="section-title" style="justify-content: center; margin-bottom: 20px;">หมวดหมู่งานที่รับทำ</h3>
             <div class="service-grid">
-                <div class="service-item">โลโก้ร้าน</div>
-                <div class="service-item">ขายสติ๊กเกอร์ไลน์</div>
-                <div class="service-item">ลายน้ำ</div>
-                <div class="service-item">แสกนคิวอาร์โค้ด</div>
-                <div class="service-item">บัญชีธนาคาร</div>
-                <div class="service-item">หัวคิวชีต</div>
-                <div class="service-item">โน้ตสลิป</div>
-                <div class="service-item">กรอบรีวิวผลงาน</div>
-                <div class="service-item">เครดิต</div>
-                <div class="service-item">รีวิวเติมเกม</div>
-                <div class="service-item">ปกเฟส ไลน์ x</div>
-                <div class="service-item">รีวิวแชทสลิป</div>
-                <div class="service-item">รับแอด-ตอบแชท</div>
-                <div class="service-item">ป้ายกลุ่ม</div>
-                <div class="service-item">รายละเอียด</div>
-                <div class="service-item">กรอบกลุ่ม</div>
-                <div class="service-item">เรทราคา</div>
-                <div class="service-item">บัตรตัวแทน</div>
-                <div class="service-item">เติมเกม (ทุกเกม)</div>
-                <div class="service-item">แอพเกม</div>
-                <div class="service-item">เติมเหรียญ</div>
-                <div class="service-item">สกินเกม</div>
-                <div class="service-item">แอพพรีเมียม</div>
-                <div class="service-item">กลางไอดีเกม</div>
-                <div class="service-item">ปั๊มฟอลไลค์วิว</div>
-                <div class="service-item">ขั้นตอน-วิธีต่าง ๆ</div>
-                <div class="service-item">แลกเงิน</div>
-                <div class="service-item">งานตามร่างแบบ</div>
-                <div class="service-item">ริชเมนูไลน์</div>
-                <div class="service-item"></div> <div class="service-item">เปิด-ปิดร้าน</div>
+                <!-- เปลี่ยน List น่าเบื่อเป็นป้าย Tag แบบน่ากด -->
+                <div class="service-tag">โลโก้ร้าน</div>
+                <div class="service-tag">ขายสติ๊กเกอร์ไลน์</div>
+                <div class="service-tag">ลายน้ำ</div>
+                <div class="service-tag">แสกนคิวอาร์โค้ด</div>
+                <div class="service-tag">บัญชีธนาคาร</div>
+                <div class="service-tag">หัวคิวชีต</div>
+                <div class="service-tag">โน้ตสลิป</div>
+                <div class="service-tag">กรอบรีวิวผลงาน</div>
+                <div class="service-tag">เครดิต</div>
+                <div class="service-tag">รีวิวเติมเกม</div>
+                <div class="service-tag">ปกเฟส ไลน์ x</div>
+                <div class="service-tag">รีวิวแชทสลิป</div>
+                <div class="service-tag">รับแอด-ตอบแชท</div>
+                <div class="service-tag">ป้ายกลุ่ม</div>
+                <div class="service-tag">รายละเอียด</div>
+                <div class="service-tag">กรอบกลุ่ม</div>
+                <div class="service-tag">เรทราคา</div>
+                <div class="service-tag">บัตรตัวแทน</div>
+                <div class="service-tag">เติมเกม (ทุกเกม)</div>
+                <div class="service-tag">แอพเกม / พรีเมียม</div>
+                <div class="service-tag">สกินเกม / เติมเหรียญ</div>
+                <div class="service-tag">กลางไอดีเกม</div>
+                <div class="service-tag">ปั๊มฟอล ไลค์ วิว</div>
+                <div class="service-tag">แลกเงิน</div>
+                <div class="service-tag">ขั้นตอน-วิธีต่าง ๆ</div>
+                <div class="service-tag">งานตามร่างแบบ</div>
+                <div class="service-tag">ริชเมนูไลน์</div>
+                <div class="service-tag">เปิด-ปิดร้าน</div>
             </div>
         </section>
 
+        <!-- Tab 3: ราคาเหมา -->
         <section id="tab3" class="tab-content">
-            <div class="bulk-container">
-                <div class="bulk-grid">
-                    <div class="bulk-card">
-                        <h3>5 ป้าย</h3>
-                        <div class="discount">ลด 5%</div>
-                    </div>
-                    <div class="bulk-card">
-                        <h3>10 ป้าย</h3>
-                        <div class="discount">ลด 10%</div>
-                    </div>
-                    <div class="bulk-card">
-                        <h3>15 ป้าย</h3>
-                        <div class="discount">ลด 15%</div>
-                    </div>
-                    <div class="bulk-card">
-                        <h3>20 ป้าย</h3>
-                        <div class="discount">ลด 20%</div>
-                    </div>
+            <div class="bulk-grid">
+                <div class="bulk-card">
+                    <h3>5 ป้าย</h3>
+                    <div class="discount">ลด 5%</div>
                 </div>
+                <div class="bulk-card">
+                    <h3>10 ป้าย</h3>
+                    <div class="discount">ลด 10%</div>
+                </div>
+                <div class="bulk-card">
+                    <h3>15 ป้าย</h3>
+                    <div class="discount">ลด 15%</div>
+                </div>
+                <div class="bulk-card">
+                    <h3>20 ป้าย</h3>
+                    <div class="discount">ลด 20%</div>
+                </div>
+            </div>
 
-                <h3 style="font-size: 18px; margin-bottom: 10px; color: var(--text-dark);">รายละเอียด</h3>
+            <div class="details-box">
+                <h3 style="font-size: 18px; margin-bottom: 15px;">รายละเอียดการเหมา</h3>
                 <ul class="details-list">
-                    <li><span class="num">1</span> ราคาเหมาคิด%จากราคางานทั้งหมด</li>
+                    <li><span class="num">1</span> ราคาเหมาคิด % จากราคางานทั้งหมด</li>
                     <li><span class="num">2</span> งานเหมาจะต้องโอนจองคิวทีเดียวทุกป้าย</li>
-                    <li><span class="num">3</span> สั่ง 10 ป้ายขึ้นไปมัดจำครึ่งนึงของราคาได้ค่ะ</li>
+                    <li><span class="num">3</span> สั่ง 10 ป้ายขึ้นไป มัดจำครึ่งนึงของราคาได้ค่ะ</li>
                     <li><span class="num">4</span> สามารถเหมาป้ายแล้วทยอยบรีฟตามทีหลังได้</li>
-                    <li><span class="num">5</span> ระยะเวลาทำงาน 1-3 วัน/ 1 ป้าย</li>
+                    <li><span class="num">5</span> ระยะเวลาทำงาน 1-3 วัน / 1 ป้าย</li>
                 </ul>
 
                 <div class="warning-box">
-                    <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="black" stroke-width="2"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"></path><line x1="12" y1="9" x2="12" y2="13"></line><line x1="12" y1="17" x2="12.01" y2="17"></line></svg>
-                    หมายเหตุ : ยกเลิกงานไม่คืนเงินทุกกรณี
+                    <span>⚠️</span> หมายเหตุ : ยกเลิกงานไม่คืนเงินทุกกรณี
                 </div>
             </div>
         </section>
 
+        <!-- Tab 4: รายละเอียด -->
         <section id="tab4" class="tab-content">
-            <h3 style="text-align: center; margin-top: 50px; color: var(--text-muted);">รอใส่ข้อมูลหน้ารายละเอียด...</h3>
+            <div class="details-box" style="text-align: center; margin-top: 30px; padding: 40px 20px;">
+                <div style="font-size: 40px; margin-bottom: 10px;">📝</div>
+                <h3 style="color: var(--text-main);">รอใส่ข้อมูลหน้ารายละเอียด...</h3>
+                <p style="color: var(--text-sub); font-size: 13px; margin-top: 5px;">คุณสามารถเพิ่มรูปภาพหรือข้อความเพิ่มเติมได้ที่นี่</p>
+            </div>
         </section>
 
     </main>
@@ -569,27 +599,23 @@
     <footer>
         <a href="#" class="social-btn">LINE OA</a>
         <a href="#" class="social-btn">FACEBOOK</a>
-        <a href="#" class="social-btn">INSTRAGRAM</a>
+        <a href="#" class="social-btn">INSTAGRAM</a>
     </footer>
 
 </div>
 
 <script>
-    // สคริปต์สำหรับสลับหน้าแท็บ (เหมือนเดิม)
     function openTab(tabId) {
-        // ซ่อนเนื้อหาทั้งหมด
         const contents = document.querySelectorAll('.tab-content');
         contents.forEach(content => {
             content.classList.remove('active');
         });
 
-        // เอาสีขาวออกจากปุ่มเมนูทั้งหมด
         const buttons = document.querySelectorAll('.tab-btn');
         buttons.forEach(btn => {
             btn.classList.remove('active');
         });
 
-        // แสดงเนื้อหาและไฮไลท์ปุ่มที่ถูกคลิก
         document.getElementById(tabId).classList.add('active');
         event.currentTarget.classList.add('active');
     }
