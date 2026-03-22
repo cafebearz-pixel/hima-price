@@ -1,0 +1,286 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>เรทราคางานป้าย</title>
+    <!-- เรียกใช้ฟอนต์ Kanit จาก Google Fonts ให้ดูทันสมัยและน่ารัก -->
+    <link href="https://fonts.googleapis.com/css2?family=Kanit:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-color: #fff0f5; /* สีพื้นหลังชมพูอ่อนมาก */
+            --card-bg: #ffffff;
+            --text-main: #5a4b50;
+            --text-light: #8a7b80;
+            --accent-pink: #ffb6c1;
+            --accent-pink-dark: #ff91a4;
+            --price-bg: #ffe4e8;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Kanit', sans-serif;
+        }
+
+        body {
+            background: linear-gradient(135deg, #fff0f5 0%, #ffe4e8 100%);
+            color: var(--text-main);
+            padding: 40px 20px;
+            min-height: 100vh;
+        }
+
+        /* คอนเทนเนอร์หลัก */
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        /* จัดเรียงการ์ด 3 คอลัมน์ */
+        .pricing-grid {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 24px;
+            justify-content: center;
+            margin-bottom: 30px;
+        }
+
+        /* สไตล์ของการ์ดแต่ละใบ */
+        .pricing-card {
+            background-color: var(--card-bg);
+            border-radius: 20px;
+            padding: 24px;
+            width: 100%;
+            max-width: 350px;
+            box-shadow: 0 10px 30px rgba(255, 182, 193, 0.2);
+            border: 2px solid #fff;
+            transition: transform 0.3s ease;
+        }
+
+        .pricing-card:hover {
+            transform: translateY(-5px);
+        }
+
+        /* หัวข้อการ์ด */
+        .card-header {
+            text-align: center;
+            margin-bottom: 20px;
+            padding-bottom: 15px;
+            border-bottom: 2px dashed var(--accent-pink);
+        }
+
+        .card-header h2 {
+            font-size: 1.4rem;
+            color: var(--accent-pink-dark);
+            font-weight: 600;
+        }
+
+        .card-header .icon {
+            font-size: 2rem;
+            margin-bottom: 10px;
+        }
+
+        /* รายการสินค้า */
+        .item-list {
+            list-style: none;
+        }
+
+        .item-list li {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 8px 0;
+            font-size: 0.95rem;
+            border-bottom: 1px solid #f9f0f2;
+        }
+
+        .item-list li:last-child {
+            border-bottom: none;
+        }
+
+        .item-name {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .item-note {
+            font-size: 0.75rem;
+            color: var(--text-light);
+        }
+
+        /* ป้ายราคา */
+        .price-tag {
+            background-color: var(--price-bg);
+            color: var(--accent-pink-dark);
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-weight: 600;
+            font-size: 0.9rem;
+        }
+
+        /* ส่วนหมายเหตุด้านล่าง (Footer) */
+        .footer-note {
+            background-color: var(--card-bg);
+            border-radius: 15px;
+            padding: 20px;
+            text-align: center;
+            box-shadow: 0 5px 20px rgba(255, 182, 193, 0.15);
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .footer-note p {
+            margin-bottom: 10px;
+            line-height: 1.6;
+        }
+
+        .contact-btn {
+            display: inline-block;
+            background-color: var(--accent-pink-dark);
+            color: white;
+            padding: 8px 20px;
+            border-radius: 20px;
+            text-decoration: none;
+            font-weight: 500;
+            margin-top: 10px;
+            transition: background-color 0.3s;
+        }
+
+        .contact-btn:hover {
+            background-color: #ff7aa5;
+        }
+
+        /* สำหรับหน้าจอมือถือ */
+        @media (max-width: 768px) {
+            .pricing-card {
+                max-width: 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        
+        <div class="pricing-grid">
+            
+            <!-- การ์ด 1: แนวน่ารัก -->
+            <div class="pricing-card">
+                <div class="card-header">
+                    <div class="icon">🌸</div>
+                    <h2>แนวน่ารัก</h2>
+                </div>
+                <ul class="item-list">
+                    <li><span class="item-name">โลโก้</span> <span class="price-tag">89.-</span></li>
+                    <li><span class="item-name">เครดิต +1</span> <span class="price-tag">89.-</span></li>
+                    <li><span class="item-name">ปกต่างๆ</span> <span class="price-tag">89.-</span></li>
+                    <li><span class="item-name">แชท-สลิป</span> <span class="price-tag">89.-</span></li>
+                    <li><span class="item-name">สติ๊กเกอร์ไลน์</span> <span class="price-tag">89.-</span></li>
+                    <li><span class="item-name">สะสมแต้ม</span> <span class="price-tag">89.-</span></li>
+                    <li><span class="item-name">กรอบรีวิว</span> <span class="price-tag">89.-</span></li>
+                    <li><span class="item-name">รายละเอียด <span class="item-note">ข้อมูลเยอะ +เพิ่ม</span></span> <span class="price-tag">89.-</span></li>
+                    <li><span class="item-name">รับกลางต่างๆ <span class="item-note">ข้อมูลเยอะ +เพิ่ม</span></span> <span class="price-tag">89.-</span></li>
+                    <li><span class="item-name">แลกเงิน <span class="item-note">ข้อมูลเยอะ +เพิ่ม</span></span> <span class="price-tag">89.-</span></li>
+                    <li><span class="item-name">ป้ายบัญชี</span> <span class="price-tag">89.-</span></li>
+                    <li><span class="item-name">โน้ตสลิป</span> <span class="price-tag">89.-</span></li>
+                    <li><span class="item-name">สแกนไลน์</span> <span class="price-tag">89.-</span></li>
+                    <li><span class="item-name">ขายรหัส/ไอดี</span> <span class="price-tag">89.-</span></li>
+                    <li><span class="item-name">รับแอดตอบแชท</span> <span class="price-tag">89.-</span></li>
+                    <li><span class="item-name">ริชเมนู (เล็ก)</span> <span class="price-tag">89.-</span></li>
+                    <li><span class="item-name">ปั๊มฟอล <span class="item-note">เรทเยอะ +เพิ่ม</span></span> <span class="price-tag">89.-</span></li>
+                    <li><span class="item-name">เติมเกม <span class="item-note">เรทเยอะ +เพิ่ม</span></span> <span class="price-tag">89.-</span></li>
+                    <li><span class="item-name">แอพพรี <span class="item-note">เรทเยอะ +เพิ่ม</span></span> <span class="price-tag">89.-</span></li>
+                    <li><span class="item-name">เปิดปิดร้าน <span class="item-note">ป้ายเดี่ยว</span></span> <span class="price-tag">89.-</span></li>
+                    <li><span class="item-name">ริชเมนู (ใหญ่)</span> <span class="price-tag">119.-</span></li>
+                    <li><span class="item-name">เปิดปิดร้าน <span class="item-note">ป้ายคู่</span></span> <span class="price-tag">129.-</span></li>
+                    <li><span class="item-name">วิธีขั้นตอน <span class="item-note">ข้อมูลเยอะ +เพิ่ม</span></span> <span class="price-tag">129.-</span></li>
+                    <li><span class="item-name">บัตรตัวแทน</span> <span class="price-tag">129.-</span></li>
+                </ul>
+            </div>
+
+            <!-- การ์ด 2: แนวออโรร่า -->
+            <div class="pricing-card">
+                <div class="card-header">
+                    <div class="icon">✨</div>
+                    <h2>แนวออโรร่า</h2>
+                </div>
+                <ul class="item-list">
+                    <li><span class="item-name">โลโก้</span> <span class="price-tag">119.-</span></li>
+                    <li><span class="item-name">กรอบรีวิว</span> <span class="price-tag">99.-</span></li>
+                    <li><span class="item-name">เครดิต +1</span> <span class="price-tag">129.-</span></li>
+                    <li><span class="item-name">ปกต่างๆ</span> <span class="price-tag">129.-</span></li>
+                    <li><span class="item-name">แชท-สลิป</span> <span class="price-tag">119.-</span></li>
+                    <li><span class="item-name">สติ๊กเกอร์ไลน์</span> <span class="price-tag">119.-</span></li>
+                    <li><span class="item-name">สะสมแต้ม</span> <span class="price-tag">119.-</span></li>
+                    <li><span class="item-name">รายละเอียด <span class="item-note">ข้อมูลเยอะ +เพิ่ม</span></span> <span class="price-tag">129.-</span></li>
+                    <li><span class="item-name">รับกลางต่างๆ <span class="item-note">ข้อมูลเยอะ +เพิ่ม</span></span> <span class="price-tag">129.-</span></li>
+                    <li><span class="item-name">แลกเงิน <span class="item-note">ข้อมูลเยอะ +เพิ่ม</span></span> <span class="price-tag">129.-</span></li>
+                    <li><span class="item-name">ป้ายบัญชี</span> <span class="price-tag">119.-</span></li>
+                    <li><span class="item-name">โน้ตสลิป</span> <span class="price-tag">119.-</span></li>
+                    <li><span class="item-name">สแกนไลน์</span> <span class="price-tag">119.-</span></li>
+                    <li><span class="item-name">ขายรหัส/ไอดี</span> <span class="price-tag">129.-</span></li>
+                    <li><span class="item-name">รับแอดตอบแชท</span> <span class="price-tag">129.-</span></li>
+                    <li><span class="item-name">ริชเมนู (เล็ก)</span> <span class="price-tag">119.-</span></li>
+                    <li><span class="item-name">ริชเมนู (ใหญ่)</span> <span class="price-tag">129.-</span></li>
+                    <li><span class="item-name">ปั๊มฟอล <span class="item-note">เรทเยอะ +เพิ่ม</span></span> <span class="price-tag">129.-</span></li>
+                    <li><span class="item-name">เติมเกม <span class="item-note">เรทเยอะ +เพิ่ม</span></span> <span class="price-tag">129.-</span></li>
+                    <li><span class="item-name">แอพพรี <span class="item-note">เรทเยอะ +เพิ่ม</span></span> <span class="price-tag">119.-</span></li>
+                    <li><span class="item-name">เปิดปิดร้าน <span class="item-note">ป้ายเดี่ยว</span></span> <span class="price-tag">129.-</span></li>
+                    <li><span class="item-name">เปิดปิดคู่ <span class="item-note">ป้ายคู่</span></span> <span class="price-tag">169.-</span></li>
+                    <li><span class="item-name">วิธีขั้นตอน <span class="item-note">ข้อมูลเยอะ +เพิ่ม</span></span> <span class="price-tag">129.-</span></li>
+                    <li><span class="item-name">บัตรตัวแทน</span> <span class="price-tag">169.-</span></li>
+                    <li><span class="item-name">ป้ายกลุ่ม</span> <span class="price-tag">139.-</span></li>
+                    <li><span class="item-name">ป้ายกลุ่ม+กรอบ</span> <span class="price-tag">199.-</span></li>
+                </ul>
+            </div>
+
+            <!-- การ์ด 3: แนวเพิร์ลเวฟ -->
+            <div class="pricing-card">
+                <div class="card-header">
+                    <div class="icon">🐚</div>
+                    <h2>แนวเพิร์ลเวฟ</h2>
+                </div>
+                <ul class="item-list">
+                    <li><span class="item-name">โลโก้</span> <span class="price-tag">119.-</span></li>
+                    <li><span class="item-name">กรอบรีวิว</span> <span class="price-tag">99.-</span></li>
+                    <li><span class="item-name">เครดิต +1</span> <span class="price-tag">129.-</span></li>
+                    <li><span class="item-name">ปกต่างๆ</span> <span class="price-tag">129.-</span></li>
+                    <li><span class="item-name">แชท-สลิป</span> <span class="price-tag">119.-</span></li>
+                    <li><span class="item-name">สติ๊กเกอร์ไลน์</span> <span class="price-tag">119.-</span></li>
+                    <li><span class="item-name">สะสมแต้ม</span> <span class="price-tag">119.-</span></li>
+                    <li><span class="item-name">รายละเอียด <span class="item-note">ข้อมูลเยอะ +เพิ่ม</span></span> <span class="price-tag">129.-</span></li>
+                    <li><span class="item-name">รับกลางต่างๆ <span class="item-note">ข้อมูลเยอะ +เพิ่ม</span></span> <span class="price-tag">129.-</span></li>
+                    <li><span class="item-name">แลกเงิน <span class="item-note">ข้อมูลเยอะ +เพิ่ม</span></span> <span class="price-tag">129.-</span></li>
+                    <li><span class="item-name">ป้ายบัญชี</span> <span class="price-tag">119.-</span></li>
+                    <li><span class="item-name">โน้ตสลิป</span> <span class="price-tag">119.-</span></li>
+                    <li><span class="item-name">สแกนไลน์</span> <span class="price-tag">119.-</span></li>
+                    <li><span class="item-name">ขายรหัส/ไอดี</span> <span class="price-tag">129.-</span></li>
+                    <li><span class="item-name">รับแอดตอบแชท</span> <span class="price-tag">129.-</span></li>
+                    <li><span class="item-name">ริชเมนู (เล็ก)</span> <span class="price-tag">119.-</span></li>
+                    <li><span class="item-name">ริชเมนู (ใหญ่)</span> <span class="price-tag">129.-</span></li>
+                    <li><span class="item-name">ปั๊มฟอล <span class="item-note">เรทเยอะ +เพิ่ม</span></span> <span class="price-tag">129.-</span></li>
+                    <li><span class="item-name">เติมเกม <span class="item-note">เรทเยอะ +เพิ่ม</span></span> <span class="price-tag">129.-</span></li>
+                    <li><span class="item-name">แอพพรี <span class="item-note">เรทเยอะ +เพิ่ม</span></span> <span class="price-tag">119.-</span></li>
+                    <li><span class="item-name">เปิดปิดร้าน <span class="item-note">ป้ายเดี่ยว</span></span> <span class="price-tag">129.-</span></li>
+                    <li><span class="item-name">เปิดปิดคู่ <span class="item-note">ป้ายคู่</span></span> <span class="price-tag">169.-</span></li>
+                    <li><span class="item-name">วิธีขั้นตอน <span class="item-note">ข้อมูลเยอะ +เพิ่ม</span></span> <span class="price-tag">129.-</span></li>
+                    <li><span class="item-name">บัตรตัวแทน</span> <span class="price-tag">169.-</span></li>
+                    <li><span class="item-name">ป้ายกลุ่ม</span> <span class="price-tag">139.-</span></li>
+                    <li><span class="item-name">ป้ายกลุ่ม+กรอบ</span> <span class="price-tag">199.-</span></li>
+                </ul>
+            </div>
+
+        </div>
+
+        <!-- หมายเหตุด้านล่าง -->
+        <div class="footer-note">
+            <p>💡 <strong>หมายเหตุ:</strong> งานอื่นๆ สามารถสอบถามได้นะคะ ขึ้นอยู่กับข้อมูลของลูกค้าเลยค่ะ สามารถทำให้ได้หมดเลย <br>(ยกเว้นงานระบบที่เจาะลึกมากเกินไป)</p>
+            <p>แต่ถ้าเป็นแนว <strong>ลิงก์ไบโอ (Link in Bio)</strong> สามารถเนรมิตให้ได้หมดเลยค่า 🥰💙</p>
+            <a href="#" class="contact-btn">📸 ตัวอย่างงาน: สามารถดูได้จากอัลบั้มในเพจ Facebook เลยนะคะ ✨</a>
+        </div>
+
+    </div>
+
+</body>
+</html>
