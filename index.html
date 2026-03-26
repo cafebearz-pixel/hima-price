@@ -7,7 +7,6 @@
 <link href="https://fonts.googleapis.com/css2?family=Prompt:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 <style>
 html{background:#fff0f5;background-color:#fff0f5}
-/* เปลี่ยน font-family เป็น Prompt */
 body{margin:0;padding:0;background:#fff0f5;background-color:#fff0f5;color:#5a3d5c;font-family:'Prompt',sans-serif;min-height:100vh;-webkit-text-size-adjust:100%}
 *{box-sizing:border-box}
 #bgg{position:fixed;inset:0;z-index:0;pointer-events:none;
@@ -64,6 +63,10 @@ background:linear-gradient(90deg,transparent,#ffb6c1,#ff69b4,transparent);opacit
 .ci{font-size:26px;margin-bottom:10px;display:block;filter:drop-shadow(0 0 8px rgba(255,105,180,.3))}
 .cttl{font-size:16px;font-weight:600;color:#d63384;margin-bottom:12px}
 .cb{font-size:13px;color:#66405c;line-height:1.8}
+/* สกอร์บาร์สำหรับกล่องที่มีข้อมูลเยอะ */
+.cb::-webkit-scrollbar { width: 4px; }
+.cb::-webkit-scrollbar-track { background: transparent; }
+.cb::-webkit-scrollbar-thumb { background: rgba(255,105,180,.3); border-radius: 10px; }
 .row{display:flex;justify-content:space-between;align-items:center;padding:5px 0;border-bottom:1px dashed rgba(255,105,180,.15)}
 .row:last-child{border-bottom:none}
 /* ปุ่มราคาและป้ายกำกับ (สี่เหลี่ยมมน + โทนชมพู) */
@@ -118,7 +121,6 @@ background:radial-gradient(circle,rgba(255,105,180,.15),transparent 70%)}
 .bown{font-size:14px;color:#8a5a83;margin-bottom:18px}
 .bnum{display:block;font-size:clamp(22px,6vw,32px);font-weight:600;
 letter-spacing:3px;color:#ff1493;margin-bottom:18px}
-/* เปลี่ยน font-family ตรงปุ่มเป็น Prompt ด้วยครับ */
 .cpbtn{display:inline-flex;align-items:center;gap:8px;padding:12px 30px;border:none;border-radius:40px;cursor:pointer;
 font-family:'Prompt',sans-serif;font-size:14px;font-weight:600;color:#fff;
 background:linear-gradient(135deg,#ff758c,#ff7eb3);
@@ -180,12 +182,34 @@ visibility:hidden}
       <div class="ct"></div>
       <span class="ci">🎮</span>
       <div class="cttl">แนวออโรร่า&เพิร์ลเวฟ</div>
-      <div class="cb">
-        <div class="row"><span>ไม่เกิน 200 lines</span><span class="pt">129.-</span></div>
-        <div class="row"><span>เกิน 200 lines</span><span class="pt">139.-</span></div>
-        <div class="row"><span>เกิน 400 lines</span><span class="pt">189.-</span></div>
-        <div class="row"><span>เกิน 600 lines</span><span class="pt">249.-</span></div>
-        <div class="row"><span>แบนเนอร์ 1–2 รูป</span><span class="pt">+29.-</span></div>
+      <div class="cb" style="max-height: 260px; overflow-y: auto; padding-right: 5px;">
+        <div class="row"><span>โลโก้ร้าน</span><span class="pt">99.-</span></div>
+        <div class="row"><span>กรอบรีวิว</span><span class="pt">99.-</span></div>
+        <div class="row"><span>ป้ายบัญชี</span><span class="pt">119.-</span></div>
+        <div class="row"><span>สติ๊กเกอร์ไลน์</span><span class="pt">119.-</span></div>
+        <div class="row"><span>ริชเมนูไลน์เล็ก</span><span class="pt">119.-</span></div>
+        <div class="row"><span>ริชเมนูไลน์ใหญ่</span><span class="pt">129.-</span></div>
+        <div class="row"><span>สะสมแต้ม</span><span class="pt">119.-</span></div>
+        <div class="row"><span>แชทสลิป</span><span class="pt">119.-</span></div>
+        <div class="row"><span>สแกนไลน์</span><span class="pt">119.-</span></div>
+        <div class="row"><span>เครดิต+1</span><span class="pt">129.-</span></div>
+        <div class="row"><span>ปกเฟส ไลน์ X</span><span class="pt">129.-</span></div>
+        <div class="row"><span>ขายรหัส/ไอดี</span><span class="pt">129.-</span></div>
+        <div class="row"><span>รับแอด-ตอบแชท</span><span class="pt">129.-</span></div>
+        <div class="row"><span>ป้ายกลุ่ม</span><span class="pt">139.-</span></div>
+        <div class="row"><span>ป้ายกลุ่ม+กรอบ</span><span class="pt">199.-</span></div>
+        <div class="row"><span>เปิดปิดร้าน(เดี่ยว)</span><span class="pt">129.-</span></div>
+        <div class="row"><span>เปิดปิดร้าน(คู่)</span><span class="pt">169.-</span></div>
+        <div class="row"><span>แลกเงิน</span><span class="pt">129.-</span></div>
+        <div class="row"><span>กลางไอดี</span><span class="pt">129.-</span></div>
+        <div class="row"><span>แต่งบล็อก</span><span class="pt">129.-</span></div>
+        <div class="row"><span>หัวป้ายชีทคิว</span><span class="pt">129.-</span></div>
+        <div class="row"><span>รายละเอียด</span><span class="pt">129-159.-</span></div>
+        <div class="row"><span>วิธี/ขั้นตอน</span><span class="pt">129-159.-</span></div>
+        <div class="row"><span>ปั๊มฟอล</span><span class="pt">129-169.-</span></div>
+        <div class="row"><span>เติมเหรียญ</span><span class="pt">129-169.-</span></div>
+        <div class="row"><span>บัตรตัวแทน</span><span class="pt">169.-</span></div>
+        <div class="row"><span>งานอื่นๆ</span><span class="pt">สอบถาม</span></div>
       </div>
     </div>
     <div class="card">
@@ -283,6 +307,82 @@ visibility:hidden}
     <div class="cdesc">สอนตั้งแต่ 0 → ทำเป็นเว็บใช้งานได้จริง 🔥 ไม่ต้องมีพื้นฐาน ปูให้ครบทุกขั้นตอน มีโน้ตสรุป + เท็มเพลทสไตล์พิ้งจู 2 แบบ</div>
     <a href="https://drive.google.com/drive/folders/1fj024BhkgC1ctJeiwyZUG3USteSdzWzr" target="_blank" class="clnk">🩷 เข้าดูคอร์ส</a>
   </div>
+  <div class="sec fi" style="animation-delay:.42s">💳 ชำระเงิน</div>
+  <div class="bnk fi" style="animation-delay:.44s">
+    <div class="blbl">🏦 ธนาคารกสิกรไทย (KBANK)</div>
+    <div class="bnm">อนุสรา พงษ์ประสิทธิ์</div>
+    <div class="bown">บัญชีนี้บัญชีเดียวเท่านั้น ✅</div>
+    <span class="bnum">2221391563</span>
+    <button class="cpbtn" id="cb" onclick="cpAcc()">
+      <span id="ci2">📋</span><span id="ct2">คัดลอกเลขบัญชี</span>
+    </button>
+   
+    <div style="margin-top:22px; font-size:13px; color:#8a5a83; line-height:1.8; background:rgba(255,105,180,0.05); padding:10px; border-radius:12px; border:1px solid rgba(255,105,180,0.2);">
+      📌 รบกวนโอนแล้ว <b>แนบสลิปทุกครั้ง</b> นะคะ ✨<br>
+      <span style="color:#ff1493;">⚠️ โอนผิดต้องโอนใหม่น้า ทางร้านไม่โอนคืนทุกกรณีค่ะ 🙏💖</span>
+    </div>
+  </div>
+  <div class="sec fi" style="animation-delay:.47s">📱 ช่องทางติดต่อ</div>
+  <div class="cons fi" style="animation-delay:.49s">
+    <a href="https://www.facebook.com/profile.php?id=61554192600355" target="_blank" class="cb2 cfb">📘 Facebook</a>
+    <a href="https://lin.ee/t0qYbAl" target="_blank" class="cb2 cln">💚 LINE</a>
+    <a href="https://www.instagram.com/pinkjulie.land?igsh=eXh6eG5jZjA5ejJl" target="_blank" class="cb2 cig">🌸 Instagram</a>
+  </div>
+  <p style="text-align:center;font-size:12px;color:#9c6f8f;margin-top:30px;opacity:.8">© pinkjulieland · ตอบกลับไม่เกิน 10 นาที (มีงานประจำค่ะ 🙏)</p>
+</div>
+<div class="toast" id="toast">✅ คัดลอกเลขบัญชีแล้ว!</div>
+<script>
+// Particles (เปลี่ยนสีเป็นโทนชมพูขาว)
+(function(){
+  var pc=document.getElementById('pts');
+  var cs=['#ffb6c1','#ff69b4','#ff1493','#ffc0cb','#f8c8dc'];
+  for(var i=0;i<28;i++){
+    var el=document.createElement('div');
+    el.className='p';
+    var s=Math.random()*4+2;
+    el.style.cssText='width:'+s+'px;height:'+s+'px;background:'+cs[i%cs.length]+';left:'+(Math.random()*100)+'%;animation-duration:'+(9+Math.random()*12)+'s;animation-delay:'+(Math.random()*12)+'s;box-shadow:0 0 '+(s*3)+'px currentColor;';
+    pc.appendChild(el);
+  }
+})();
+// Copy Function
+function cpAcc(){
+  const textToCopy = '2221391563';
+ 
+  if (navigator.clipboard && window.isSecureContext) {
+      navigator.clipboard.writeText(textToCopy).then(showSuccess);
+  } else {
+      try {
+          const tempTextArea = document.createElement('textarea');
+          tempTextArea.value = textToCopy;
+          tempTextArea.style.top = "0";
+          tempTextArea.style.left = "0";
+          tempTextArea.style.position = "fixed";
+         
+          document.body.appendChild(tempTextArea);
+          tempTextArea.focus();
+          tempTextArea.select();
+          document.execCommand('copy');
+          document.body.removeChild(tempTextArea);
+          showSuccess();
+      } catch (err) {
+          console.error('Failed to copy', err);
+      }
+  }
+}
+function showSuccess() {
+    var btn=document.getElementById('cb');
+    document.getElementById('ci2').textContent='✅';
+    document.getElementById('ct2').textContent='คัดลอกแล้ว!';
+    btn.classList.add('done');
+    var t=document.getElementById('toast');
+    t.classList.add('on');
+    setTimeout(function(){
+      btn.classList.remove('done');
+      document.getElementById('ci2').textContent='📋';
+      document.getElementById('ct2').textContent='คัดลอกเลขบัญชี';
+      t.classList.remove('on');
+    },2600);
+}
 </script>
 </body>
 </html>
