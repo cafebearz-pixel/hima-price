@@ -4,10 +4,11 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>HIMAWARI</title>
-<link href="https://fonts.googleapis.com/css2?family=Mitr:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Prompt:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 <style>
 html{background:#fff0f5;background-color:#fff0f5}
-body{margin:0;padding:0;background:#fff0f5;background-color:#fff0f5;color:#5a3d5c;font-family:'Mitr',sans-serif;min-height:100vh;-webkit-text-size-adjust:100%}
+/* เปลี่ยน font-family เป็น Prompt */
+body{margin:0;padding:0;background:#fff0f5;background-color:#fff0f5;color:#5a3d5c;font-family:'Prompt',sans-serif;min-height:100vh;-webkit-text-size-adjust:100%}
 *{box-sizing:border-box}
 #bgg{position:fixed;inset:0;z-index:0;pointer-events:none;
 background:
@@ -117,11 +118,12 @@ background:radial-gradient(circle,rgba(255,105,180,.15),transparent 70%)}
 .bown{font-size:14px;color:#8a5a83;margin-bottom:18px}
 .bnum{display:block;font-size:clamp(22px,6vw,32px);font-weight:600;
 letter-spacing:3px;color:#ff1493;margin-bottom:18px}
+/* เปลี่ยน font-family ตรงปุ่มเป็น Prompt ด้วยครับ */
 .cpbtn{display:inline-flex;align-items:center;gap:8px;padding:12px 30px;border:none;border-radius:40px;cursor:pointer;
-font-family:'Mitr',sans-serif;font-size:14px;font-weight:600;color:#fff;
+font-family:'Prompt',sans-serif;font-size:14px;font-weight:600;color:#fff;
 background:linear-gradient(135deg,#ff758c,#ff7eb3);
 box-shadow:0 4px 15px rgba(255,105,180,.3);transition:all .25s;position:relative;overflow:hidden}
-.cpbtn::after{content:'';position:absolute;inset:0;background:linear-gradient(135deg,transparent 40%,rgba(255,255,255,.2))}
+.cpbtn::after{content:'absolute';inset:0;background:linear-gradient(135deg,transparent 40%,rgba(255,255,255,.2))}
 .cpbtn:hover{transform:translateY(-2px) scale(1.03);box-shadow:0 8px 20px rgba(255,105,180,.4)}
 .cpbtn:active{transform:scale(.97)}
 .cpbtn.done{background:linear-gradient(135deg,#00a860,#00d87a);box-shadow:0 4px 15px rgba(0,200,120,.3)}
