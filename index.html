@@ -24,7 +24,6 @@ body {
   background-image: radial-gradient(circle at 90% 10%, rgba(255,255,255,0.4) 0%, transparent 50%);
   overflow-x: hidden;
 }
-/* อัปเดตคลาสฟอนต์เป็น Prompt */
 .font-prompt { 
   font-family: 'Prompt', sans-serif; 
   font-weight: 400; 
@@ -103,8 +102,6 @@ body {
   50% { transform: translateY(-10px); }
   100% { transform: translateY(0px); }
 }
-
-/* Emojis Background Animations */
 @keyframes twinkle {
   0%, 100% { opacity: 0.3; transform: scale(0.8) rotate(0deg); }
   50% { opacity: 0.8; transform: scale(1.2) rotate(5deg); }
@@ -121,24 +118,6 @@ body {
   border-radius: 1rem;
   padding: 0.5rem;
   position: relative;
-}
-.link-item {
-  display: inline-block;
-  background: #fff0f3;
-  color: var(--text-light);
-  padding: 0.4rem 1rem;
-  border-radius: 0.75rem;
-  font-size: 0.9rem;
-  margin-bottom: 0.5rem;
-  margin-right: 0.5rem;
-  transition: all 0.2s;
-  text-decoration: none;
-  border: 1px solid #ffdce3;
-}
-.link-item:hover {
-  background: var(--pink-accent);
-  color: white;
-  transform: scale(1.02);
 }
 .contact-btn {
   background-color: var(--pink-accent);
@@ -318,37 +297,83 @@ body {
             </div>
             <span class="font-eng font-bold text-[#ff8fa3] tracking-widest text-xs">PORTFOLIO</span>
           </div>
-          <div class="p-5 font-prompt text-sm">
-            <p class="font-bold mb-3 text-[#b86b7d] flex items-center"><svg class="w-5 h-5 text-yellow-500 mr-2" viewBox="0 0 24 24" fill="currentColor"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg> ผลงานร้านฮิมาวาริ คลิก</p>
-            <div class="mb-4">
-              <span class="bg-[#ffe8d6] text-[#b5734c] px-2 py-1 rounded text-xs font-bold mb-2 inline-block">แนวน่ารัก</span>
-              <div class="flex flex-wrap gap-1">
-                <a href="https://drive.google.com/drive/folders/1iCJoITdkAIy0YyIN2cGP2oY_boskefSB" target="_blank" class="link-item">ตกแต่งของตกแต่งเรียบๆและใช้ฟอนต์ลายมือ</a>
+          <div class="p-4 font-prompt text-sm space-y-3">
+            <p class="font-bold mb-2 text-[#b86b7d] flex items-center pb-2 border-b border-dashed border-pink-200">
+              <svg class="w-5 h-5 text-yellow-500 mr-2" viewBox="0 0 24 24" fill="currentColor"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
+              หมวดหมู่ผลงานร้านฮิมาวาริ
+            </p>
+
+            <div class="bg-[#fff0f3] border border-[#ffdce3] rounded-xl p-3 hover:shadow-md transition-shadow">
+              <div class="flex justify-between items-center mb-1">
+                <h4 class="font-bold text-[#b86b7d] flex items-center gap-1.5">
+                  <span class="text-xl">🎀</span> แนวน่ารัก
+                </h4>
+              </div>
+              <p class="text-xs text-[#b07d89] mb-3 leading-relaxed">ตกแต่งเรียบๆเน้นความสดใสใช้ฟอนต์ลายมือน่ารักๆ</p>
+              <a href="https://drive.google.com/drive/folders/1iCJoITdkAIy0YyIN2cGP2oY_boskefSB" target="_blank" class="flex items-center justify-center w-full bg-white hover:bg-[#ff9eaa] hover:text-white text-[#b86b7d] border border-[#ffdce3] text-xs font-bold py-1.5 rounded-lg transition-colors">
+                ดูผลงานคลิก ✦
+              </a>
+            </div>
+
+            <div class="bg-[#f5f0ff] border border-[#eadaff] rounded-xl p-3 hover:shadow-md transition-shadow">
+              <div class="flex justify-between items-center mb-1">
+                <h4 class="font-bold text-[#9d7bb0] flex items-center gap-1.5">
+                  <span class="text-xl">👑</span> แนวออโรร่า
+                </h4>
+              </div>
+              <p class="text-xs text-[#a084ad] mb-3 leading-relaxed">มีความเป็นเจ้าหญิงตกแต่งกุหลาบแสงเหนือใช้ฟอนต์หัวมน</p>
+              <a href="https://drive.google.com/drive/folders/1lHXXeLsHyFte6gBxzd8fBYZ9oRCMtE8a" target="_blank" class="flex items-center justify-center w-full bg-white hover:bg-[#d4bcf0] hover:text-white text-[#9d7bb0] border border-[#eadaff] text-xs font-bold py-1.5 rounded-lg transition-colors">
+                ดูผลงานคลิก ✦
+              </a>
+            </div>
+
+            <div class="bg-[#eff8ff] border border-[#cce8ff] rounded-xl p-3 hover:shadow-md transition-shadow">
+              <div class="flex justify-between items-center mb-1">
+                <h4 class="font-bold text-[#6a95b5] flex items-center gap-1.5">
+                  <span class="text-xl">🐚</span> แนวเพิร์ลเวฟ
+                  <span class="bg-red-400 text-white text-[10px] px-2 py-0.5 rounded-full ml-1 animate-pulse">ขายดี🔥</span>
+                </h4>
+              </div>
+              <p class="text-xs text-[#82a4bf] mb-3 leading-relaxed">มีความฟุ้งละมุนเป็นคลื่นเวฟตกแต่งไข่มุกวาวใช้ฟอนต์หัวมน</p>
+              <a href="https://drive.google.com/drive/folders/1lWey7mwXS9jjsZVfM_7HI8ijkdxYqRbG" target="_blank" class="flex items-center justify-center w-full bg-white hover:bg-[#9ccbed] hover:text-white text-[#6a95b5] border border-[#cce8ff] text-xs font-bold py-1.5 rounded-lg transition-colors">
+                ดูผลงานคลิก ✦
+              </a>
+            </div>
+
+            <div class="bg-[#fff6eb] border border-[#ffe0bd] rounded-xl p-3 hover:shadow-md transition-shadow">
+              <div class="flex justify-between items-center mb-1">
+                <h4 class="font-bold text-[#b58c5a] flex items-center gap-1.5">
+                  <span class="text-xl">📈</span> แนว ADS
+                </h4>
+              </div>
+              <p class="text-xs text-[#b8986f] mb-3 leading-relaxed">ทางการจริงจังเพิ่มความน่าเชื่อถือเหมาะกับลงเพจขายสินค้า</p>
+              <a href="https://drive.google.com/drive/folders/1CLxQT8kMLcJZEfde_wL5GodRRgqV9MLV" target="_blank" class="flex items-center justify-center w-full bg-white hover:bg-[#ffcdb2] hover:text-white text-[#b58c5a] border border-[#ffe0bd] text-xs font-bold py-1.5 rounded-lg transition-colors">
+                ดูผลงานคลิก ✦
+              </a>
+            </div>
+
+            <div class="grid grid-cols-2 gap-3 mt-4">
+              <div class="bg-gray-50 border border-gray-200 rounded-xl p-3 flex flex-col justify-between hover:shadow-md transition-shadow">
+                <div>
+                  <h4 class="font-bold text-gray-600 mb-1 text-xs flex items-center gap-1"><span class="text-sm">🖼️</span> โลโก้ & ลายน้ำ</h4>
+                  <p class="text-[10px] text-gray-500 mb-2">เลือกแบบที่ชอบแล้วแจ้งรับได้เลย</p>
+                </div>
+                <a href="https://drive.google.com/drive/folders/11rVarBy_nS83IpsclyYLucJuSoluyGOa" target="_blank" class="flex items-center justify-center w-full bg-white hover:bg-gray-200 text-gray-600 border border-gray-200 text-xs font-bold py-1.5 rounded-lg transition-colors">
+                  ดูผลงาน
+                </a>
+              </div>
+
+              <div class="bg-[#fff0f4] border border-[#ffdce3] rounded-xl p-3 flex flex-col justify-between hover:shadow-md transition-shadow">
+                <div>
+                  <h4 class="font-bold text-[#b86b7d] mb-1 text-xs flex items-center gap-1"><span class="text-sm">🛒</span> ป้ายสำเร็จ (CF)</h4>
+                  <p class="text-[10px] text-[#b07d89] mb-2">พร้อมเปลี่ยนข้อมูล รอรับใน 24 ชม.</p>
+                </div>
+                <a href="https://drive.google.com/drive/folders/1T5DQC8dY22KFPtSL9I-ptTTFW19v2Hon" target="_blank" class="flex items-center justify-center w-full bg-white hover:bg-[#ff9eaa] hover:text-white text-[#b86b7d] border border-[#ffdce3] text-xs font-bold py-1.5 rounded-lg transition-colors">
+                  ดูผลงาน
+                </a>
               </div>
             </div>
-            <div class="mb-4">
-              <span class="bg-[#8c5a65] text-white px-2 py-1 rounded text-xs font-bold mb-2 inline-block">โทนมืด</span>
-              <div class="flex flex-wrap gap-1">
-                <a href="https://pinkdark.cozyw75.workers.dev/" target="_blank" class="link-item">V.1</a>
-                <a href="https://pinkblue.cozyw75.workers.dev/" target="_blank" class="link-item">V.2</a>
-                <a href="https://dd3.cozyw75.workers.dev/" target="_blank" class="link-item">V.3</a>
-                <a href="https://jugame.cozyw75.workers.dev/" target="_blank" class="link-item">V.4</a>
-                <a href="https://moonpink.cozyw75.workers.dev/" target="_blank" class="link-item">V.5 พระจันทร์</a>
-                <a href="https://shiny-thunder-d71e.cozyw75.workers.dev/" target="_blank" class="link-item">V.6 start</a>
-                <a href="https://blue.cozyw75.workers.dev/" target="_blank" class="link-item">V.7 สีฟ้า</a>
-                <a href="https://lix.cozyw75.workers.dev/" target="_blank" class="link-item">V.8 ดูดวง</a>
-              </div>
-            </div>
-            <div>
-              <span class="bg-[#ffb5c6] text-white px-2 py-1 rounded text-xs font-bold mb-2 inline-block">พาสเทล</span>
-              <div class="flex flex-wrap gap-1">
-                <a href="https://wish-uwu.cozyw75.workers.dev/" target="_blank" class="link-item">V.1</a>
-                <a href="https://regal-torrone-46c94f.netlify.app/" target="_blank" class="link-item">V.2</a>
-                <a href="https://cawaei.cozyw75.workers.dev/" target="_blank" class="link-item">V.3 สติกเกอร์</a>
-                <a href="https://meww.cozyw75.workers.dev/" target="_blank" class="link-item">V.4 แมวดำ</a>
-                <a href="https://duduw.cozyw75.workers.dev/" target="_blank" class="link-item">V.5 เปเปอร์</a>
-              </div>
-            </div>
+
           </div>
         </div>
       </div>
