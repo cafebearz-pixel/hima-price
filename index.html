@@ -13,19 +13,78 @@
       font-family: "Prompt", sans-serif;
     }
 
+    :root {
+      --main: #087673;
+      --yellow: #ffc83d;
+      --cream: #fffdf8;
+      --soft: #f6f6f6;
+      --text: #243534;
+      --pink: #ff6f9f;
+      --danger: #e74c3c;
+      --radius: 22px;
+    }
+
     body {
       margin: 0;
       background: linear-gradient(180deg, #fff8e8, #eefbf7);
-      color: #243534;
+      color: var(--text);
+    }
+
+    .page {
+      width: 100%;
+      min-height: 100vh;
+      display: flex;
+      justify-content: center;
     }
 
     .app {
-      max-width: 430px;
-      margin: auto;
+      width: 100%;
+      max-width: 1200px;
       min-height: 100vh;
       background: #fffdf8;
       padding: 18px;
-      padding-bottom: 90px;
+      padding-bottom: 95px;
+    }
+
+    .layout {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 16px;
+    }
+
+    @media (min-width: 768px) {
+      .app {
+        padding: 28px;
+        padding-bottom: 110px;
+      }
+
+      .layout {
+        grid-template-columns: 1fr 1fr;
+        align-items: start;
+      }
+
+      .full {
+        grid-column: 1 / -1;
+      }
+    }
+
+    @media (min-width: 1024px) {
+      .app {
+        border-left: 1px solid #eee;
+        border-right: 1px solid #eee;
+      }
+
+      .layout {
+        grid-template-columns: 1fr 1fr 1fr;
+      }
+
+      .wide {
+        grid-column: span 2;
+      }
+
+      .full {
+        grid-column: 1 / -1;
+      }
     }
 
     .topbar {
@@ -33,12 +92,14 @@
       justify-content: space-between;
       align-items: center;
       margin-bottom: 18px;
+      gap: 12px;
     }
 
     .logo {
-      font-size: 30px;
+      font-size: clamp(28px, 4vw, 38px);
       font-weight: 700;
       color: #07716f;
+      line-height: 1;
     }
 
     .logo span {
@@ -48,7 +109,7 @@
     .sub {
       font-size: 13px;
       color: #777;
-      margin-top: -6px;
+      margin-top: 4px;
     }
 
     .icon-btn {
@@ -60,6 +121,7 @@
       display: grid;
       place-items: center;
       font-size: 20px;
+      flex-shrink: 0;
     }
 
     .hero {
@@ -71,6 +133,7 @@
       justify-content: space-between;
       align-items: center;
       overflow: hidden;
+      min-height: 180px;
     }
 
     .hero h1 {
@@ -92,10 +155,31 @@
       font-size: 15px;
     }
 
+    button:active {
+      transform: scale(.98);
+    }
+
     .primary {
       background: #087673;
       color: white;
       box-shadow: 0 8px 16px #08767333;
+    }
+
+    .secondary {
+      background: #f2fbf6;
+      color: #087673;
+      border: 1px solid #d8efe6;
+    }
+
+    .danger {
+      background: #ffecec;
+      color: #c0392b;
+    }
+
+    .ghost {
+      background: white;
+      color: #087673;
+      border: 1px solid #d8efe6;
     }
 
     .green {
@@ -118,6 +202,11 @@
       color: #2476ac;
     }
 
+    .pink {
+      background: #ffe9f1;
+      color: #d94b7d;
+    }
+
     .card {
       background: white;
       border: 1px solid #eeeeee;
@@ -131,6 +220,10 @@
       font-size: 18px;
       font-weight: 700;
       margin-bottom: 14px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 8px;
     }
 
     .queue-box {
@@ -170,15 +263,14 @@
 
     .steps {
       display: flex;
-      justify-content: space-between;
       align-items: center;
-      gap: 5px;
+      gap: 8px;
       overflow-x: auto;
       padding-bottom: 4px;
     }
 
     .step {
-      min-width: 62px;
+      min-width: 66px;
       text-align: center;
       font-size: 11px;
       color: #666;
@@ -193,8 +285,16 @@
       background: #f4f4f4;
       display: grid;
       place-items: center;
-      font-size: 23px;
+      font-size: 0;
       border: 1px solid #e5e5e5;
+    }
+
+    .step-icon svg {
+      width: 22px;
+      height: 22px;
+      stroke: currentColor;
+      stroke-width: 2;
+      fill: none;
     }
 
     .step.active .step-icon {
@@ -214,6 +314,16 @@
       gap: 8px;
     }
 
+    @media (max-width: 430px) {
+      .search-box {
+        flex-direction: column;
+      }
+
+      .search-box button {
+        width: 100%;
+      }
+    }
+
     input, select, textarea {
       width: 100%;
       padding: 13px;
@@ -224,10 +334,26 @@
       background: #fff;
     }
 
+    textarea {
+      min-height: 80px;
+      resize: vertical;
+    }
+
+    input:focus, select:focus, textarea:focus {
+      border-color: #087673;
+      box-shadow: 0 0 0 3px #08767318;
+    }
+
     .quick-grid {
       display: grid;
       grid-template-columns: repeat(4, 1fr);
       gap: 10px;
+    }
+
+    @media (max-width: 360px) {
+      .quick-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
     }
 
     .quick {
@@ -237,13 +363,6 @@
       border: 1px solid #eee;
       background: #fff;
       font-size: 12px;
-    }
-
-    .quick svg {
-      width: 28px;
-      height: 28px;
-      margin-bottom: 6px;
-      stroke: #087673;
     }
 
     .work-list {
@@ -277,7 +396,7 @@
       display: flex;
       justify-content: space-between;
       gap: 10px;
-      align-items: center;
+      align-items: flex-start;
       margin-bottom: 10px;
     }
 
@@ -286,11 +405,13 @@
       border-radius: 999px;
       font-size: 12px;
       font-weight: 600;
+      white-space: nowrap;
     }
 
     .detail-row {
       display: flex;
       justify-content: space-between;
+      gap: 12px;
       border-bottom: 1px solid #f1f1f1;
       padding: 10px 0;
       font-size: 14px;
@@ -298,6 +419,11 @@
 
     .detail-row span:first-child {
       color: #777;
+      flex-shrink: 0;
+    }
+
+    .detail-row b {
+      text-align: right;
     }
 
     .admin-panel {
@@ -314,7 +440,7 @@
     }
 
     .bottom-nav {
-      max-width: 430px;
+      max-width: 1200px;
       margin: auto;
       position: fixed;
       left: 0;
@@ -327,6 +453,7 @@
       padding: 8px 8px 12px;
       border-radius: 22px 22px 0 0;
       box-shadow: 0 -8px 24px rgba(0,0,0,.06);
+      z-index: 20;
     }
 
     .nav-item {
@@ -376,166 +503,313 @@
 
     .admin-actions {
       display: grid;
-      grid-template-columns: repeat(2, 1fr);
-      gap: 10px;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 8px;
       margin-top: 12px;
+    }
+
+    @media (max-width: 480px) {
+      .admin-actions {
+        grid-template-columns: 1fr;
+      }
     }
 
     .tiny {
       font-size: 12px;
       color: #777;
     }
+
+    .admin-lock {
+      display: none;
+    }
+
+    .admin-lock.active {
+      display: block;
+    }
+
+    .admin-content {
+      display: none;
+    }
+
+    .admin-content.active {
+      display: block;
+    }
+
+    .modal-backdrop {
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,.28);
+      display: none;
+      align-items: center;
+      justify-content: center;
+      padding: 18px;
+      z-index: 50;
+    }
+
+    .modal-backdrop.active {
+      display: flex;
+    }
+
+    .modal {
+      background: white;
+      border-radius: 24px;
+      padding: 20px;
+      width: 100%;
+      max-width: 520px;
+      box-shadow: 0 20px 50px rgba(0,0,0,.18);
+    }
+
+    .modal-title {
+      font-size: 20px;
+      font-weight: 700;
+      margin-bottom: 14px;
+    }
+
+    .modal-actions {
+      display: flex;
+      gap: 10px;
+      margin-top: 14px;
+    }
+
+    .modal-actions button {
+      flex: 1;
+    }
+
+    .summary-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 10px;
+    }
+
+    @media (max-width: 640px) {
+      .summary-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+
+    .summary-card {
+      padding: 14px;
+      border-radius: 18px;
+      background: #fffdf8;
+      border: 1px solid #eee;
+      text-align: center;
+    }
+
+    .summary-card b {
+      font-size: 28px;
+      display: block;
+      color: #087673;
+    }
+
+    .toolbar {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+
+    .toolbar button {
+      padding: 10px 12px;
+      font-size: 13px;
+    }
+
+    .empty {
+      padding: 18px;
+      text-align: center;
+      color: #777;
+      border: 1px dashed #ddd;
+      border-radius: 18px;
+      background: #fffdf8;
+    }
   </style>
 </head>
 
 <body>
-  <div class="app">
+  <div class="page">
+    <div class="app">
 
-    <div class="topbar">
-      <div>
-        <div class="logo">Himawari <span>🌻</span></div>
-        <div class="sub">รับออกแบบป้ายครบวงจร</div>
-      </div>
-      <div class="icon-btn">☰</div>
-    </div>
-
-    <div class="mode-switch">
-      <button id="guestBtn" class="active" onclick="switchMode('guest')">Guest</button>
-      <button id="adminBtn" onclick="switchMode('admin')">Admin</button>
-    </div>
-
-    <!-- GUEST -->
-    <section id="guestPanel" class="guest-panel active">
-
-      <div class="hero">
+      <div class="topbar full">
         <div>
-          <h1>ยินดีต้อนรับ!</h1>
-          <p>เช็กคิวงานและสถานะงาน<br>ได้ตลอด 24 ชม.</p>
-          <button class="primary">เช็กสถานะเลย</button>
+          <div class="logo">Himawari <span>🌻</span></div>
+          <div class="sub">รับออกแบบป้ายครบวงจร</div>
         </div>
-        <div style="font-size:70px;">👩‍🎨</div>
+        <div class="icon-btn">☰</div>
       </div>
 
-      <div class="card">
-        <div class="card-title">คิวงานตอนนี้</div>
-        <div class="queue-box">
-          <div class="queue-item">
-            <small>คิวงานก่อนหน้า</small>
-            <div class="queue-num">12</div>
-            <small>คิว</small>
+      <div class="mode-switch full">
+        <button id="guestBtn" class="active" onclick="switchMode('guest')">Guest</button>
+        <button id="adminBtn" onclick="switchMode('admin')">Admin</button>
+      </div>
+
+      <!-- GUEST -->
+      <section id="guestPanel" class="guest-panel active">
+        <div class="layout">
+
+          <div class="hero wide">
+            <div>
+              <h1>ยินดีต้อนรับ!</h1>
+              <p>เช็กคิวงานและสถานะงาน<br>ได้ตลอด 24 ชม.</p>
+              <button class="primary" onclick="document.getElementById('searchCode').focus()">เช็กสถานะเลย</button>
+            </div>
+            <div style="font-size:70px;">👩‍🎨</div>
           </div>
-          <div class="queue-item">
-            <small>คิวที่ว่าง</small>
-            <div class="queue-num">3</div>
-            <small>คิว</small>
+
+          <div class="card">
+            <div class="card-title">คิวงานตอนนี้</div>
+            <div class="queue-box">
+              <div class="queue-item">
+                <small>คิวงานรอดำเนินการ</small>
+                <div class="queue-num" id="waitingCount">0</div>
+                <small>คิว</small>
+              </div>
+              <div class="queue-item">
+                <small>คิวที่ว่าง</small>
+                <div class="queue-num" id="freeCount">0</div>
+                <small>คิว</small>
+              </div>
+            </div>
+            <div class="tiny" id="lastUpdateText">อัปเดตล่าสุด -</div>
           </div>
+
+          <div class="card wide">
+            <div class="card-title">ขั้นตอนการทำงาน</div>
+            <div id="defaultSteps"></div>
+          </div>
+
+          <div class="card wide">
+            <div class="card-title">เช็กสถานะงานของคุณ</div>
+            <div class="search-box">
+              <input id="searchCode" placeholder="กรอกหมายเลขออเดอร์ เช่น HMW-240515">
+              <button class="primary" onclick="searchOrder()">ค้นหา</button>
+            </div>
+          </div>
+
+          <div id="resultBox" class="wide"></div>
+
+          <div class="card wide">
+            <div class="quick-grid">
+              <div class="quick">💸<br>แจ้งชำระเงิน</div>
+              <div class="quick">💬<br>สอบถามแอดมิน</div>
+              <div class="quick">🖼️<br>ผลงานของเรา</div>
+              <div class="quick">❔<br>คำถามที่พบบ่อย</div>
+            </div>
+          </div>
+
+          <div class="card wide">
+            <div class="card-title">ผลงานล่าสุด</div>
+            <div class="work-list">
+              <div class="work">Moonlight<br>Cafe</div>
+              <div class="work">บ้านฟ้าใส<br>Clinic</div>
+              <div class="work">Glow<br>Studio</div>
+            </div>
+          </div>
+
+          <div class="card green">
+            <b>มีคำถาม? ทักหาเราได้เลย</b>
+            <p class="tiny">ทีมงานพร้อมให้บริการทุกวัน 9:00 - 18:00 น.</p>
+          </div>
+
         </div>
-        <div class="tiny">อัปเดตล่าสุด 10:30 น.</div>
-      </div>
+      </section>
 
-      <div class="card">
-        <div class="card-title">ขั้นตอนการทำงาน</div>
-        <div class="steps">
-          <div class="step done">
-            <div class="step-icon">⏳</div>
-            ยังไม่ถึงคิว
-          </div>
-          <div class="step active">
-            <div class="step-icon">✏️</div>
-            กำลังทำ
-          </div>
-          <div class="step">
-            <div class="step-icon">🔍</div>
-            เช็คงาน
-          </div>
-          <div class="step">
-            <div class="step-icon">📝</div>
-            แก้ไขงาน
-          </div>
-          <div class="step">
-            <div class="step-icon">➤</div>
-            ส่งงานแล้ว
-          </div>
-        </div>
-      </div>
+      <!-- ADMIN -->
+      <section id="adminPanel" class="admin-panel">
 
-      <div class="card">
-        <div class="card-title">เช็กสถานะงานของคุณ</div>
-        <div class="search-box">
-          <input id="searchCode" placeholder="กรอกหมายเลขออเดอร์ เช่น HMW-240515">
-          <button class="primary" onclick="searchOrder()">ค้นหา</button>
-        </div>
-      </div>
-
-      <div id="resultBox"></div>
-
-      <div class="card">
-        <div class="quick-grid">
-          <div class="quick">💸<br>แจ้งชำระเงิน</div>
-          <div class="quick">💬<br>สอบถามแอดมิน</div>
-          <div class="quick">🖼️<br>ผลงานของเรา</div>
-          <div class="quick">❔<br>คำถามที่พบบ่อย</div>
-        </div>
-      </div>
-
-      <div class="card">
-        <div class="card-title">ผลงานล่าสุด</div>
-        <div class="work-list">
-          <div class="work">Moonlight<br>Cafe</div>
-          <div class="work">บ้านฟ้าใส<br>Clinic</div>
-          <div class="work">Glow<br>Studio</div>
-        </div>
-      </div>
-
-      <div class="card green">
-        <b>มีคำถาม? ทักหาเราได้เลย</b>
-        <p class="tiny">ทีมงานพร้อมให้บริการทุกวัน 9:00 - 18:00 น.</p>
-      </div>
-    </section>
-
-    <!-- ADMIN -->
-    <section id="adminPanel" class="admin-panel">
-
-      <div class="card">
-        <div class="card-title">ภาพรวมวันนี้</div>
-        <div class="queue-box">
-          <div class="queue-item">
-            <small>ออเดอร์ทั้งหมด</small>
-            <div class="queue-num">15</div>
-            <small>งาน</small>
-          </div>
-          <div class="queue-item">
-            <small>คิวว่าง</small>
-            <div class="queue-num">3</div>
-            <small>คิว</small>
+        <div id="adminLock" class="admin-lock active">
+          <div class="card" style="max-width:520px;margin:auto;">
+            <div class="card-title">เข้าสู่ระบบ Admin 🔐</div>
+            <div class="form-grid">
+              <input id="adminPass" type="password" placeholder="กรอกรหัส Admin">
+              <button class="primary" onclick="loginAdmin()">เข้าสู่ระบบ</button>
+              <button class="ghost" onclick="switchMode('guest')">กลับหน้า Guest</button>
+              <p class="tiny">รหัสสำหรับทดสอบ: 2001</p>
+            </div>
           </div>
         </div>
-      </div>
 
-      <div class="card">
-        <div class="card-title">เพิ่มออเดอร์ใหม่</div>
-        <div class="form-grid">
-          <input id="newCode" placeholder="เลขออเดอร์ เช่น HMW-240516">
-          <input id="newCustomer" placeholder="ชื่อลูกค้า / ร้าน">
-          <input id="newType" placeholder="ประเภทงาน เช่น ป้ายกล่องไฟ">
-          <select id="newStatus">
-            <option>ยังไม่ถึงคิว</option>
-            <option>กำลังทำ</option>
-            <option>เช็คงาน</option>
-            <option>แก้ไขงาน</option>
-            <option>ส่งงานแล้ว</option>
-          </select>
-          <button class="primary" onclick="addOrder()">บันทึกออเดอร์</button>
+        <div id="adminContent" class="admin-content">
+          <div class="layout">
+
+            <div class="card full">
+              <div class="card-title">
+                ภาพรวมวันนี้
+                <div class="toolbar">
+                  <button class="secondary" onclick="openAddModal()">+ เพิ่มออเดอร์</button>
+                  <button class="ghost" onclick="logoutAdmin()">ออกจากระบบ</button>
+                </div>
+              </div>
+
+              <div class="summary-grid">
+                <div class="summary-card">
+                  <small>ทั้งหมด</small>
+                  <b id="totalOrders">0</b>
+                  <small>งาน</small>
+                </div>
+                <div class="summary-card">
+                  <small>รอดำเนินการ</small>
+                  <b id="adminWaitingCount">0</b>
+                  <small>คิว</small>
+                </div>
+                <div class="summary-card">
+                  <small>กำลังทำ</small>
+                  <b id="adminDoingCount">0</b>
+                  <small>งาน</small>
+                </div>
+                <div class="summary-card">
+                  <small>คิวว่าง</small>
+                  <b id="adminFreeCount">0</b>
+                  <small>คิว</small>
+                </div>
+              </div>
+            </div>
+
+            <div class="card wide">
+              <div class="card-title">เพิ่มออเดอร์ใหม่</div>
+              <div class="form-grid">
+                <input id="newCode" placeholder="เลขออเดอร์ เช่น HMW-240516">
+                <input id="newCustomer" placeholder="ชื่อลูกค้า / ร้าน">
+                <input id="newType" placeholder="ประเภทงาน เช่น ป้ายกล่องไฟ">
+                <input id="newQueue" type="number" placeholder="ลำดับคิว เช่น 12">
+                <select id="newStatus">
+                  <option>ยังไม่ถึงคิว</option>
+                  <option>กำลังทำ</option>
+                  <option>เช็คงาน</option>
+                  <option>แก้ไขงาน</option>
+                  <option>ส่งงานแล้ว</option>
+                </select>
+                <textarea id="newNote" placeholder="หมายเหตุ เช่น รอไฟล์ / ลูกค้าแก้สี / นัดส่งงาน"></textarea>
+                <button class="primary" onclick="addOrder()">บันทึกออเดอร์</button>
+              </div>
+            </div>
+
+            <div class="card">
+              <div class="card-title">ตั้งค่าคิว</div>
+              <div class="form-grid">
+                <input id="maxQueueInput" type="number" placeholder="จำนวนคิวที่รับได้ทั้งหมด">
+                <button class="secondary" onclick="saveQueueSetting()">บันทึกจำนวนคิว</button>
+                <p class="tiny">ระบบจะคำนวณคิวว่างจากจำนวนคิวทั้งหมด ลบงานที่ยังไม่ส่งงาน</p>
+              </div>
+            </div>
+
+            <div class="card full">
+              <div class="card-title">
+                งานทั้งหมด
+                <div class="toolbar">
+                  <button class="ghost" onclick="filterStatus('ทั้งหมด')">ทั้งหมด</button>
+                  <button class="yellow" onclick="filterStatus('ยังไม่ถึงคิว')">ยังไม่ถึงคิว</button>
+                  <button class="yellow" onclick="filterStatus('กำลังทำ')">กำลังทำ</button>
+                  <button class="blue" onclick="filterStatus('เช็คงาน')">เช็คงาน</button>
+                  <button class="purple" onclick="filterStatus('แก้ไขงาน')">แก้ไขงาน</button>
+                  <button class="green" onclick="filterStatus('ส่งงานแล้ว')">ส่งแล้ว</button>
+                </div>
+              </div>
+              <div id="adminOrders"></div>
+            </div>
+
+          </div>
         </div>
-      </div>
+      </section>
 
-      <div class="card">
-        <div class="card-title">งานที่กำลังดำเนินการ</div>
-        <div id="adminOrders"></div>
-      </div>
-
-    </section>
-
+    </div>
   </div>
 
   <div class="bottom-nav">
@@ -547,7 +821,7 @@
       <svg fill="none" viewBox="0 0 24 24"><path d="M8 6h13M8 12h13M8 18h13M3 6h.01M3 12h.01M3 18h.01" stroke-width="2"/></svg>
       ออเดอร์
     </div>
-    <div class="nav-item">
+    <div class="nav-item" onclick="adminLoggedIn ? openAddModal() : switchMode('admin')">
       <svg fill="none" viewBox="0 0 24 24"><path d="M12 5v14M5 12h14" stroke-width="2"/></svg>
       เพิ่ม
     </div>
@@ -561,30 +835,45 @@
     </div>
   </div>
 
+  <!-- EDIT MODAL -->
+  <div class="modal-backdrop" id="editModal">
+    <div class="modal">
+      <div class="modal-title" id="modalTitle">แก้ไขออเดอร์</div>
+
+      <div class="form-grid">
+        <input id="editCode" placeholder="เลขออเดอร์">
+        <input id="editCustomer" placeholder="ชื่อลูกค้า / ร้าน">
+        <input id="editType" placeholder="ประเภทงาน">
+        <input id="editQueue" type="number" placeholder="ลำดับคิว">
+        <select id="editStatus">
+          <option>ยังไม่ถึงคิว</option>
+          <option>กำลังทำ</option>
+          <option>เช็คงาน</option>
+          <option>แก้ไขงาน</option>
+          <option>ส่งงานแล้ว</option>
+        </select>
+        <textarea id="editNote" placeholder="หมายเหตุ"></textarea>
+      </div>
+
+      <div class="modal-actions">
+        <button class="ghost" onclick="closeEditModal()">ยกเลิก</button>
+        <button class="primary" onclick="saveEditOrder()">บันทึก</button>
+      </div>
+    </div>
+  </div>
+
   <script>
-    let orders = [
-      {
-        code: "HMW-240515",
-        customer: "ร้านกาแฟ Slow Bar",
-        type: "ป้ายกล่องไฟ 120 x 60 ซม.",
-        status: "กำลังทำ",
-        queue: 12
-      },
-      {
-        code: "HMW-240514",
-        customer: "ร้านอาหารบ้านสวน",
-        type: "ป้ายหน้าร้าน",
-        status: "เช็คงาน",
-        queue: 11
-      },
-      {
-        code: "HMW-240513",
-        customer: "The Chic",
-        type: "ป้ายไวนิล",
-        status: "แก้ไขงาน",
-        queue: 10
-      }
-    ];
+    const ADMIN_PASSWORD = "2001";
+    const STORAGE_KEY = "himawari_orders_v2";
+    const SETTINGS_KEY = "himawari_settings_v2";
+
+    let adminLoggedIn = false;
+    let currentFilter = "ทั้งหมด";
+    let editingIndex = null;
+
+    let settings = loadSettings();
+
+    let orders = loadOrders();
 
     const statusColors = {
       "ยังไม่ถึงคิว": "yellow",
@@ -594,6 +883,64 @@
       "ส่งงานแล้ว": "green"
     };
 
+    const stepSvg = {
+      "ยังไม่ถึงคิว": `<svg viewBox="0 0 24 24"><path d="M6 2h12M6 22h12M8 2c0 5 8 5 8 10s-8 5-8 10M16 2c0 5-8 5-8 10s8 5 8 10"/></svg>`,
+      "กำลังทำ": `<svg viewBox="0 0 24 24"><path d="M12 20h9"/><path d="M16.5 3.5a2.1 2.1 0 0 1 3 3L7 19l-4 1 1-4 12.5-12.5z"/></svg>`,
+      "เช็คงาน": `<svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.5-3.5"/></svg>`,
+      "แก้ไขงาน": `<svg viewBox="0 0 24 24"><path d="M4 20h16"/><path d="M14 4l6 6-9 9H5v-6l9-9z"/></svg>`,
+      "ส่งงานแล้ว": `<svg viewBox="0 0 24 24"><path d="M22 2L11 13"/><path d="M22 2l-7 20-4-9-9-4 20-7z"/></svg>`
+    };
+
+    function defaultOrders() {
+      return [
+        {
+          code: "HMW-240515",
+          customer: "ร้านกาแฟ Slow Bar",
+          type: "ป้ายกล่องไฟ 120 x 60 ซม.",
+          status: "กำลังทำ",
+          queue: 12,
+          note: "กำลังออกแบบแบบร่างแรก"
+        },
+        {
+          code: "HMW-240514",
+          customer: "ร้านอาหารบ้านสวน",
+          type: "ป้ายหน้าร้าน",
+          status: "เช็คงาน",
+          queue: 11,
+          note: "รอลูกค้าเช็กความถูกต้อง"
+        },
+        {
+          code: "HMW-240513",
+          customer: "The Chic",
+          type: "ป้ายไวนิล",
+          status: "แก้ไขงาน",
+          queue: 10,
+          note: "แก้สีตัวอักษรตามที่แจ้ง"
+        }
+      ];
+    }
+
+    function loadOrders() {
+      const saved = localStorage.getItem(STORAGE_KEY);
+      if (saved) return JSON.parse(saved);
+      return defaultOrders();
+    }
+
+    function saveOrders() {
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(orders));
+      updateAll();
+    }
+
+    function loadSettings() {
+      const saved = localStorage.getItem(SETTINGS_KEY);
+      if (saved) return JSON.parse(saved);
+      return { maxQueue: 15 };
+    }
+
+    function saveSettings() {
+      localStorage.setItem(SETTINGS_KEY, JSON.stringify(settings));
+    }
+
     function switchMode(mode) {
       document.getElementById("guestPanel").classList.toggle("active", mode === "guest");
       document.getElementById("adminPanel").classList.toggle("active", mode === "admin");
@@ -601,7 +948,87 @@
       document.getElementById("guestBtn").classList.toggle("active", mode === "guest");
       document.getElementById("adminBtn").classList.toggle("active", mode === "admin");
 
+      if (mode === "admin") {
+        if (adminLoggedIn) {
+          showAdminContent();
+        } else {
+          showAdminLock();
+          setTimeout(() => document.getElementById("adminPass").focus(), 100);
+        }
+      }
+
       renderAdminOrders();
+    }
+
+    function loginAdmin() {
+      const pass = document.getElementById("adminPass").value.trim();
+
+      if (pass !== ADMIN_PASSWORD) {
+        alert("รหัสไม่ถูกต้อง");
+        return;
+      }
+
+      adminLoggedIn = true;
+      document.getElementById("adminPass").value = "";
+      showAdminContent();
+    }
+
+    function logoutAdmin() {
+      adminLoggedIn = false;
+      showAdminLock();
+    }
+
+    function showAdminLock() {
+      document.getElementById("adminLock").classList.add("active");
+      document.getElementById("adminContent").classList.remove("active");
+    }
+
+    function showAdminContent() {
+      document.getElementById("adminLock").classList.remove("active");
+      document.getElementById("adminContent").classList.add("active");
+      renderAdminOrders();
+    }
+
+    function getActiveOrders() {
+      return orders.filter(o => o.status !== "ส่งงานแล้ว");
+    }
+
+    function getWaitingCount() {
+      return getActiveOrders().length;
+    }
+
+    function getFreeCount() {
+      return Math.max(settings.maxQueue - getWaitingCount(), 0);
+    }
+
+    function updateSummary() {
+      document.getElementById("waitingCount").textContent = getWaitingCount();
+      document.getElementById("freeCount").textContent = getFreeCount();
+
+      document.getElementById("totalOrders").textContent = orders.length;
+      document.getElementById("adminWaitingCount").textContent = getWaitingCount();
+      document.getElementById("adminDoingCount").textContent = orders.filter(o => o.status === "กำลังทำ").length;
+      document.getElementById("adminFreeCount").textContent = getFreeCount();
+
+      document.getElementById("maxQueueInput").value = settings.maxQueue;
+      document.getElementById("lastUpdateText").textContent = "อัปเดตล่าสุด " + new Date().toLocaleTimeString("th-TH", {
+        hour: "2-digit",
+        minute: "2-digit"
+      }) + " น.";
+    }
+
+    function saveQueueSetting() {
+      const value = Number(document.getElementById("maxQueueInput").value);
+
+      if (!value || value < 1) {
+        alert("กรุณากรอกจำนวนคิวที่รับได้ให้ถูกต้อง");
+        return;
+      }
+
+      settings.maxQueue = value;
+      saveSettings();
+      updateAll();
+      alert("บันทึกจำนวนคิวเรียบร้อยแล้ว");
     }
 
     function getStepClass(orderStatus, stepName) {
@@ -615,30 +1042,33 @@
     }
 
     function stepHTML(status) {
-      const steps = [
-        ["ยังไม่ถึงคิว", "⏳"],
-        ["กำลังทำ", "✏️"],
-        ["เช็คงาน", "🔍"],
-        ["แก้ไขงาน", "📝"],
-        ["ส่งงานแล้ว", "➤"]
-      ];
+      const steps = ["ยังไม่ถึงคิว", "กำลังทำ", "เช็คงาน", "แก้ไขงาน", "ส่งงานแล้ว"];
 
       return `
         <div class="steps">
-          ${steps.map(s => `
-            <div class="step ${getStepClass(status, s[0])}">
-              <div class="step-icon">${s[1]}</div>
-              ${s[0]}
+          ${steps.map(name => `
+            <div class="step ${getStepClass(status, name)}">
+              <div class="step-icon">${stepSvg[name]}</div>
+              ${name}
             </div>
           `).join("")}
         </div>
       `;
     }
 
+    function renderDefaultSteps() {
+      document.getElementById("defaultSteps").innerHTML = stepHTML("กำลังทำ");
+    }
+
     function searchOrder() {
       const code = document.getElementById("searchCode").value.trim();
       const order = orders.find(o => o.code.toLowerCase() === code.toLowerCase());
       const box = document.getElementById("resultBox");
+
+      if (!code) {
+        alert("กรุณากรอกเลขออเดอร์");
+        return;
+      }
 
       if (!order) {
         box.innerHTML = `
@@ -654,21 +1084,25 @@
         <div class="card">
           <div class="order-head">
             <div>
-              <b>${order.code}</b><br>
-              <span class="tiny">${order.customer}</span>
+              <b>${escapeHtml(order.code)}</b><br>
+              <span class="tiny">${escapeHtml(order.customer)}</span>
             </div>
-            <div class="badge ${statusColors[order.status]}">${order.status}</div>
+            <div class="badge ${statusColors[order.status]}">${escapeHtml(order.status)}</div>
           </div>
 
           ${stepHTML(order.status)}
 
           <div class="detail-row">
             <span>ประเภทงาน</span>
-            <b>${order.type}</b>
+            <b>${escapeHtml(order.type || "-")}</b>
           </div>
           <div class="detail-row">
             <span>ลำดับคิว</span>
-            <b>คิวที่ ${order.queue}</b>
+            <b>คิวที่ ${escapeHtml(String(order.queue || "-"))}</b>
+          </div>
+          <div class="detail-row">
+            <span>หมายเหตุ</span>
+            <b>${escapeHtml(order.note || "-")}</b>
           </div>
         </div>
       `;
@@ -676,43 +1110,72 @@
 
     function renderAdminOrders() {
       const box = document.getElementById("adminOrders");
+      if (!box) return;
 
-      box.innerHTML = orders.map((order, index) => `
-        <div class="order-card">
-          <div class="order-head">
-            <div>
-              <b>${order.code}</b><br>
-              <span class="tiny">${order.customer}</span>
+      let list = [...orders];
+
+      if (currentFilter !== "ทั้งหมด") {
+        list = list.filter(o => o.status === currentFilter);
+      }
+
+      list.sort((a, b) => Number(a.queue || 9999) - Number(b.queue || 9999));
+
+      if (list.length === 0) {
+        box.innerHTML = `<div class="empty">ยังไม่มีรายการในหมวดนี้</div>`;
+        return;
+      }
+
+      box.innerHTML = list.map(order => {
+        const index = orders.findIndex(o => o.code === order.code);
+
+        return `
+          <div class="order-card">
+            <div class="order-head">
+              <div>
+                <b>${escapeHtml(order.code)}</b><br>
+                <span class="tiny">${escapeHtml(order.customer)}</span>
+              </div>
+              <div class="badge ${statusColors[order.status]}">${escapeHtml(order.status)}</div>
             </div>
-            <div class="badge ${statusColors[order.status]}">${order.status}</div>
-          </div>
 
-          <div class="tiny">${order.type}</div>
-          ${stepHTML(order.status)}
+            <div class="tiny">${escapeHtml(order.type || "-")}</div>
+            ${stepHTML(order.status)}
 
-          <div class="admin-actions">
-            <select onchange="updateStatus(${index}, this.value)">
-              <option ${order.status === "ยังไม่ถึงคิว" ? "selected" : ""}>ยังไม่ถึงคิว</option>
-              <option ${order.status === "กำลังทำ" ? "selected" : ""}>กำลังทำ</option>
-              <option ${order.status === "เช็คงาน" ? "selected" : ""}>เช็คงาน</option>
-              <option ${order.status === "แก้ไขงาน" ? "selected" : ""}>แก้ไขงาน</option>
-              <option ${order.status === "ส่งงานแล้ว" ? "selected" : ""}>ส่งงานแล้ว</option>
-            </select>
-            <button onclick="deleteOrder(${index})" style="background:#ffecec;color:#c0392b;">ลบ</button>
+            <div class="detail-row">
+              <span>คิว</span>
+              <b>${escapeHtml(String(order.queue || "-"))}</b>
+            </div>
+            <div class="detail-row">
+              <span>หมายเหตุ</span>
+              <b>${escapeHtml(order.note || "-")}</b>
+            </div>
+
+            <div class="admin-actions">
+              <select onchange="updateStatus(${index}, this.value)">
+                <option ${order.status === "ยังไม่ถึงคิว" ? "selected" : ""}>ยังไม่ถึงคิว</option>
+                <option ${order.status === "กำลังทำ" ? "selected" : ""}>กำลังทำ</option>
+                <option ${order.status === "เช็คงาน" ? "selected" : ""}>เช็คงาน</option>
+                <option ${order.status === "แก้ไขงาน" ? "selected" : ""}>แก้ไขงาน</option>
+                <option ${order.status === "ส่งงานแล้ว" ? "selected" : ""}>ส่งงานแล้ว</option>
+              </select>
+
+              <button class="secondary" onclick="openEditModal(${index})">แก้ไข</button>
+              <button class="danger" onclick="deleteOrder(${index})">ลบ</button>
+            </div>
           </div>
-        </div>
-      `).join("");
+        `;
+      }).join("");
     }
 
     function updateStatus(index, status) {
       orders[index].status = status;
-      renderAdminOrders();
+      saveOrders();
     }
 
     function deleteOrder(index) {
       if (confirm("ต้องการลบออเดอร์นี้ใช่ไหม?")) {
         orders.splice(index, 1);
-        renderAdminOrders();
+        saveOrders();
       }
     }
 
@@ -721,9 +1184,16 @@
       const customer = document.getElementById("newCustomer").value.trim();
       const type = document.getElementById("newType").value.trim();
       const status = document.getElementById("newStatus").value;
+      const queue = document.getElementById("newQueue").value.trim();
+      const note = document.getElementById("newNote").value.trim();
 
       if (!code || !customer) {
         alert("กรุณากรอกเลขออเดอร์และชื่อลูกค้า");
+        return;
+      }
+
+      if (orders.some(o => o.code.toLowerCase() === code.toLowerCase())) {
+        alert("เลขออเดอร์นี้มีอยู่แล้ว");
         return;
       }
 
@@ -732,18 +1202,128 @@
         customer,
         type: type || "ยังไม่ระบุประเภทงาน",
         status,
-        queue: orders.length + 1
+        queue: queue || getWaitingCount() + 1,
+        note: note || "-"
       });
 
       document.getElementById("newCode").value = "";
       document.getElementById("newCustomer").value = "";
       document.getElementById("newType").value = "";
+      document.getElementById("newQueue").value = "";
+      document.getElementById("newNote").value = "";
+      document.getElementById("newStatus").value = "ยังไม่ถึงคิว";
 
-      renderAdminOrders();
+      saveOrders();
       alert("เพิ่มออเดอร์เรียบร้อยแล้ว");
     }
 
-    renderAdminOrders();
+    function openAddModal() {
+      if (!adminLoggedIn) {
+        switchMode("admin");
+        return;
+      }
+
+      editingIndex = null;
+      document.getElementById("modalTitle").textContent = "เพิ่มออเดอร์ใหม่";
+      document.getElementById("editCode").value = "";
+      document.getElementById("editCustomer").value = "";
+      document.getElementById("editType").value = "";
+      document.getElementById("editQueue").value = "";
+      document.getElementById("editStatus").value = "ยังไม่ถึงคิว";
+      document.getElementById("editNote").value = "";
+      document.getElementById("editModal").classList.add("active");
+    }
+
+    function openEditModal(index) {
+      editingIndex = index;
+      const order = orders[index];
+
+      document.getElementById("modalTitle").textContent = "แก้ไขออเดอร์";
+      document.getElementById("editCode").value = order.code || "";
+      document.getElementById("editCustomer").value = order.customer || "";
+      document.getElementById("editType").value = order.type || "";
+      document.getElementById("editQueue").value = order.queue || "";
+      document.getElementById("editStatus").value = order.status || "ยังไม่ถึงคิว";
+      document.getElementById("editNote").value = order.note || "";
+
+      document.getElementById("editModal").classList.add("active");
+    }
+
+    function closeEditModal() {
+      document.getElementById("editModal").classList.remove("active");
+      editingIndex = null;
+    }
+
+    function saveEditOrder() {
+      const code = document.getElementById("editCode").value.trim();
+      const customer = document.getElementById("editCustomer").value.trim();
+      const type = document.getElementById("editType").value.trim();
+      const queue = document.getElementById("editQueue").value.trim();
+      const status = document.getElementById("editStatus").value;
+      const note = document.getElementById("editNote").value.trim();
+
+      if (!code || !customer) {
+        alert("กรุณากรอกเลขออเดอร์และชื่อลูกค้า");
+        return;
+      }
+
+      const duplicate = orders.some((o, i) =>
+        o.code.toLowerCase() === code.toLowerCase() && i !== editingIndex
+      );
+
+      if (duplicate) {
+        alert("เลขออเดอร์นี้ซ้ำกับรายการอื่น");
+        return;
+      }
+
+      const data = {
+        code,
+        customer,
+        type: type || "ยังไม่ระบุประเภทงาน",
+        queue: queue || getWaitingCount() + 1,
+        status,
+        note: note || "-"
+      };
+
+      if (editingIndex === null) {
+        orders.unshift(data);
+      } else {
+        orders[editingIndex] = data;
+      }
+
+      saveOrders();
+      closeEditModal();
+    }
+
+    function filterStatus(status) {
+      currentFilter = status;
+      renderAdminOrders();
+    }
+
+    function updateAll() {
+      updateSummary();
+      renderDefaultSteps();
+      renderAdminOrders();
+    }
+
+    function escapeHtml(text) {
+      return String(text)
+        .replaceAll("&", "&amp;")
+        .replaceAll("<", "&lt;")
+        .replaceAll(">", "&gt;")
+        .replaceAll('"', "&quot;")
+        .replaceAll("'", "&#039;");
+    }
+
+    document.getElementById("searchCode").addEventListener("keydown", function(e) {
+      if (e.key === "Enter") searchOrder();
+    });
+
+    document.getElementById("adminPass").addEventListener("keydown", function(e) {
+      if (e.key === "Enter") loginAdmin();
+    });
+
+    updateAll();
   </script>
 </body>
 </html>
