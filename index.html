@@ -1,232 +1,749 @@
-/* NEW UX/UI CARD STYLE */
-.container {
-    max-width: 520px;
-    width: 100%;
-    display: grid;
-    gap: 18px;
-    position: relative;
-    z-index: 1;
-}
+<!DOCTYPE html>
+<html lang="th">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Himawari Queue</title>
 
-.section,
-.social-section {
-    background: rgba(255,255,255,0.72);
-    backdrop-filter: blur(18px);
-    -webkit-backdrop-filter: blur(18px);
-    border-radius: 30px;
-    padding: 22px;
-    border: 1px solid rgba(221,213,211,0.7);
-    box-shadow:
-        0 20px 45px rgba(180,143,145,0.12),
-        inset 0 1px 0 rgba(255,255,255,0.9);
-    position: relative;
-    overflow: hidden;
-}
+  <link href="https://fonts.googleapis.com/css2?family=Prompt:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 
-.section::before,
-.social-section::before {
-    content: "";
-    position: absolute;
-    width: 120px;
-    height: 120px;
-    background: radial-gradient(circle, #E8CCD7 0%, transparent 70%);
-    top: -45px;
-    right: -40px;
-    opacity: 0.55;
-}
+  <style>
+    * {
+      box-sizing: border-box;
+      font-family: "Prompt", sans-serif;
+    }
 
-.section-title {
-    color: #8F7072;
-    font-size: 19px;
-    font-weight: 600;
-    margin-bottom: 18px;
-    justify-content: flex-start;
-    text-align: left;
-}
+    body {
+      margin: 0;
+      background: linear-gradient(180deg, #fff8e8, #eefbf7);
+      color: #243534;
+    }
 
-/* HEADER NEW */
-.header {
-    background: linear-gradient(145deg, #F8F3F2, #FFFFFF);
-    padding: 28px 22px;
-    border-radius: 34px;
-    box-shadow: 0 18px 45px rgba(180,143,145,0.13);
-}
+    .app {
+      max-width: 430px;
+      margin: auto;
+      min-height: 100vh;
+      background: #fffdf8;
+      padding: 18px;
+      padding-bottom: 90px;
+    }
 
-.profile-img {
-    width: 125px;
-    height: 125px;
-    border-radius: 32px;
-    border: 6px solid #FFFFFF;
-    box-shadow: 0 12px 30px rgba(180,143,145,0.2);
-}
+    .topbar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 18px;
+    }
 
-.badges-container {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    width: 100%;
-}
+    .logo {
+      font-size: 30px;
+      font-weight: 700;
+      color: #07716f;
+    }
 
-.badge {
-    background: #F8F3F2;
-    border: 1px solid #DDD5D3;
-    color: #8F7072;
-    border-radius: 18px;
-    justify-content: center;
-}
+    .logo span {
+      color: #ffc83d;
+    }
 
-/* BUTTON NEW */
-.btn-bubbly {
-    border-radius: 20px;
-    padding: 15px 20px;
-}
+    .sub {
+      font-size: 13px;
+      color: #777;
+      margin-top: -6px;
+    }
 
-.btn-pink {
-    background: linear-gradient(135deg, #CFC1C1, #B48F91);
-    box-shadow: 0 12px 25px rgba(180,143,145,0.28);
-}
+    .icon-btn {
+      width: 42px;
+      height: 42px;
+      border-radius: 50%;
+      border: 1px solid #e7e7e7;
+      background: white;
+      display: grid;
+      place-items: center;
+      font-size: 20px;
+    }
 
-.btn-outline-dashed {
-    background: #FFFFFF;
-    border: 1.5px solid #DDD5D3;
-    color: #8F7072;
-    box-shadow: 0 10px 25px rgba(180,143,145,0.1);
-}
+    .hero {
+      background: linear-gradient(135deg, #ffe58f, #fff7d7);
+      border-radius: 22px;
+      padding: 22px;
+      margin-bottom: 16px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      overflow: hidden;
+    }
 
-/* STEP LIST NEW */
-.list-container {
-    gap: 14px;
-}
+    .hero h1 {
+      margin: 0;
+      font-size: 25px;
+    }
 
-.list-item {
-    background: #F8F3F2;
-    border: 1px solid #DDD5D3;
-    border-radius: 22px;
-    padding: 14px;
-    color: #8F7072;
-    align-items: center;
-}
+    .hero p {
+      margin: 8px 0 16px;
+      font-size: 14px;
+    }
 
-.num-circle {
-    background: #CFC1C1;
-    color: #FFFFFF;
-    box-shadow: none;
-}
+    button {
+      border: none;
+      cursor: pointer;
+      border-radius: 14px;
+      padding: 12px 18px;
+      font-weight: 600;
+      font-size: 15px;
+    }
 
-/* PRICE CARD NEW */
-.price-list {
-    background: transparent;
-    border: none;
-    padding: 0;
-    gap: 12px;
-}
+    .primary {
+      background: #087673;
+      color: white;
+      box-shadow: 0 8px 16px #08767333;
+    }
 
-.price-item {
-    background: #F8F3F2;
-    border: 1px solid #DDD5D3;
-    border-radius: 20px;
-    padding: 14px 16px;
-}
+    .green {
+      background: #e9f8ed;
+      color: #2f8a4b;
+    }
 
-.p-name {
-    color: #8F7072;
-}
+    .yellow {
+      background: #fff2bd;
+      color: #a46b00;
+    }
 
-.p-val {
-    background: #FFFFFF;
-    color: #B48F91;
-    box-shadow: none;
-}
+    .purple {
+      background: #f2eaff;
+      color: #7349c4;
+    }
 
-/* DURATION NEW */
-.duration-box {
-    background: #F8F3F2;
-    border-radius: 24px;
-    border: 1px solid #DDD5D3;
-    box-shadow: none;
-}
+    .blue {
+      background: #e8f5ff;
+      color: #2476ac;
+    }
 
-.duration-box.fast,
-.duration-box.super-fast {
-    background: linear-gradient(135deg, #F8F3F2, #E8CCD7);
-    border-color: #CFC1C1;
-}
+    .card {
+      background: white;
+      border: 1px solid #eeeeee;
+      border-radius: 22px;
+      padding: 18px;
+      margin-bottom: 14px;
+      box-shadow: 0 8px 20px rgba(0,0,0,.035);
+    }
 
-.d-icon {
-    background: #FFFFFF;
-}
+    .card-title {
+      font-size: 18px;
+      font-weight: 700;
+      margin-bottom: 14px;
+    }
 
-.d-price {
-    background: #B48F91;
-    box-shadow: none;
-}
+    .queue-box {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      border: 1px solid #eee;
+      border-radius: 18px;
+      overflow: hidden;
+      margin-bottom: 14px;
+    }
 
-.d-price.normal {
-    color: #8F7072;
-    border-color: #CFC1C1;
-}
+    .queue-item {
+      padding: 18px;
+      text-align: center;
+      background: #fffdf8;
+    }
 
-.duration-note,
-.payment-warning {
-    background: #F8F3F2;
-    border: 1px solid #DDD5D3;
-    color: #8F7072;
-}
+    .queue-item:nth-child(2) {
+      background: #f2fbf6;
+    }
 
-/* SHOWCASE NEW */
-.showcase-grid {
-    gap: 14px;
-}
+    .queue-item small {
+      color: #777;
+    }
 
-.showcase-item {
-    background: #F8F3F2;
-    border-radius: 26px;
-    border: 1px solid #DDD5D3;
-    box-shadow: none;
-    padding: 10px;
-}
+    .queue-num {
+      font-size: 46px;
+      font-weight: 700;
+      color: #087673;
+      line-height: 1;
+      margin: 8px 0;
+    }
 
-.showcase-item img {
-    border-radius: 20px;
-    border: none;
-}
+    .queue-item:first-child .queue-num {
+      color: #8b5f25;
+    }
 
-.showcase-item h4 {
-    color: #8F7072;
-}
+    .steps {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 5px;
+      overflow-x: auto;
+      padding-bottom: 4px;
+    }
 
-/* BANK NEW */
-.bank-card {
-    background: linear-gradient(145deg, #FFFFFF, #F8F3F2);
-    border-radius: 26px;
-    border: 1px solid #DDD5D3;
-    box-shadow: 0 12px 30px rgba(180,143,145,0.1);
-}
+    .step {
+      min-width: 62px;
+      text-align: center;
+      font-size: 11px;
+      color: #666;
+      position: relative;
+    }
 
-.acc-num {
-    color: #8F7072;
-    border: 1px solid #DDD5D3;
-    background: #FFFFFF;
-}
+    .step-icon {
+      width: 45px;
+      height: 45px;
+      margin: 0 auto 6px;
+      border-radius: 50%;
+      background: #f4f4f4;
+      display: grid;
+      place-items: center;
+      font-size: 23px;
+      border: 1px solid #e5e5e5;
+    }
 
-.copy-btn {
-    background: #B48F91;
-    box-shadow: none;
-}
+    .step.active .step-icon {
+      background: #ffc83d;
+      color: #3a2a00;
+      border-color: #ffc83d;
+    }
 
-/* SOCIAL NEW */
-.social-row {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-}
+    .step.done .step-icon {
+      background: #dff6e8;
+      color: #2f8a4b;
+      border-color: #dff6e8;
+    }
 
-.social-btn-bubbly {
-    background: #F8F3F2;
-    border-radius: 24px;
-    border: 1px solid #DDD5D3;
-    color: #8F7072;
-    box-shadow: none;
-}
+    .search-box {
+      display: flex;
+      gap: 8px;
+    }
 
-.icon-mauve {
-    fill: #B48F91;
-}
+    input, select, textarea {
+      width: 100%;
+      padding: 13px;
+      border-radius: 14px;
+      border: 1px solid #ddd;
+      font-size: 14px;
+      outline: none;
+      background: #fff;
+    }
+
+    .quick-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 10px;
+    }
+
+    .quick {
+      text-align: center;
+      padding: 14px 8px;
+      border-radius: 18px;
+      border: 1px solid #eee;
+      background: #fff;
+      font-size: 12px;
+    }
+
+    .quick svg {
+      width: 28px;
+      height: 28px;
+      margin-bottom: 6px;
+      stroke: #087673;
+    }
+
+    .work-list {
+      display: flex;
+      gap: 10px;
+      overflow-x: auto;
+    }
+
+    .work {
+      min-width: 120px;
+      height: 120px;
+      border-radius: 18px;
+      background: linear-gradient(135deg, #104e4b, #ffc83d);
+      color: white;
+      display: grid;
+      place-items: center;
+      font-weight: 600;
+      text-align: center;
+      padding: 10px;
+    }
+
+    .order-card {
+      border: 1px solid #eee;
+      border-radius: 18px;
+      padding: 15px;
+      margin-bottom: 12px;
+      background: #fff;
+    }
+
+    .order-head {
+      display: flex;
+      justify-content: space-between;
+      gap: 10px;
+      align-items: center;
+      margin-bottom: 10px;
+    }
+
+    .badge {
+      padding: 7px 10px;
+      border-radius: 999px;
+      font-size: 12px;
+      font-weight: 600;
+    }
+
+    .detail-row {
+      display: flex;
+      justify-content: space-between;
+      border-bottom: 1px solid #f1f1f1;
+      padding: 10px 0;
+      font-size: 14px;
+    }
+
+    .detail-row span:first-child {
+      color: #777;
+    }
+
+    .admin-panel {
+      display: none;
+    }
+
+    .admin-panel.active,
+    .guest-panel.active {
+      display: block;
+    }
+
+    .guest-panel {
+      display: none;
+    }
+
+    .bottom-nav {
+      max-width: 430px;
+      margin: auto;
+      position: fixed;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: white;
+      border-top: 1px solid #eee;
+      display: grid;
+      grid-template-columns: repeat(5, 1fr);
+      padding: 8px 8px 12px;
+      border-radius: 22px 22px 0 0;
+      box-shadow: 0 -8px 24px rgba(0,0,0,.06);
+    }
+
+    .nav-item {
+      text-align: center;
+      font-size: 11px;
+      color: #777;
+      padding: 6px 0;
+    }
+
+    .nav-item.active {
+      color: #087673;
+      font-weight: 700;
+    }
+
+    .nav-item svg {
+      width: 23px;
+      height: 23px;
+      display: block;
+      margin: 0 auto 3px;
+      stroke: currentColor;
+    }
+
+    .mode-switch {
+      display: flex;
+      gap: 8px;
+      background: #f6f6f6;
+      padding: 6px;
+      border-radius: 16px;
+      margin-bottom: 14px;
+    }
+
+    .mode-switch button {
+      flex: 1;
+      background: transparent;
+      color: #777;
+    }
+
+    .mode-switch button.active {
+      background: #087673;
+      color: white;
+    }
+
+    .form-grid {
+      display: grid;
+      gap: 10px;
+    }
+
+    .admin-actions {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 10px;
+      margin-top: 12px;
+    }
+
+    .tiny {
+      font-size: 12px;
+      color: #777;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="app">
+
+    <div class="topbar">
+      <div>
+        <div class="logo">Himawari <span>🌻</span></div>
+        <div class="sub">รับออกแบบป้ายครบวงจร</div>
+      </div>
+      <div class="icon-btn">☰</div>
+    </div>
+
+    <div class="mode-switch">
+      <button id="guestBtn" class="active" onclick="switchMode('guest')">Guest</button>
+      <button id="adminBtn" onclick="switchMode('admin')">Admin</button>
+    </div>
+
+    <!-- GUEST -->
+    <section id="guestPanel" class="guest-panel active">
+
+      <div class="hero">
+        <div>
+          <h1>ยินดีต้อนรับ!</h1>
+          <p>เช็กคิวงานและสถานะงาน<br>ได้ตลอด 24 ชม.</p>
+          <button class="primary">เช็กสถานะเลย</button>
+        </div>
+        <div style="font-size:70px;">👩‍🎨</div>
+      </div>
+
+      <div class="card">
+        <div class="card-title">คิวงานตอนนี้</div>
+        <div class="queue-box">
+          <div class="queue-item">
+            <small>คิวงานก่อนหน้า</small>
+            <div class="queue-num">12</div>
+            <small>คิว</small>
+          </div>
+          <div class="queue-item">
+            <small>คิวที่ว่าง</small>
+            <div class="queue-num">3</div>
+            <small>คิว</small>
+          </div>
+        </div>
+        <div class="tiny">อัปเดตล่าสุด 10:30 น.</div>
+      </div>
+
+      <div class="card">
+        <div class="card-title">ขั้นตอนการทำงาน</div>
+        <div class="steps">
+          <div class="step done">
+            <div class="step-icon">⏳</div>
+            ยังไม่ถึงคิว
+          </div>
+          <div class="step active">
+            <div class="step-icon">✏️</div>
+            กำลังทำ
+          </div>
+          <div class="step">
+            <div class="step-icon">🔍</div>
+            เช็คงาน
+          </div>
+          <div class="step">
+            <div class="step-icon">📝</div>
+            แก้ไขงาน
+          </div>
+          <div class="step">
+            <div class="step-icon">➤</div>
+            ส่งงานแล้ว
+          </div>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-title">เช็กสถานะงานของคุณ</div>
+        <div class="search-box">
+          <input id="searchCode" placeholder="กรอกหมายเลขออเดอร์ เช่น HMW-240515">
+          <button class="primary" onclick="searchOrder()">ค้นหา</button>
+        </div>
+      </div>
+
+      <div id="resultBox"></div>
+
+      <div class="card">
+        <div class="quick-grid">
+          <div class="quick">💸<br>แจ้งชำระเงิน</div>
+          <div class="quick">💬<br>สอบถามแอดมิน</div>
+          <div class="quick">🖼️<br>ผลงานของเรา</div>
+          <div class="quick">❔<br>คำถามที่พบบ่อย</div>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-title">ผลงานล่าสุด</div>
+        <div class="work-list">
+          <div class="work">Moonlight<br>Cafe</div>
+          <div class="work">บ้านฟ้าใส<br>Clinic</div>
+          <div class="work">Glow<br>Studio</div>
+        </div>
+      </div>
+
+      <div class="card green">
+        <b>มีคำถาม? ทักหาเราได้เลย</b>
+        <p class="tiny">ทีมงานพร้อมให้บริการทุกวัน 9:00 - 18:00 น.</p>
+      </div>
+    </section>
+
+    <!-- ADMIN -->
+    <section id="adminPanel" class="admin-panel">
+
+      <div class="card">
+        <div class="card-title">ภาพรวมวันนี้</div>
+        <div class="queue-box">
+          <div class="queue-item">
+            <small>ออเดอร์ทั้งหมด</small>
+            <div class="queue-num">15</div>
+            <small>งาน</small>
+          </div>
+          <div class="queue-item">
+            <small>คิวว่าง</small>
+            <div class="queue-num">3</div>
+            <small>คิว</small>
+          </div>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-title">เพิ่มออเดอร์ใหม่</div>
+        <div class="form-grid">
+          <input id="newCode" placeholder="เลขออเดอร์ เช่น HMW-240516">
+          <input id="newCustomer" placeholder="ชื่อลูกค้า / ร้าน">
+          <input id="newType" placeholder="ประเภทงาน เช่น ป้ายกล่องไฟ">
+          <select id="newStatus">
+            <option>ยังไม่ถึงคิว</option>
+            <option>กำลังทำ</option>
+            <option>เช็คงาน</option>
+            <option>แก้ไขงาน</option>
+            <option>ส่งงานแล้ว</option>
+          </select>
+          <button class="primary" onclick="addOrder()">บันทึกออเดอร์</button>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-title">งานที่กำลังดำเนินการ</div>
+        <div id="adminOrders"></div>
+      </div>
+
+    </section>
+
+  </div>
+
+  <div class="bottom-nav">
+    <div class="nav-item active">
+      <svg fill="none" viewBox="0 0 24 24"><path d="M3 11L12 4l9 7v8a1 1 0 0 1-1 1h-5v-6H9v6H4a1 1 0 0 1-1-1v-8z" stroke-width="2"/></svg>
+      หน้าหลัก
+    </div>
+    <div class="nav-item">
+      <svg fill="none" viewBox="0 0 24 24"><path d="M8 6h13M8 12h13M8 18h13M3 6h.01M3 12h.01M3 18h.01" stroke-width="2"/></svg>
+      ออเดอร์
+    </div>
+    <div class="nav-item">
+      <svg fill="none" viewBox="0 0 24 24"><path d="M12 5v14M5 12h14" stroke-width="2"/></svg>
+      เพิ่ม
+    </div>
+    <div class="nav-item">
+      <svg fill="none" viewBox="0 0 24 24"><path d="M21 15a4 4 0 0 1-4 4H7l-4 3V7a4 4 0 0 1 4-4h10a4 4 0 0 1 4 4v8z" stroke-width="2"/></svg>
+      ติดต่อ
+    </div>
+    <div class="nav-item">
+      <svg fill="none" viewBox="0 0 24 24"><path d="M4 6h16M4 12h16M4 18h16" stroke-width="2"/></svg>
+      เมนู
+    </div>
+  </div>
+
+  <script>
+    let orders = [
+      {
+        code: "HMW-240515",
+        customer: "ร้านกาแฟ Slow Bar",
+        type: "ป้ายกล่องไฟ 120 x 60 ซม.",
+        status: "กำลังทำ",
+        queue: 12
+      },
+      {
+        code: "HMW-240514",
+        customer: "ร้านอาหารบ้านสวน",
+        type: "ป้ายหน้าร้าน",
+        status: "เช็คงาน",
+        queue: 11
+      },
+      {
+        code: "HMW-240513",
+        customer: "The Chic",
+        type: "ป้ายไวนิล",
+        status: "แก้ไขงาน",
+        queue: 10
+      }
+    ];
+
+    const statusColors = {
+      "ยังไม่ถึงคิว": "yellow",
+      "กำลังทำ": "yellow",
+      "เช็คงาน": "blue",
+      "แก้ไขงาน": "purple",
+      "ส่งงานแล้ว": "green"
+    };
+
+    function switchMode(mode) {
+      document.getElementById("guestPanel").classList.toggle("active", mode === "guest");
+      document.getElementById("adminPanel").classList.toggle("active", mode === "admin");
+
+      document.getElementById("guestBtn").classList.toggle("active", mode === "guest");
+      document.getElementById("adminBtn").classList.toggle("active", mode === "admin");
+
+      renderAdminOrders();
+    }
+
+    function getStepClass(orderStatus, stepName) {
+      const steps = ["ยังไม่ถึงคิว", "กำลังทำ", "เช็คงาน", "แก้ไขงาน", "ส่งงานแล้ว"];
+      const current = steps.indexOf(orderStatus);
+      const step = steps.indexOf(stepName);
+
+      if (step < current) return "done";
+      if (step === current) return "active";
+      return "";
+    }
+
+    function stepHTML(status) {
+      const steps = [
+        ["ยังไม่ถึงคิว", "⏳"],
+        ["กำลังทำ", "✏️"],
+        ["เช็คงาน", "🔍"],
+        ["แก้ไขงาน", "📝"],
+        ["ส่งงานแล้ว", "➤"]
+      ];
+
+      return `
+        <div class="steps">
+          ${steps.map(s => `
+            <div class="step ${getStepClass(status, s[0])}">
+              <div class="step-icon">${s[1]}</div>
+              ${s[0]}
+            </div>
+          `).join("")}
+        </div>
+      `;
+    }
+
+    function searchOrder() {
+      const code = document.getElementById("searchCode").value.trim();
+      const order = orders.find(o => o.code.toLowerCase() === code.toLowerCase());
+      const box = document.getElementById("resultBox");
+
+      if (!order) {
+        box.innerHTML = `
+          <div class="card">
+            <b>ไม่พบออเดอร์นี้</b>
+            <p class="tiny">กรุณาตรวจสอบหมายเลขออเดอร์อีกครั้ง หรือติดต่อแอดมิน</p>
+          </div>
+        `;
+        return;
+      }
+
+      box.innerHTML = `
+        <div class="card">
+          <div class="order-head">
+            <div>
+              <b>${order.code}</b><br>
+              <span class="tiny">${order.customer}</span>
+            </div>
+            <div class="badge ${statusColors[order.status]}">${order.status}</div>
+          </div>
+
+          ${stepHTML(order.status)}
+
+          <div class="detail-row">
+            <span>ประเภทงาน</span>
+            <b>${order.type}</b>
+          </div>
+          <div class="detail-row">
+            <span>ลำดับคิว</span>
+            <b>คิวที่ ${order.queue}</b>
+          </div>
+        </div>
+      `;
+    }
+
+    function renderAdminOrders() {
+      const box = document.getElementById("adminOrders");
+
+      box.innerHTML = orders.map((order, index) => `
+        <div class="order-card">
+          <div class="order-head">
+            <div>
+              <b>${order.code}</b><br>
+              <span class="tiny">${order.customer}</span>
+            </div>
+            <div class="badge ${statusColors[order.status]}">${order.status}</div>
+          </div>
+
+          <div class="tiny">${order.type}</div>
+          ${stepHTML(order.status)}
+
+          <div class="admin-actions">
+            <select onchange="updateStatus(${index}, this.value)">
+              <option ${order.status === "ยังไม่ถึงคิว" ? "selected" : ""}>ยังไม่ถึงคิว</option>
+              <option ${order.status === "กำลังทำ" ? "selected" : ""}>กำลังทำ</option>
+              <option ${order.status === "เช็คงาน" ? "selected" : ""}>เช็คงาน</option>
+              <option ${order.status === "แก้ไขงาน" ? "selected" : ""}>แก้ไขงาน</option>
+              <option ${order.status === "ส่งงานแล้ว" ? "selected" : ""}>ส่งงานแล้ว</option>
+            </select>
+            <button onclick="deleteOrder(${index})" style="background:#ffecec;color:#c0392b;">ลบ</button>
+          </div>
+        </div>
+      `).join("");
+    }
+
+    function updateStatus(index, status) {
+      orders[index].status = status;
+      renderAdminOrders();
+    }
+
+    function deleteOrder(index) {
+      if (confirm("ต้องการลบออเดอร์นี้ใช่ไหม?")) {
+        orders.splice(index, 1);
+        renderAdminOrders();
+      }
+    }
+
+    function addOrder() {
+      const code = document.getElementById("newCode").value.trim();
+      const customer = document.getElementById("newCustomer").value.trim();
+      const type = document.getElementById("newType").value.trim();
+      const status = document.getElementById("newStatus").value;
+
+      if (!code || !customer) {
+        alert("กรุณากรอกเลขออเดอร์และชื่อลูกค้า");
+        return;
+      }
+
+      orders.unshift({
+        code,
+        customer,
+        type: type || "ยังไม่ระบุประเภทงาน",
+        status,
+        queue: orders.length + 1
+      });
+
+      document.getElementById("newCode").value = "";
+      document.getElementById("newCustomer").value = "";
+      document.getElementById("newType").value = "";
+
+      renderAdminOrders();
+      alert("เพิ่มออเดอร์เรียบร้อยแล้ว");
+    }
+
+    renderAdminOrders();
+  </script>
+</body>
+</html>
