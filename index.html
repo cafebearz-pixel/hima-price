@@ -1,1329 +1,757 @@
 <!DOCTYPE html>
 <html lang="th">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Himawari Queue</title>
-
-  <link href="https://fonts.googleapis.com/css2?family=Prompt:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-
-  <style>
-    * {
-      box-sizing: border-box;
-      font-family: "Prompt", sans-serif;
-    }
-
-    :root {
-      --main: #087673;
-      --yellow: #ffc83d;
-      --cream: #fffdf8;
-      --soft: #f6f6f6;
-      --text: #243534;
-      --pink: #ff6f9f;
-      --danger: #e74c3c;
-      --radius: 22px;
-    }
-
-    body {
-      margin: 0;
-      background: linear-gradient(180deg, #fff8e8, #eefbf7);
-      color: var(--text);
-    }
-
-    .page {
-      width: 100%;
-      min-height: 100vh;
-      display: flex;
-      justify-content: center;
-    }
-
-    .app {
-      width: 100%;
-      max-width: 1200px;
-      min-height: 100vh;
-      background: #fffdf8;
-      padding: 18px;
-      padding-bottom: 95px;
-    }
-
-    .layout {
-      display: grid;
-      grid-template-columns: 1fr;
-      gap: 16px;
-    }
-
-    @media (min-width: 768px) {
-      .app {
-        padding: 28px;
-        padding-bottom: 110px;
-      }
-
-      .layout {
-        grid-template-columns: 1fr 1fr;
-        align-items: start;
-      }
-
-      .full {
-        grid-column: 1 / -1;
-      }
-    }
-
-    @media (min-width: 1024px) {
-      .app {
-        border-left: 1px solid #eee;
-        border-right: 1px solid #eee;
-      }
-
-      .layout {
-        grid-template-columns: 1fr 1fr 1fr;
-      }
-
-      .wide {
-        grid-column: span 2;
-      }
-
-      .full {
-        grid-column: 1 / -1;
-      }
-    }
-
-    .topbar {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      margin-bottom: 18px;
-      gap: 12px;
-    }
-
-    .logo {
-      font-size: clamp(28px, 4vw, 38px);
-      font-weight: 700;
-      color: #07716f;
-      line-height: 1;
-    }
-
-    .logo span {
-      color: #ffc83d;
-    }
-
-    .sub {
-      font-size: 13px;
-      color: #777;
-      margin-top: 4px;
-    }
-
-    .icon-btn {
-      width: 42px;
-      height: 42px;
-      border-radius: 50%;
-      border: 1px solid #e7e7e7;
-      background: white;
-      display: grid;
-      place-items: center;
-      font-size: 20px;
-      flex-shrink: 0;
-    }
-
-    .hero {
-      background: linear-gradient(135deg, #ffe58f, #fff7d7);
-      border-radius: 22px;
-      padding: 22px;
-      margin-bottom: 16px;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      overflow: hidden;
-      min-height: 180px;
-    }
-
-    .hero h1 {
-      margin: 0;
-      font-size: 25px;
-    }
-
-    .hero p {
-      margin: 8px 0 16px;
-      font-size: 14px;
-    }
-
-    button {
-      border: none;
-      cursor: pointer;
-      border-radius: 14px;
-      padding: 12px 18px;
-      font-weight: 600;
-      font-size: 15px;
-    }
-
-    button:active {
-      transform: scale(.98);
-    }
-
-    .primary {
-      background: #087673;
-      color: white;
-      box-shadow: 0 8px 16px #08767333;
-    }
-
-    .secondary {
-      background: #f2fbf6;
-      color: #087673;
-      border: 1px solid #d8efe6;
-    }
-
-    .danger {
-      background: #ffecec;
-      color: #c0392b;
-    }
-
-    .ghost {
-      background: white;
-      color: #087673;
-      border: 1px solid #d8efe6;
-    }
-
-    .green {
-      background: #e9f8ed;
-      color: #2f8a4b;
-    }
-
-    .yellow {
-      background: #fff2bd;
-      color: #a46b00;
-    }
-
-    .purple {
-      background: #f2eaff;
-      color: #7349c4;
-    }
-
-    .blue {
-      background: #e8f5ff;
-      color: #2476ac;
-    }
-
-    .pink {
-      background: #ffe9f1;
-      color: #d94b7d;
-    }
-
-    .card {
-      background: white;
-      border: 1px solid #eeeeee;
-      border-radius: 22px;
-      padding: 18px;
-      margin-bottom: 14px;
-      box-shadow: 0 8px 20px rgba(0,0,0,.035);
-    }
-
-    .card-title {
-      font-size: 18px;
-      font-weight: 700;
-      margin-bottom: 14px;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      gap: 8px;
-    }
-
-    .queue-box {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      border: 1px solid #eee;
-      border-radius: 18px;
-      overflow: hidden;
-      margin-bottom: 14px;
-    }
-
-    .queue-item {
-      padding: 18px;
-      text-align: center;
-      background: #fffdf8;
-    }
-
-    .queue-item:nth-child(2) {
-      background: #f2fbf6;
-    }
-
-    .queue-item small {
-      color: #777;
-    }
-
-    .queue-num {
-      font-size: 46px;
-      font-weight: 700;
-      color: #087673;
-      line-height: 1;
-      margin: 8px 0;
-    }
-
-    .queue-item:first-child .queue-num {
-      color: #8b5f25;
-    }
-
-    .steps {
-      display: flex;
-      align-items: center;
-      gap: 8px;
-      overflow-x: auto;
-      padding-bottom: 4px;
-    }
-
-    .step {
-      min-width: 66px;
-      text-align: center;
-      font-size: 11px;
-      color: #666;
-      position: relative;
-    }
-
-    .step-icon {
-      width: 45px;
-      height: 45px;
-      margin: 0 auto 6px;
-      border-radius: 50%;
-      background: #f4f4f4;
-      display: grid;
-      place-items: center;
-      font-size: 0;
-      border: 1px solid #e5e5e5;
-    }
-
-    .step-icon svg {
-      width: 22px;
-      height: 22px;
-      stroke: currentColor;
-      stroke-width: 2;
-      fill: none;
-    }
-
-    .step.active .step-icon {
-      background: #ffc83d;
-      color: #3a2a00;
-      border-color: #ffc83d;
-    }
-
-    .step.done .step-icon {
-      background: #dff6e8;
-      color: #2f8a4b;
-      border-color: #dff6e8;
-    }
-
-    .search-box {
-      display: flex;
-      gap: 8px;
-    }
-
-    @media (max-width: 430px) {
-      .search-box {
-        flex-direction: column;
-      }
-
-      .search-box button {
-        width: 100%;
-      }
-    }
-
-    input, select, textarea {
-      width: 100%;
-      padding: 13px;
-      border-radius: 14px;
-      border: 1px solid #ddd;
-      font-size: 14px;
-      outline: none;
-      background: #fff;
-    }
-
-    textarea {
-      min-height: 80px;
-      resize: vertical;
-    }
-
-    input:focus, select:focus, textarea:focus {
-      border-color: #087673;
-      box-shadow: 0 0 0 3px #08767318;
-    }
-
-    .quick-grid {
-      display: grid;
-      grid-template-columns: repeat(4, 1fr);
-      gap: 10px;
-    }
-
-    @media (max-width: 360px) {
-      .quick-grid {
-        grid-template-columns: repeat(2, 1fr);
-      }
-    }
-
-    .quick {
-      text-align: center;
-      padding: 14px 8px;
-      border-radius: 18px;
-      border: 1px solid #eee;
-      background: #fff;
-      font-size: 12px;
-    }
-
-    .work-list {
-      display: flex;
-      gap: 10px;
-      overflow-x: auto;
-    }
-
-    .work {
-      min-width: 120px;
-      height: 120px;
-      border-radius: 18px;
-      background: linear-gradient(135deg, #104e4b, #ffc83d);
-      color: white;
-      display: grid;
-      place-items: center;
-      font-weight: 600;
-      text-align: center;
-      padding: 10px;
-    }
-
-    .order-card {
-      border: 1px solid #eee;
-      border-radius: 18px;
-      padding: 15px;
-      margin-bottom: 12px;
-      background: #fff;
-    }
-
-    .order-head {
-      display: flex;
-      justify-content: space-between;
-      gap: 10px;
-      align-items: flex-start;
-      margin-bottom: 10px;
-    }
-
-    .badge {
-      padding: 7px 10px;
-      border-radius: 999px;
-      font-size: 12px;
-      font-weight: 600;
-      white-space: nowrap;
-    }
-
-    .detail-row {
-      display: flex;
-      justify-content: space-between;
-      gap: 12px;
-      border-bottom: 1px solid #f1f1f1;
-      padding: 10px 0;
-      font-size: 14px;
-    }
-
-    .detail-row span:first-child {
-      color: #777;
-      flex-shrink: 0;
-    }
-
-    .detail-row b {
-      text-align: right;
-    }
-
-    .admin-panel {
-      display: none;
-    }
-
-    .admin-panel.active,
-    .guest-panel.active {
-      display: block;
-    }
-
-    .guest-panel {
-      display: none;
-    }
-
-    .bottom-nav {
-      max-width: 1200px;
-      margin: auto;
-      position: fixed;
-      left: 0;
-      right: 0;
-      bottom: 0;
-      background: white;
-      border-top: 1px solid #eee;
-      display: grid;
-      grid-template-columns: repeat(5, 1fr);
-      padding: 8px 8px 12px;
-      border-radius: 22px 22px 0 0;
-      box-shadow: 0 -8px 24px rgba(0,0,0,.06);
-      z-index: 20;
-    }
-
-    .nav-item {
-      text-align: center;
-      font-size: 11px;
-      color: #777;
-      padding: 6px 0;
-    }
-
-    .nav-item.active {
-      color: #087673;
-      font-weight: 700;
-    }
-
-    .nav-item svg {
-      width: 23px;
-      height: 23px;
-      display: block;
-      margin: 0 auto 3px;
-      stroke: currentColor;
-    }
-
-    .mode-switch {
-      display: flex;
-      gap: 8px;
-      background: #f6f6f6;
-      padding: 6px;
-      border-radius: 16px;
-      margin-bottom: 14px;
-    }
-
-    .mode-switch button {
-      flex: 1;
-      background: transparent;
-      color: #777;
-    }
-
-    .mode-switch button.active {
-      background: #087673;
-      color: white;
-    }
-
-    .form-grid {
-      display: grid;
-      gap: 10px;
-    }
-
-    .admin-actions {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 8px;
-      margin-top: 12px;
-    }
-
-    @media (max-width: 480px) {
-      .admin-actions {
-        grid-template-columns: 1fr;
-      }
-    }
-
-    .tiny {
-      font-size: 12px;
-      color: #777;
-    }
-
-    .admin-lock {
-      display: none;
-    }
-
-    .admin-lock.active {
-      display: block;
-    }
-
-    .admin-content {
-      display: none;
-    }
-
-    .admin-content.active {
-      display: block;
-    }
-
-    .modal-backdrop {
-      position: fixed;
-      inset: 0;
-      background: rgba(0,0,0,.28);
-      display: none;
-      align-items: center;
-      justify-content: center;
-      padding: 18px;
-      z-index: 50;
-    }
-
-    .modal-backdrop.active {
-      display: flex;
-    }
-
-    .modal {
-      background: white;
-      border-radius: 24px;
-      padding: 20px;
-      width: 100%;
-      max-width: 520px;
-      box-shadow: 0 20px 50px rgba(0,0,0,.18);
-    }
-
-    .modal-title {
-      font-size: 20px;
-      font-weight: 700;
-      margin-bottom: 14px;
-    }
-
-    .modal-actions {
-      display: flex;
-      gap: 10px;
-      margin-top: 14px;
-    }
-
-    .modal-actions button {
-      flex: 1;
-    }
-
-    .summary-grid {
-      display: grid;
-      grid-template-columns: repeat(4, 1fr);
-      gap: 10px;
-    }
-
-    @media (max-width: 640px) {
-      .summary-grid {
-        grid-template-columns: repeat(2, 1fr);
-      }
-    }
-
-    .summary-card {
-      padding: 14px;
-      border-radius: 18px;
-      background: #fffdf8;
-      border: 1px solid #eee;
-      text-align: center;
-    }
-
-    .summary-card b {
-      font-size: 28px;
-      display: block;
-      color: #087673;
-    }
-
-    .toolbar {
-      display: flex;
-      gap: 8px;
-      flex-wrap: wrap;
-    }
-
-    .toolbar button {
-      padding: 10px 12px;
-      font-size: 13px;
-    }
-
-    .empty {
-      padding: 18px;
-      text-align: center;
-      color: #777;
-      border: 1px dashed #ddd;
-      border-radius: 18px;
-      background: #fffdf8;
-    }
-  </style>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Himawari Studio Queue</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Prompt:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+<style>
+:root{
+  --pink:#f2528d;
+  --pink2:#ff8db6;
+  --soft:#fff3f8;
+  --soft2:#ffe4ee;
+  --text:#292633;
+  --muted:#8e8794;
+  --line:#ffd0df;
+  --blue:#66a9ff;
+  --orange:#ffae43;
+  --purple:#b48cff;
+  --green:#51ce8b;
+  --shadow:0 14px 35px rgba(242,82,141,.16);
+}
+*{box-sizing:border-box}
+body{
+  margin:0;
+font-family:"Prompt",sans-serif;
+  color:var(--text);
+  background:linear-gradient(160deg,#fff4f9,#fff,#ffeef5);
+}
+.app{
+  max-width:430px;
+  min-height:100vh;
+  margin:auto;
+  background:#fff;
+  position:relative;
+  overflow:hidden;
+}
+.page{
+  display:none;
+  padding:18px 18px 90px;
+  min-height:100vh;
+}
+.page.active{display:block}
+.logo-img{
+  height:42px;
+  object-fit:contain;
+}
+.logo-center{
+  display:block;
+  height:70px;
+  margin:0 auto 10px;
+}
+.card{
+  background:#fff;
+  border:1px solid var(--line);
+  border-radius:24px;
+  box-shadow:var(--shadow);
+  padding:16px;
+}
+.btn{
+  border:0;
+  border-radius:18px;
+  padding:13px 16px;
+  font-family:inherit;
+  font-weight:600;
+  cursor:pointer;
+  background:linear-gradient(135deg,var(--pink),var(--pink2));
+  color:#fff;
+  box-shadow:0 8px 20px rgba(242,82,141,.25);
+}
+.btn-light{
+  background:#fff;
+  color:var(--pink);
+  border:1px solid var(--line);
+  box-shadow:none;
+}
+input,select,textarea{
+  width:100%;
+  border:1px solid var(--line);
+  border-radius:16px;
+  padding:13px 14px;
+  font-family:inherit;
+  outline:none;
+  background:#fff;
+}
+textarea{min-height:90px;resize:none}
+h1,h2,h3,p{margin-top:0}
+.small{font-size:13px;color:var(--muted)}
+.row{display:flex;align-items:center;justify-content:space-between;gap:10px}
+.header{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  margin-bottom:16px;
+}
+.icon-btn{
+  width:38px;height:38px;
+  border-radius:14px;
+  border:1px solid var(--line);
+  background:#fff;
+  display:grid;
+  place-items:center;
+  cursor:pointer;
+}
+.hero{
+  background:linear-gradient(135deg,#ffe5ef,#fff8fb);
+  border-radius:24px;
+  padding:16px;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  border:1px solid var(--line);
+}
+.hero-art{
+  width:80px;height:80px;border-radius:50%;
+  background:linear-gradient(135deg,#ffd3e3,#fff);
+  display:grid;
+  place-items:center;
+}
+.stats{
+  display:grid;
+  grid-template-columns:repeat(2,1fr);
+  gap:12px;
+  margin:14px 0;
+}
+.stat{
+  border:1px solid var(--line);
+  border-radius:22px;
+  padding:14px;
+  background:#fff;
+  box-shadow:0 10px 24px rgba(242,82,141,.08);
+}
+.stat b{
+  display:block;
+  font-size:26px;
+  color:var(--pink);
+}
+.stat svg{width:28px;height:28px}
+.job{
+  display:flex;
+  gap:12px;
+  align-items:center;
+  border:1px solid var(--line);
+  border-radius:22px;
+  padding:13px;
+  margin-bottom:12px;
+  background:#fff;
+}
+.job-icon{
+  width:48px;height:48px;
+  border-radius:18px;
+  display:grid;
+  place-items:center;
+  flex:none;
+}
+.job-icon svg{width:26px;height:26px}
+.job-info{flex:1}
+.job-title{font-weight:700;font-size:14px}
+.badge{
+  display:inline-block;
+  padding:4px 10px;
+  border-radius:999px;
+  font-size:12px;
+  font-weight:600;
+}
+.wait{background:#ffe8ef;color:var(--pink)}
+.doing{background:#fff0d8;color:#ee8d19}
+.check{background:#e8f2ff;color:#347ddd}
+.edit{background:#f1e8ff;color:#8656dd}
+.done{background:#e6fff1;color:#25a860}
+.searchbox{
+  position:relative;
+  margin-bottom:12px;
+}
+.searchbox input{padding-left:42px}
+.searchbox svg{
+  position:absolute;
+  left:14px;
+  top:12px;
+  width:20px;
+  height:20px;
+  color:var(--muted);
+}
+.chips{
+  display:flex;
+  gap:8px;
+  overflow:auto;
+  padding-bottom:8px;
+}
+.chip{
+  white-space:nowrap;
+  border:1px solid var(--line);
+  background:#fff;
+  color:#555;
+  padding:8px 14px;
+  border-radius:999px;
+  font-size:13px;
+  cursor:pointer;
+}
+.chip.active{
+  background:var(--pink);
+  color:#fff;
+  border-color:var(--pink);
+}
+.bottom{
+  position:fixed;
+  left:50%;
+  transform:translateX(-50%);
+  bottom:0;
+  width:100%;
+  max-width:430px;
+  background:rgba(255,255,255,.96);
+  border-top:1px solid var(--line);
+  display:grid;
+  grid-template-columns:repeat(5,1fr);
+  padding:8px 6px 12px;
+  z-index:40;
+}
+.nav{
+  text-align:center;
+  font-size:11px;
+  color:#777;
+  cursor:pointer;
+}
+.nav svg{
+  width:21px;height:21px;
+  display:block;
+  margin:0 auto 2px;
+}
+.nav.active{color:var(--pink);font-weight:700}
+.fab{
+  width:56px;height:56px;
+  margin:-28px auto 0;
+  border-radius:50%;
+  background:linear-gradient(135deg,var(--pink),var(--pink2));
+  color:#fff;
+  display:grid;
+  place-items:center;
+  box-shadow:var(--shadow);
+}
+.fab svg{width:26px;height:26px}
+.login{
+  min-height:100vh;
+  padding:34px 24px;
+  display:flex;
+  flex-direction:column;
+  justify-content:center;
+}
+.login-title{text-align:center;margin-bottom:22px}
+.login-title h1{
+  color:var(--pink);
+  font-size:36px;
+  margin:0;
+}
+.mode-btn{
+  display:flex;
+  align-items:center;
+  gap:12px;
+  width:100%;
+  margin-bottom:12px;
+}
+.contact-item{
+  display:flex;
+  gap:12px;
+  align-items:center;
+  padding:13px 0;
+  border-bottom:1px solid #ffe5ee;
+}
+.contact-icon{
+  width:40px;height:40px;border-radius:50%;
+  background:var(--pink);
+  color:white;
+  display:grid;
+  place-items:center;
+}
+.status-list .status-option{
+  display:flex;
+  align-items:center;
+  gap:12px;
+  border:1px solid var(--line);
+  padding:12px;
+  border-radius:18px;
+  margin-bottom:10px;
+  cursor:pointer;
+}
+.status-option.active{background:#fff1f6;border-color:var(--pink)}
+.status-dot{
+  width:38px;height:38px;border-radius:15px;
+  display:grid;place-items:center;
+}
+.detail-top{
+  background:linear-gradient(135deg,var(--pink),#ff9bc0);
+  color:white;
+  margin:-18px -18px 0;
+  padding:22px 18px 44px;
+  border-radius:0 0 28px 28px;
+}
+.detail-card{
+  margin-top:-28px;
+  background:white;
+  border-radius:26px;
+  padding:18px;
+  box-shadow:var(--shadow);
+}
+.form-grid{display:grid;gap:12px}
+.filebox{
+  border:1px dashed var(--line);
+  background:#fff8fb;
+  padding:13px;
+  border-radius:16px;
+  text-align:center;
+  color:var(--pink);
+}
+.empty{
+  padding:22px;
+  text-align:center;
+  color:var(--muted);
+}
+svg{stroke:currentColor}
+</style>
 </head>
 
 <body>
-  <div class="page">
-    <div class="app">
+<div class="app">
 
-      <div class="topbar full">
-        <div>
-          <div class="logo">Himawari <span>🌻</span></div>
-          <div class="sub">รับออกแบบป้ายครบวงจร</div>
-        </div>
-        <div class="icon-btn">☰</div>
-      </div>
-
-      <div class="mode-switch full">
-        <button id="guestBtn" class="active" onclick="switchMode('guest')">Guest</button>
-        <button id="adminBtn" onclick="switchMode('admin')">Admin</button>
-      </div>
-
-      <!-- GUEST -->
-      <section id="guestPanel" class="guest-panel active">
-        <div class="layout">
-
-          <div class="hero wide">
-            <div>
-              <h1>ยินดีต้อนรับ!</h1>
-              <p>เช็กคิวงานและสถานะงาน<br>ได้ตลอด 24 ชม.</p>
-              <button class="primary" onclick="document.getElementById('searchCode').focus()">เช็กสถานะเลย</button>
-            </div>
-            <div style="font-size:70px;">👩‍🎨</div>
-          </div>
-
-          <div class="card">
-            <div class="card-title">คิวงานตอนนี้</div>
-            <div class="queue-box">
-              <div class="queue-item">
-                <small>คิวงานรอดำเนินการ</small>
-                <div class="queue-num" id="waitingCount">0</div>
-                <small>คิว</small>
-              </div>
-              <div class="queue-item">
-                <small>คิวที่ว่าง</small>
-                <div class="queue-num" id="freeCount">0</div>
-                <small>คิว</small>
-              </div>
-            </div>
-            <div class="tiny" id="lastUpdateText">อัปเดตล่าสุด -</div>
-          </div>
-
-          <div class="card wide">
-            <div class="card-title">ขั้นตอนการทำงาน</div>
-            <div id="defaultSteps"></div>
-          </div>
-
-          <div class="card wide">
-            <div class="card-title">เช็กสถานะงานของคุณ</div>
-            <div class="search-box">
-              <input id="searchCode" placeholder="กรอกหมายเลขออเดอร์ เช่น HMW-240515">
-              <button class="primary" onclick="searchOrder()">ค้นหา</button>
-            </div>
-          </div>
-
-          <div id="resultBox" class="wide"></div>
-
-          <div class="card wide">
-            <div class="quick-grid">
-              <div class="quick">💸<br>แจ้งชำระเงิน</div>
-              <div class="quick">💬<br>สอบถามแอดมิน</div>
-              <div class="quick">🖼️<br>ผลงานของเรา</div>
-              <div class="quick">❔<br>คำถามที่พบบ่อย</div>
-            </div>
-          </div>
-
-          <div class="card wide">
-            <div class="card-title">ผลงานล่าสุด</div>
-            <div class="work-list">
-              <div class="work">Moonlight<br>Cafe</div>
-              <div class="work">บ้านฟ้าใส<br>Clinic</div>
-              <div class="work">Glow<br>Studio</div>
-            </div>
-          </div>
-
-          <div class="card green">
-            <b>มีคำถาม? ทักหาเราได้เลย</b>
-            <p class="tiny">ทีมงานพร้อมให้บริการทุกวัน 9:00 - 18:00 น.</p>
-          </div>
-
-        </div>
-      </section>
-
-      <!-- ADMIN -->
-      <section id="adminPanel" class="admin-panel">
-
-        <div id="adminLock" class="admin-lock active">
-          <div class="card" style="max-width:520px;margin:auto;">
-            <div class="card-title">เข้าสู่ระบบ Admin 🔐</div>
-            <div class="form-grid">
-              <input id="adminPass" type="password" placeholder="กรอกรหัส Admin">
-              <button class="primary" onclick="loginAdmin()">เข้าสู่ระบบ</button>
-              <button class="ghost" onclick="switchMode('guest')">กลับหน้า Guest</button>
-              <p class="tiny">รหัสสำหรับทดสอบ: 2001</p>
-            </div>
-          </div>
-        </div>
-
-        <div id="adminContent" class="admin-content">
-          <div class="layout">
-
-            <div class="card full">
-              <div class="card-title">
-                ภาพรวมวันนี้
-                <div class="toolbar">
-                  <button class="secondary" onclick="openAddModal()">+ เพิ่มออเดอร์</button>
-                  <button class="ghost" onclick="logoutAdmin()">ออกจากระบบ</button>
-                </div>
-              </div>
-
-              <div class="summary-grid">
-                <div class="summary-card">
-                  <small>ทั้งหมด</small>
-                  <b id="totalOrders">0</b>
-                  <small>งาน</small>
-                </div>
-                <div class="summary-card">
-                  <small>รอดำเนินการ</small>
-                  <b id="adminWaitingCount">0</b>
-                  <small>คิว</small>
-                </div>
-                <div class="summary-card">
-                  <small>กำลังทำ</small>
-                  <b id="adminDoingCount">0</b>
-                  <small>งาน</small>
-                </div>
-                <div class="summary-card">
-                  <small>คิวว่าง</small>
-                  <b id="adminFreeCount">0</b>
-                  <small>คิว</small>
-                </div>
-              </div>
-            </div>
-
-            <div class="card wide">
-              <div class="card-title">เพิ่มออเดอร์ใหม่</div>
-              <div class="form-grid">
-                <input id="newCode" placeholder="เลขออเดอร์ เช่น HMW-240516">
-                <input id="newCustomer" placeholder="ชื่อลูกค้า / ร้าน">
-                <input id="newType" placeholder="ประเภทงาน เช่น ป้ายกล่องไฟ">
-                <input id="newQueue" type="number" placeholder="ลำดับคิว เช่น 12">
-                <select id="newStatus">
-                  <option>ยังไม่ถึงคิว</option>
-                  <option>กำลังทำ</option>
-                  <option>เช็คงาน</option>
-                  <option>แก้ไขงาน</option>
-                  <option>ส่งงานแล้ว</option>
-                </select>
-                <textarea id="newNote" placeholder="หมายเหตุ เช่น รอไฟล์ / ลูกค้าแก้สี / นัดส่งงาน"></textarea>
-                <button class="primary" onclick="addOrder()">บันทึกออเดอร์</button>
-              </div>
-            </div>
-
-            <div class="card">
-              <div class="card-title">ตั้งค่าคิว</div>
-              <div class="form-grid">
-                <input id="maxQueueInput" type="number" placeholder="จำนวนคิวที่รับได้ทั้งหมด">
-                <button class="secondary" onclick="saveQueueSetting()">บันทึกจำนวนคิว</button>
-                <p class="tiny">ระบบจะคำนวณคิวว่างจากจำนวนคิวทั้งหมด ลบงานที่ยังไม่ส่งงาน</p>
-              </div>
-            </div>
-
-            <div class="card full">
-              <div class="card-title">
-                งานทั้งหมด
-                <div class="toolbar">
-                  <button class="ghost" onclick="filterStatus('ทั้งหมด')">ทั้งหมด</button>
-                  <button class="yellow" onclick="filterStatus('ยังไม่ถึงคิว')">ยังไม่ถึงคิว</button>
-                  <button class="yellow" onclick="filterStatus('กำลังทำ')">กำลังทำ</button>
-                  <button class="blue" onclick="filterStatus('เช็คงาน')">เช็คงาน</button>
-                  <button class="purple" onclick="filterStatus('แก้ไขงาน')">แก้ไขงาน</button>
-                  <button class="green" onclick="filterStatus('ส่งงานแล้ว')">ส่งแล้ว</button>
-                </div>
-              </div>
-              <div id="adminOrders"></div>
-            </div>
-
-          </div>
-        </div>
-      </section>
-
+  <section id="loginPage" class="login">
+    <div class="login-title">
+      <img src="Logo.png" class="logo-center" onerror="this.style.display='none'">
+      <h1>Himawari</h1>
+      <p class="small">รับออกแบบป้าย โลโก้ สื่อออนไลน์ และงานกราฟิกทุกประเภท</p>
     </div>
-  </div>
 
-  <div class="bottom-nav">
-    <div class="nav-item active">
-      <svg fill="none" viewBox="0 0 24 24"><path d="M3 11L12 4l9 7v8a1 1 0 0 1-1 1h-5v-6H9v6H4a1 1 0 0 1-1-1v-8z" stroke-width="2"/></svg>
-      หน้าหลัก
-    </div>
-    <div class="nav-item">
-      <svg fill="none" viewBox="0 0 24 24"><path d="M8 6h13M8 12h13M8 18h13M3 6h.01M3 12h.01M3 18h.01" stroke-width="2"/></svg>
-      ออเดอร์
-    </div>
-    <div class="nav-item" onclick="adminLoggedIn ? openAddModal() : switchMode('admin')">
-      <svg fill="none" viewBox="0 0 24 24"><path d="M12 5v14M5 12h14" stroke-width="2"/></svg>
-      เพิ่ม
-    </div>
-    <div class="nav-item">
-      <svg fill="none" viewBox="0 0 24 24"><path d="M21 15a4 4 0 0 1-4 4H7l-4 3V7a4 4 0 0 1 4-4h10a4 4 0 0 1 4 4v8z" stroke-width="2"/></svg>
-      ติดต่อ
-    </div>
-    <div class="nav-item">
-      <svg fill="none" viewBox="0 0 24 24"><path d="M4 6h16M4 12h16M4 18h16" stroke-width="2"/></svg>
-      เมนู
-    </div>
-  </div>
+    <div class="card">
+      <h3>เข้าสู่ระบบ</h3>
+      <button class="btn mode-btn" onclick="loginGuest()">
+        <span id="icoUser"></span> Guest เข้าสู่ระบบ
+      </button>
+      <button class="btn btn-light mode-btn" onclick="showAdminLogin()">
+        <span id="icoLock"></span> Admin เข้าสู่ระบบ
+      </button>
 
-  <!-- EDIT MODAL -->
-  <div class="modal-backdrop" id="editModal">
-    <div class="modal">
-      <div class="modal-title" id="modalTitle">แก้ไขออเดอร์</div>
-
-      <div class="form-grid">
-        <input id="editCode" placeholder="เลขออเดอร์">
-        <input id="editCustomer" placeholder="ชื่อลูกค้า / ร้าน">
-        <input id="editType" placeholder="ประเภทงาน">
-        <input id="editQueue" type="number" placeholder="ลำดับคิว">
-        <select id="editStatus">
-          <option>ยังไม่ถึงคิว</option>
-          <option>กำลังทำ</option>
-          <option>เช็คงาน</option>
-          <option>แก้ไขงาน</option>
-          <option>ส่งงานแล้ว</option>
-        </select>
-        <textarea id="editNote" placeholder="หมายเหตุ"></textarea>
-      </div>
-
-      <div class="modal-actions">
-        <button class="ghost" onclick="closeEditModal()">ยกเลิก</button>
-        <button class="primary" onclick="saveEditOrder()">บันทึก</button>
+      <div id="adminBox" style="display:none;margin-top:12px">
+        <input id="adminPass" type="password" placeholder="กรอกรหัส Admin">
+        <button class="btn" style="width:100%;margin-top:10px" onclick="loginAdmin()">ยืนยัน</button>
+        <p class="small">รหัสเริ่มต้น: 2001</p>
       </div>
     </div>
-  </div>
-
-  <script>
-    const ADMIN_PASSWORD = "2001";
-    const STORAGE_KEY = "himawari_orders_v2";
-    const SETTINGS_KEY = "himawari_settings_v2";
-
-    let adminLoggedIn = false;
-    let currentFilter = "ทั้งหมด";
-    let editingIndex = null;
-
-    let settings = loadSettings();
-
-    let orders = loadOrders();
-
-    const statusColors = {
-      "ยังไม่ถึงคิว": "yellow",
-      "กำลังทำ": "yellow",
-      "เช็คงาน": "blue",
-      "แก้ไขงาน": "purple",
-      "ส่งงานแล้ว": "green"
-    };
-
-    const stepSvg = {
-      "ยังไม่ถึงคิว": `<svg viewBox="0 0 24 24"><path d="M6 2h12M6 22h12M8 2c0 5 8 5 8 10s-8 5-8 10M16 2c0 5-8 5-8 10s8 5 8 10"/></svg>`,
-      "กำลังทำ": `<svg viewBox="0 0 24 24"><path d="M12 20h9"/><path d="M16.5 3.5a2.1 2.1 0 0 1 3 3L7 19l-4 1 1-4 12.5-12.5z"/></svg>`,
-      "เช็คงาน": `<svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.5-3.5"/></svg>`,
-      "แก้ไขงาน": `<svg viewBox="0 0 24 24"><path d="M4 20h16"/><path d="M14 4l6 6-9 9H5v-6l9-9z"/></svg>`,
-      "ส่งงานแล้ว": `<svg viewBox="0 0 24 24"><path d="M22 2L11 13"/><path d="M22 2l-7 20-4-9-9-4 20-7z"/></svg>`
-    };
-
-    function defaultOrders() {
-      return [
-        {
-          code: "HMW-240515",
-          customer: "ร้านกาแฟ Slow Bar",
-          type: "ป้ายกล่องไฟ 120 x 60 ซม.",
-          status: "กำลังทำ",
-          queue: 12,
-          note: "กำลังออกแบบแบบร่างแรก"
-        },
-        {
-          code: "HMW-240514",
-          customer: "ร้านอาหารบ้านสวน",
-          type: "ป้ายหน้าร้าน",
-          status: "เช็คงาน",
-          queue: 11,
-          note: "รอลูกค้าเช็กความถูกต้อง"
-        },
-        {
-          code: "HMW-240513",
-          customer: "The Chic",
-          type: "ป้ายไวนิล",
-          status: "แก้ไขงาน",
-          queue: 10,
-          note: "แก้สีตัวอักษรตามที่แจ้ง"
-        }
-      ];
-    }
-
-    function loadOrders() {
-      const saved = localStorage.getItem(STORAGE_KEY);
-      if (saved) return JSON.parse(saved);
-      return defaultOrders();
-    }
-
-    function saveOrders() {
-      localStorage.setItem(STORAGE_KEY, JSON.stringify(orders));
-      updateAll();
-    }
-
-    function loadSettings() {
-      const saved = localStorage.getItem(SETTINGS_KEY);
-      if (saved) return JSON.parse(saved);
-      return { maxQueue: 15 };
-    }
-
-    function saveSettings() {
-      localStorage.setItem(SETTINGS_KEY, JSON.stringify(settings));
-    }
-
-    function switchMode(mode) {
-      document.getElementById("guestPanel").classList.toggle("active", mode === "guest");
-      document.getElementById("adminPanel").classList.toggle("active", mode === "admin");
-
-      document.getElementById("guestBtn").classList.toggle("active", mode === "guest");
-      document.getElementById("adminBtn").classList.toggle("active", mode === "admin");
-
-      if (mode === "admin") {
-        if (adminLoggedIn) {
-          showAdminContent();
-        } else {
-          showAdminLock();
-          setTimeout(() => document.getElementById("adminPass").focus(), 100);
-        }
-      }
-
-      renderAdminOrders();
-    }
-
-    function loginAdmin() {
-      const pass = document.getElementById("adminPass").value.trim();
-
-      if (pass !== ADMIN_PASSWORD) {
-        alert("รหัสไม่ถูกต้อง");
-        return;
-      }
-
-      adminLoggedIn = true;
-      document.getElementById("adminPass").value = "";
-      showAdminContent();
-    }
-
-    function logoutAdmin() {
-      adminLoggedIn = false;
-      showAdminLock();
-    }
-
-    function showAdminLock() {
-      document.getElementById("adminLock").classList.add("active");
-      document.getElementById("adminContent").classList.remove("active");
-    }
-
-    function showAdminContent() {
-      document.getElementById("adminLock").classList.remove("active");
-      document.getElementById("adminContent").classList.add("active");
-      renderAdminOrders();
-    }
-
-    function getActiveOrders() {
-      return orders.filter(o => o.status !== "ส่งงานแล้ว");
-    }
-
-    function getWaitingCount() {
-      return getActiveOrders().length;
-    }
-
-    function getFreeCount() {
-      return Math.max(settings.maxQueue - getWaitingCount(), 0);
-    }
-
-    function updateSummary() {
-      document.getElementById("waitingCount").textContent = getWaitingCount();
-      document.getElementById("freeCount").textContent = getFreeCount();
-
-      document.getElementById("totalOrders").textContent = orders.length;
-      document.getElementById("adminWaitingCount").textContent = getWaitingCount();
-      document.getElementById("adminDoingCount").textContent = orders.filter(o => o.status === "กำลังทำ").length;
-      document.getElementById("adminFreeCount").textContent = getFreeCount();
-
-      document.getElementById("maxQueueInput").value = settings.maxQueue;
-      document.getElementById("lastUpdateText").textContent = "อัปเดตล่าสุด " + new Date().toLocaleTimeString("th-TH", {
-        hour: "2-digit",
-        minute: "2-digit"
-      }) + " น.";
-    }
-
-    function saveQueueSetting() {
-      const value = Number(document.getElementById("maxQueueInput").value);
-
-      if (!value || value < 1) {
-        alert("กรุณากรอกจำนวนคิวที่รับได้ให้ถูกต้อง");
-        return;
-      }
-
-      settings.maxQueue = value;
-      saveSettings();
-      updateAll();
-      alert("บันทึกจำนวนคิวเรียบร้อยแล้ว");
-    }
-
-    function getStepClass(orderStatus, stepName) {
-      const steps = ["ยังไม่ถึงคิว", "กำลังทำ", "เช็คงาน", "แก้ไขงาน", "ส่งงานแล้ว"];
-      const current = steps.indexOf(orderStatus);
-      const step = steps.indexOf(stepName);
-
-      if (step < current) return "done";
-      if (step === current) return "active";
-      return "";
-    }
-
-    function stepHTML(status) {
-      const steps = ["ยังไม่ถึงคิว", "กำลังทำ", "เช็คงาน", "แก้ไขงาน", "ส่งงานแล้ว"];
-
-      return `
-        <div class="steps">
-          ${steps.map(name => `
-            <div class="step ${getStepClass(status, name)}">
-              <div class="step-icon">${stepSvg[name]}</div>
-              ${name}
-            </div>
-          `).join("")}
-        </div>
-      `;
-    }
-
-    function renderDefaultSteps() {
-      document.getElementById("defaultSteps").innerHTML = stepHTML("กำลังทำ");
-    }
-
-    function searchOrder() {
-      const code = document.getElementById("searchCode").value.trim();
-      const order = orders.find(o => o.code.toLowerCase() === code.toLowerCase());
-      const box = document.getElementById("resultBox");
-
-      if (!code) {
-        alert("กรุณากรอกเลขออเดอร์");
-        return;
-      }
-
-      if (!order) {
-        box.innerHTML = `
-          <div class="card">
-            <b>ไม่พบออเดอร์นี้</b>
-            <p class="tiny">กรุณาตรวจสอบหมายเลขออเดอร์อีกครั้ง หรือติดต่อแอดมิน</p>
-          </div>
-        `;
-        return;
-      }
-
-      box.innerHTML = `
-        <div class="card">
-          <div class="order-head">
-            <div>
-              <b>${escapeHtml(order.code)}</b><br>
-              <span class="tiny">${escapeHtml(order.customer)}</span>
-            </div>
-            <div class="badge ${statusColors[order.status]}">${escapeHtml(order.status)}</div>
-          </div>
-
-          ${stepHTML(order.status)}
-
-          <div class="detail-row">
-            <span>ประเภทงาน</span>
-            <b>${escapeHtml(order.type || "-")}</b>
-          </div>
-          <div class="detail-row">
-            <span>ลำดับคิว</span>
-            <b>คิวที่ ${escapeHtml(String(order.queue || "-"))}</b>
-          </div>
-          <div class="detail-row">
-            <span>หมายเหตุ</span>
-            <b>${escapeHtml(order.note || "-")}</b>
-          </div>
-        </div>
-      `;
-    }
-
-    function renderAdminOrders() {
-      const box = document.getElementById("adminOrders");
-      if (!box) return;
-
-      let list = [...orders];
-
-      if (currentFilter !== "ทั้งหมด") {
-        list = list.filter(o => o.status === currentFilter);
-      }
-
-      list.sort((a, b) => Number(a.queue || 9999) - Number(b.queue || 9999));
-
-      if (list.length === 0) {
-        box.innerHTML = `<div class="empty">ยังไม่มีรายการในหมวดนี้</div>`;
-        return;
-      }
-
-      box.innerHTML = list.map(order => {
-        const index = orders.findIndex(o => o.code === order.code);
-
-        return `
-          <div class="order-card">
-            <div class="order-head">
-              <div>
-                <b>${escapeHtml(order.code)}</b><br>
-                <span class="tiny">${escapeHtml(order.customer)}</span>
-              </div>
-              <div class="badge ${statusColors[order.status]}">${escapeHtml(order.status)}</div>
-            </div>
-
-            <div class="tiny">${escapeHtml(order.type || "-")}</div>
-            ${stepHTML(order.status)}
-
-            <div class="detail-row">
-              <span>คิว</span>
-              <b>${escapeHtml(String(order.queue || "-"))}</b>
-            </div>
-            <div class="detail-row">
-              <span>หมายเหตุ</span>
-              <b>${escapeHtml(order.note || "-")}</b>
-            </div>
-
-            <div class="admin-actions">
-              <select onchange="updateStatus(${index}, this.value)">
-                <option ${order.status === "ยังไม่ถึงคิว" ? "selected" : ""}>ยังไม่ถึงคิว</option>
-                <option ${order.status === "กำลังทำ" ? "selected" : ""}>กำลังทำ</option>
-                <option ${order.status === "เช็คงาน" ? "selected" : ""}>เช็คงาน</option>
-                <option ${order.status === "แก้ไขงาน" ? "selected" : ""}>แก้ไขงาน</option>
-                <option ${order.status === "ส่งงานแล้ว" ? "selected" : ""}>ส่งงานแล้ว</option>
-              </select>
-
-              <button class="secondary" onclick="openEditModal(${index})">แก้ไข</button>
-              <button class="danger" onclick="deleteOrder(${index})">ลบ</button>
-            </div>
-          </div>
-        `;
-      }).join("");
-    }
-
-    function updateStatus(index, status) {
-      orders[index].status = status;
-      saveOrders();
-    }
-
-    function deleteOrder(index) {
-      if (confirm("ต้องการลบออเดอร์นี้ใช่ไหม?")) {
-        orders.splice(index, 1);
-        saveOrders();
-      }
-    }
-
-    function addOrder() {
-      const code = document.getElementById("newCode").value.trim();
-      const customer = document.getElementById("newCustomer").value.trim();
-      const type = document.getElementById("newType").value.trim();
-      const status = document.getElementById("newStatus").value;
-      const queue = document.getElementById("newQueue").value.trim();
-      const note = document.getElementById("newNote").value.trim();
-
-      if (!code || !customer) {
-        alert("กรุณากรอกเลขออเดอร์และชื่อลูกค้า");
-        return;
-      }
-
-      if (orders.some(o => o.code.toLowerCase() === code.toLowerCase())) {
-        alert("เลขออเดอร์นี้มีอยู่แล้ว");
-        return;
-      }
-
-      orders.unshift({
-        code,
-        customer,
-        type: type || "ยังไม่ระบุประเภทงาน",
-        status,
-        queue: queue || getWaitingCount() + 1,
-        note: note || "-"
-      });
-
-      document.getElementById("newCode").value = "";
-      document.getElementById("newCustomer").value = "";
-      document.getElementById("newType").value = "";
-      document.getElementById("newQueue").value = "";
-      document.getElementById("newNote").value = "";
-      document.getElementById("newStatus").value = "ยังไม่ถึงคิว";
-
-      saveOrders();
-      alert("เพิ่มออเดอร์เรียบร้อยแล้ว");
-    }
-
-    function openAddModal() {
-      if (!adminLoggedIn) {
-        switchMode("admin");
-        return;
-      }
-
-      editingIndex = null;
-      document.getElementById("modalTitle").textContent = "เพิ่มออเดอร์ใหม่";
-      document.getElementById("editCode").value = "";
-      document.getElementById("editCustomer").value = "";
-      document.getElementById("editType").value = "";
-      document.getElementById("editQueue").value = "";
-      document.getElementById("editStatus").value = "ยังไม่ถึงคิว";
-      document.getElementById("editNote").value = "";
-      document.getElementById("editModal").classList.add("active");
-    }
-
-    function openEditModal(index) {
-      editingIndex = index;
-      const order = orders[index];
-
-      document.getElementById("modalTitle").textContent = "แก้ไขออเดอร์";
-      document.getElementById("editCode").value = order.code || "";
-      document.getElementById("editCustomer").value = order.customer || "";
-      document.getElementById("editType").value = order.type || "";
-      document.getElementById("editQueue").value = order.queue || "";
-      document.getElementById("editStatus").value = order.status || "ยังไม่ถึงคิว";
-      document.getElementById("editNote").value = order.note || "";
-
-      document.getElementById("editModal").classList.add("active");
-    }
-
-    function closeEditModal() {
-      document.getElementById("editModal").classList.remove("active");
-      editingIndex = null;
-    }
-
-    function saveEditOrder() {
-      const code = document.getElementById("editCode").value.trim();
-      const customer = document.getElementById("editCustomer").value.trim();
-      const type = document.getElementById("editType").value.trim();
-      const queue = document.getElementById("editQueue").value.trim();
-      const status = document.getElementById("editStatus").value;
-      const note = document.getElementById("editNote").value.trim();
-
-      if (!code || !customer) {
-        alert("กรุณากรอกเลขออเดอร์และชื่อลูกค้า");
-        return;
-      }
-
-      const duplicate = orders.some((o, i) =>
-        o.code.toLowerCase() === code.toLowerCase() && i !== editingIndex
-      );
-
-      if (duplicate) {
-        alert("เลขออเดอร์นี้ซ้ำกับรายการอื่น");
-        return;
-      }
-
-      const data = {
-        code,
-        customer,
-        type: type || "ยังไม่ระบุประเภทงาน",
-        queue: queue || getWaitingCount() + 1,
-        status,
-        note: note || "-"
-      };
-
-      if (editingIndex === null) {
-        orders.unshift(data);
-      } else {
-        orders[editingIndex] = data;
-      }
-
-      saveOrders();
-      closeEditModal();
-    }
-
-    function filterStatus(status) {
-      currentFilter = status;
-      renderAdminOrders();
-    }
-
-    function updateAll() {
-      updateSummary();
-      renderDefaultSteps();
-      renderAdminOrders();
-    }
-
-    function escapeHtml(text) {
-      return String(text)
-        .replaceAll("&", "&amp;")
-        .replaceAll("<", "&lt;")
-        .replaceAll(">", "&gt;")
-        .replaceAll('"', "&quot;")
-        .replaceAll("'", "&#039;");
-    }
-
-    document.getElementById("searchCode").addEventListener("keydown", function(e) {
-      if (e.key === "Enter") searchOrder();
-    });
-
-    document.getElementById("adminPass").addEventListener("keydown", function(e) {
-      if (e.key === "Enter") loginAdmin();
-    });
-
-    updateAll();
-  </script>
+
+    <div class="card" style="margin-top:16px">
+      <h3>ช่องทางการติดต่อ</h3>
+      <div class="contact-item"><span class="contact-icon" id="icoFb"></span><div><b>Facebook</b><br><span class="small">Himawari Studio</span></div></div>
+      <div class="contact-item"><span class="contact-icon" id="icoIg"></span><div><b>Instagram</b><br><span class="small">@himawari.studio</span></div></div>
+      <div class="contact-item"><span class="contact-icon" id="icoLine"></span><div><b>LINE Official</b><br><span class="small">@himawari.studio</span></div></div>
+      <div class="contact-item"><span class="contact-icon" id="icoPhone"></span><div><b>Phone</b><br><span class="small">089-123-4567</span></div></div>
+    </div>
+  </section>
+
+  <section id="homePage" class="page active">
+    <div class="header">
+      <button class="icon-btn" onclick="logout()" title="ออกจากระบบ"><span id="icoMenu"></span></button>
+      <img src="Logo.png" class="logo-img" onerror="this.outerHTML='<b style=color:#f2528d>Himawari</b>'">
+      <button class="icon-btn"><span id="icoBell"></span></button>
+    </div>
+
+    <div class="hero">
+      <div>
+        <b id="welcomeText">สวัสดีค่ะ, Admin</b>
+        <p class="small" style="margin:4px 0 0">ยินดีต้อนรับกลับมา!</p>
+      </div>
+      <div class="hero-art"><span id="icoDesign"></span></div>
+    </div>
+
+    <div class="card" style="margin-top:14px">
+      <p class="small">คิวงานทั้งหมด</p>
+      <h1 style="color:var(--pink);margin:0"><span id="totalJobs">0</span> <small style="font-size:15px;color:#777">รายการ</small></h1>
+    </div>
+
+    <div class="stats">
+      <div class="stat"><span id="icoClock"></span><b id="waitCount">0</b><span>รอคิว</span></div>
+      <div class="stat"><span id="icoPencil"></span><b id="doingCount">0</b><span>กำลังทำ</span></div>
+      <div class="stat"><span id="icoSearch"></span><b id="checkCount">0</b><span>รอเช็คงาน</span></div>
+      <div class="stat"><span id="icoPaper"></span><b id="doneCount">0</b><span>ส่งงานแล้ว</span></div>
+    </div>
+
+    <div class="row">
+      <h3>คิวงานล่าสุด</h3>
+      <button class="btn-light btn" onclick="goPage('listPage')">ดูทั้งหมด</button>
+    </div>
+    <div id="latestJobs"></div>
+  </section>
+
+  <section id="searchPage" class="page">
+    <div class="header">
+      <button class="icon-btn" onclick="goPage('homePage')"><span id="icoBack1"></span></button>
+      <h3 style="margin:0">ค้นหาคิวงาน</h3>
+      <button class="icon-btn"><span id="icoFilter"></span></button>
+    </div>
+
+    <div class="searchbox">
+      <span id="icoSearchInput"></span>
+      <input id="searchInput" placeholder="ค้นหาด้วย ชื่อ เบอร์โทร ประเภทงาน..." oninput="renderJobs()">
+    </div>
+
+    <div class="chips" id="filterChips"></div>
+    <div id="searchJobs"></div>
+  </section>
+
+  <section id="addPage" class="page">
+    <div class="header">
+      <button class="icon-btn" onclick="goPage('homePage')"><span id="icoBack2"></span></button>
+      <h3 style="margin:0">เพิ่มคิวงาน</h3>
+      <span></span>
+    </div>
+
+    <div class="form-grid">
+      <input id="fCustomer" placeholder="ชื่อลูกค้า">
+      <input id="fPhone" placeholder="เบอร์โทร">
+      <select id="fChannel">
+        <option value="LINE">LINE</option>
+        <option value="Facebook">Facebook</option>
+        <option value="Instagram">Instagram</option>
+        <option value="อื่นๆ">อื่นๆ</option>
+      </select>
+      <input id="fType" placeholder="ประเภทงาน เช่น ป้ายไวนิล / โลโก้ / แบนเนอร์">
+      <textarea id="fDetail" placeholder="รายละเอียดงาน"></textarea>
+      <select id="fStatus">
+        <option value="รอคิว">รอคิว</option>
+        <option value="กำลังทำ">กำลังทำ</option>
+        <option value="รอเช็คงาน">รอเช็คงาน</option>
+        <option value="แก้ไขงาน">แก้ไขงาน</option>
+        <option value="ส่งงานแล้ว">ส่งงานแล้ว</option>
+      </select>
+      <div class="filebox">+ แนบไฟล์ / ชื่อไฟล์ตัวอย่าง</div>
+      <button class="btn" onclick="saveJob()">บันทึกคิวงาน</button>
+    </div>
+  </section>
+
+  <section id="listPage" class="page">
+    <div class="header">
+      <button class="icon-btn" onclick="goPage('homePage')"><span id="icoBack3"></span></button>
+      <h3 style="margin:0">คิวงานทั้งหมด</h3>
+      <span></span>
+    </div>
+
+    <div class="chips" id="listChips"></div>
+    <div id="allJobs"></div>
+  </section>
+
+  <section id="detailPage" class="page">
+    <div class="detail-top">
+      <div class="row">
+        <button class="icon-btn" style="color:white;background:transparent;border-color:rgba(255,255,255,.4)" onclick="goPage('listPage')"><span id="icoBack4"></span></button>
+        <button class="icon-btn" style="color:white;background:transparent;border-color:rgba(255,255,255,.4)" onclick="deleteCurrentJob()"><span id="icoTrash"></span></button>
+      </div>
+      <h1 id="dNumber" style="margin:22px 0 4px">001</h1>
+      <span id="dBadge" class="badge wait">รอคิว</span>
+    </div>
+
+    <div class="detail-card">
+      <h3 id="dTitle">รายละเอียดงาน</h3>
+      <p class="small" id="dType"></p>
+
+      <hr style="border:0;border-top:1px solid #ffe1eb">
+
+      <p><b>ลูกค้า</b><br><span id="dCustomer"></span></p>
+      <p><b>เบอร์โทร</b><br><span id="dPhone"></span></p>
+      <p><b>ช่องทางติดต่อ</b><br><span id="dChannel"></span></p>
+      <p><b>วันที่สร้างงาน</b><br><span id="dDate"></span></p>
+      <p><b>รายละเอียดงาน</b><br><span id="dDetail"></span></p>
+
+      <div class="filebox" style="text-align:left">IMG_001.jpg <span style="float:right">ดาวน์โหลด</span></div>
+
+      <div class="actions" style="display:flex;gap:10px;margin-top:16px">
+        <button class="btn btn-light" style="flex:1" onclick="editCurrentJob()">แก้ไขคิวงาน</button>
+        <button class="btn" style="flex:1" onclick="openStatusPage()">อัปเดตสถานะ</button>
+      </div>
+    </div>
+  </section>
+
+  <section id="statusPage" class="page">
+    <div class="header">
+      <button class="icon-btn" onclick="goPage('detailPage')"><span id="icoBack5"></span></button>
+      <h3 style="margin:0">อัปเดตสถานะงาน</h3>
+      <span></span>
+    </div>
+
+    <div class="card">
+      <b id="statusJobNo">001</b>
+      <p class="small" id="statusJobName"></p>
+    </div>
+
+    <div class="status-list" style="margin-top:14px" id="statusOptions"></div>
+    <button class="btn" style="width:100%" onclick="saveStatus()">บันทึก</button>
+  </section>
+
+  <section id="contactPage" class="page">
+    <div class="header">
+      <button class="icon-btn" onclick="goPage('homePage')"><span id="icoBack6"></span></button>
+      <h3 style="margin:0">ติดต่อเรา</h3>
+      <span></span>
+    </div>
+
+    <div class="hero" style="margin-bottom:16px">
+      <div>
+        <b>สอบถามงานได้เลย</b>
+        <p class="small">พร้อมให้บริการค่ะ</p>
+      </div>
+      <div class="hero-art"><span id="icoChat"></span></div>
+    </div>
+
+    <div class="card">
+      <div class="contact-item"><span class="contact-icon" id="cFb"></span><div><b>Facebook</b><br><span class="small">Himawari Studio</span></div></div>
+      <div class="contact-item"><span class="contact-icon" id="cIg"></span><div><b>Instagram</b><br><span class="small">@himawari.studio</span></div></div>
+      <div class="contact-item"><span class="contact-icon" id="cLine"></span><div><b>LINE Official</b><br><span class="small">@himawari.studio</span></div></div>
+      <div class="contact-item"><span class="contact-icon" id="cEmail"></span><div><b>Email</b><br><span class="small">himawari.studio@gmail.com</span></div></div>
+      <div class="contact-item"><span class="contact-icon" id="cPhone"></span><div><b>Phone</b><br><span class="small">089-123-4567</span></div></div>
+    </div>
+  </section>
+
+  <nav id="bottomNav" class="bottom" style="display:none">
+    <div class="nav active" onclick="navGo('homePage',this)"><span id="navHome"></span>หน้าแรก</div>
+    <div class="nav" onclick="navGo('listPage',this)"><span id="navCal"></span>คิวงาน</div>
+    <div class="nav" onclick="goAdd()"><div class="fab"><span id="navPlus"></span></div></div>
+    <div class="nav" onclick="navGo('searchPage',this)"><span id="navSearch"></span>ค้นหา</div>
+    <div class="nav" onclick="navGo('contactPage',this)"><span id="navContact"></span>ติดต่อ</div>
+  </nav>
+
+</div>
+
+<script>
+const icons = {
+user:`<svg fill="none" viewBox="0 0 24 24"><path d="M20 21a8 8 0 0 0-16 0"/><circle cx="12" cy="7" r="4"/></svg>`,
+lock:`<svg fill="none" viewBox="0 0 24 24"><rect x="5" y="10" width="14" height="10" rx="2"/><path d="M8 10V7a4 4 0 0 1 8 0v3"/></svg>`,
+menu:`<svg fill="none" viewBox="0 0 24 24"><path d="M4 7h16M4 12h16M4 17h16"/></svg>`,
+bell:`<svg fill="none" viewBox="0 0 24 24"><path d="M18 8a6 6 0 0 0-12 0c0 7-3 7-3 9h18c0-2-3-2-3-9"/><path d="M10 21h4"/></svg>`,
+back:`<svg fill="none" viewBox="0 0 24 24"><path d="M15 18l-6-6 6-6"/></svg>`,
+filter:`<svg fill="none" viewBox="0 0 24 24"><path d="M4 5h16l-6 7v5l-4 2v-7z"/></svg>`,
+search:`<svg fill="none" viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3-3"/></svg>`,
+plus:`<svg fill="none" viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></svg>`,
+home:`<svg fill="none" viewBox="0 0 24 24"><path d="M3 11l9-8 9 8"/><path d="M5 10v10h14V10"/></svg>`,
+cal:`<svg fill="none" viewBox="0 0 24 24"><rect x="4" y="5" width="16" height="15" rx="2"/><path d="M8 3v4M16 3v4M4 10h16"/></svg>`,
+phone:`<svg fill="none" viewBox="0 0 24 24"><path d="M22 16.9v3a2 2 0 0 1-2.2 2 19.8 19.8 0 0 1-8.6-3.1 19.5 19.5 0 0 1-6-6A19.8 19.8 0 0 1 2.1 4.2 2 2 0 0 1 4.1 2h3a2 2 0 0 1 2 1.7c.1 1 .4 2 .7 2.8a2 2 0 0 1-.5 2.1L8 9.9a16 16 0 0 0 6 6l1.3-1.3a2 2 0 0 1 2.1-.5c.9.3 1.8.6 2.8.7a2 2 0 0 1 1.8 2.1z"/></svg>`,
+clock:`<svg fill="none" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 7v6l4 2"/></svg>`,
+pencil:`<svg fill="none" viewBox="0 0 24 24"><path d="M12 20h9"/><path d="M16.5 3.5a2.1 2.1 0 0 1 3 3L7 19l-4 1 1-4z"/></svg>`,
+paper:`<svg fill="none" viewBox="0 0 24 24"><path d="M22 2L11 13"/><path d="M22 2l-7 20-4-9-9-4z"/></svg>`,
+trash:`<svg fill="none" viewBox="0 0 24 24"><path d="M3 6h18M8 6V4h8v2M19 6l-1 14H6L5 6"/></svg>`,
+bag:`<svg fill="none" viewBox="0 0 24 24"><rect x="5" y="7" width="14" height="13" rx="2"/><path d="M9 7a3 3 0 0 1 6 0"/></svg>`,
+design:`<svg fill="none" viewBox="0 0 24 24"><path d="M4 20h16"/><rect x="6" y="4" width="12" height="10" rx="2"/><path d="M9 18h6"/></svg>`,
+chat:`<svg fill="none" viewBox="0 0 24 24"><path d="M21 15a4 4 0 0 1-4 4H8l-5 3V7a4 4 0 0 1 4-4h10a4 4 0 0 1 4 4z"/></svg>`
+};
+
+function setIcon(id,key){ const el=document.getElementById(id); if(el) el.innerHTML=icons[key]; }
+[
+["icoUser","user"],["icoLock","lock"],["icoMenu","menu"],["icoBell","bell"],["icoBack1","back"],["icoBack2","back"],["icoBack3","back"],["icoBack4","back"],["icoBack5","back"],["icoBack6","back"],["icoFilter","filter"],["icoSearchInput","search"],["icoTrash","trash"],["icoClock","clock"],["icoPencil","pencil"],["icoSearch","search"],["icoPaper","paper"],["icoDesign","design"],["icoChat","chat"],["navHome","home"],["navCal","cal"],["navPlus","plus"],["navSearch","search"],["navContact","phone"],["icoFb","phone"],["icoIg","phone"],["icoLine","phone"],["icoPhone","phone"],["cFb","phone"],["cIg","phone"],["cLine","phone"],["cEmail","phone"],["cPhone","phone"]
+].forEach(x=>setIcon(x[0],x[1]));
+
+const statuses = ["ทั้งหมด","รอคิว","กำลังทำ","รอเช็คงาน","แก้ไขงาน","ส่งงานแล้ว"];
+let currentFilter = "ทั้งหมด";
+let currentJobId = null;
+let tempStatus = null;
+let role = localStorage.getItem("himawari_role") || "";
+
+let jobs = JSON.parse(localStorage.getItem("himawari_jobs")) || [
+  {id:1,no:"032",customer:"คุณน้ำฝน",phone:"096-123-XXXX",channel:"LINE",type:"ออกแบบป้ายไวนิลร้านกาแฟ",detail:"ขนาด 2x1 เมตร โทนไม่น่าเบื่อ สดใส มินิมอล",status:"รอคิว",date:"20 พ.ค. 2567 14:30 น."},
+  {id:2,no:"031",customer:"คุณมายด์",phone:"082-345-XXXX",channel:"Facebook",type:"ออกแบบโลโก้แบรนด์เสื้อผ้า",detail:"แนว minimal สำหรับแบรนด์วัยรุ่น",status:"กำลังทำ",date:"20 พ.ค. 2567 11:15 น."},
+  {id:3,no:"030",customer:"คุณแอน",phone:"094-567-XXXX",channel:"Instagram",type:"ออกแบบแบนเนอร์ออนไลน์",detail:"ขนาด 1200x628 px สำหรับโปรโมชัน",status:"รอเช็คงาน",date:"19 พ.ค. 2567 16:40 น."},
+  {id:4,no:"029",customer:"คุณบี",phone:"061-789-XXXX",channel:"LINE",type:"แก้งานป้ายร้าน",detail:"ปรับโทนสีและข้อความ",status:"แก้ไขงาน",date:"19 พ.ค. 2567 09:20 น."}
+];
+
+function saveLocal(){ localStorage.setItem("himawari_jobs",JSON.stringify(jobs)); }
+
+function showAdminLogin(){ adminBox.style.display = adminBox.style.display==="none" ? "block" : "none"; }
+function loginGuest(){ role="guest"; localStorage.setItem("himawari_role",role); startApp(); }
+function loginAdmin(){
+  if(adminPass.value==="2001"){
+    role="admin"; localStorage.setItem("himawari_role",role); startApp();
+  }else alert("รหัสไม่ถูกต้อง");
+}
+function logout(){
+  localStorage.removeItem("himawari_role");
+  location.reload();
+}
+function startApp(){
+  loginPage.style.display="none";
+  bottomNav.style.display="grid";
+  welcomeText.innerText = role==="admin" ? "สวัสดีค่ะ, Admin" : "สวัสดีค่ะ, Guest";
+  renderAll();
+}
+if(role) startApp();
+
+function goPage(id){
+  document.querySelectorAll(".page").forEach(p=>p.classList.remove("active"));
+  document.getElementById(id).classList.add("active");
+  renderAll();
+}
+function navGo(id,el){
+  document.querySelectorAll(".nav").forEach(n=>n.classList.remove("active"));
+  el.classList.add("active");
+  goPage(id);
+}
+function goAdd(){
+  if(role!=="admin") return alert("Guest ดูข้อมูลได้อย่างเดียว ต้องเข้า Admin เพื่อเพิ่มคิวงาน");
+  goPage("addPage");
+}
+
+function statusClass(s){
+  return s==="รอคิว"?"wait":s==="กำลังทำ"?"doing":s==="รอเช็คงาน"?"check":s==="แก้ไขงาน"?"edit":"done";
+}
+function statusIcon(s){
+  if(s==="รอคิว") return icons.clock;
+  if(s==="กำลังทำ") return icons.pencil;
+  if(s==="รอเช็คงาน") return icons.search;
+  if(s==="แก้ไขงาน") return icons.pencil;
+  return icons.paper;
+}
+function makeJobCard(j){
+  return `
+  <div class="job" onclick="openDetail(${j.id})">
+    <div class="job-icon ${statusClass(j.status)}">${statusIcon(j.status)}</div>
+    <div class="job-info">
+      <div class="row">
+        <b style="color:var(--pink)">${j.no}</b>
+        <span class="badge ${statusClass(j.status)}">${j.status}</span>
+      </div>
+      <div class="job-title">${j.type}</div>
+      <div class="small">${j.customer}<br>${j.date}</div>
+    </div>
+  </div>`;
+}
+function renderChips(target){
+  document.getElementById(target).innerHTML = statuses.map(s=>`
+    <button class="chip ${currentFilter===s?'active':''}" onclick="currentFilter='${s}';renderAll()">${s}</button>
+  `).join("");
+}
+function filteredJobs(){
+  const q = (searchInput?.value || "").toLowerCase();
+  return jobs.filter(j=>{
+    const matchFilter = currentFilter==="ทั้งหมด" || j.status===currentFilter;
+    const text = `${j.no} ${j.customer} ${j.phone} ${j.channel} ${j.type} ${j.detail} ${j.status}`.toLowerCase();
+    return matchFilter && text.includes(q);
+  });
+}
+function renderJobs(){
+  const list = filteredJobs();
+  searchJobs.innerHTML = list.length ? list.map(makeJobCard).join("") : `<div class="empty">ไม่พบคิวงาน</div>`;
+  allJobs.innerHTML = list.length ? list.map(makeJobCard).join("") : `<div class="empty">ไม่มีรายการ</div>`;
+}
+function renderAll(){
+  totalJobs.innerText=jobs.length;
+  waitCount.innerText=jobs.filter(j=>j.status==="รอคิว").length;
+  doingCount.innerText=jobs.filter(j=>j.status==="กำลังทำ").length;
+  checkCount.innerText=jobs.filter(j=>j.status==="รอเช็คงาน").length;
+  doneCount.innerText=jobs.filter(j=>j.status==="ส่งงานแล้ว").length;
+  latestJobs.innerHTML = jobs.slice(0,3).map(makeJobCard).join("");
+  renderChips("filterChips");
+  renderChips("listChips");
+  renderJobs();
+}
+
+function saveJob(){
+  if(role!=="admin") return alert("เฉพาะ Admin เท่านั้น");
+  if(!fCustomer.value || !fType.value) return alert("กรอกชื่อลูกค้าและประเภทงานก่อนนะ");
+  const next = jobs.length ? Math.max(...jobs.map(j=>Number(j.no)))+1 : 1;
+  const no = String(next).padStart(3,"0");
+  const now = new Date();
+  const date = now.toLocaleDateString("th-TH",{day:"numeric",month:"short",year:"numeric"})+" "+now.toLocaleTimeString("th-TH",{hour:"2-digit",minute:"2-digit"})+" น.";
+  jobs.unshift({
+    id:Date.now(),
+    no,
+    customer:fCustomer.value,
+    phone:fPhone.value || "-",
+    channel:fChannel.value,
+    type:fType.value,
+    detail:fDetail.value || "-",
+    status:fStatus.value,
+    date
+  });
+  saveLocal();
+  fCustomer.value=fPhone.value=fType.value=fDetail.value="";
+  fChannel.value="LINE";
+  fStatus.value="รอคิว";
+  goPage("homePage");
+}
+function openDetail(id){
+  currentJobId=id;
+  const j=jobs.find(x=>x.id===id);
+  if(!j) return;
+  dNumber.innerText=j.no;
+  dBadge.innerText=j.status;
+  dBadge.className="badge "+statusClass(j.status);
+  dTitle.innerText=j.type;
+  dType.innerText=j.status;
+  dCustomer.innerText=j.customer;
+  dPhone.innerText=j.phone;
+  dChannel.innerText=j.channel;
+  dDate.innerText=j.date;
+  dDetail.innerText=j.detail;
+  goPage("detailPage");
+}
+function openStatusPage(){
+  if(role!=="admin") return alert("Guest ดูข้อมูลได้อย่างเดียว ต้องเข้า Admin เพื่ออัปเดตสถานะ");
+  const j=jobs.find(x=>x.id===currentJobId);
+  tempStatus=j.status;
+  statusJobNo.innerText=j.no;
+  statusJobName.innerText=j.type;
+  renderStatusOptions();
+  goPage("statusPage");
+}
+function renderStatusOptions(){
+  statusOptions.innerHTML = statuses.filter(s=>s!=="ทั้งหมด").map(s=>`
+    <div class="status-option ${tempStatus===s?'active':''}" onclick="tempStatus='${s}';renderStatusOptions()">
+      <div class="status-dot ${statusClass(s)}">${statusIcon(s)}</div>
+      <div><b>${s}</b><br><span class="small">${statusDesc(s)}</span></div>
+    </div>
+  `).join("");
+}
+function statusDesc(s){
+  return {
+    "รอคิว":"รอถึงคิวประมาณ 1-3 วัน",
+    "กำลังทำ":"กำลังออกแบบงานแล้ว",
+    "รอเช็คงาน":"รอตรวจสอบจากลูกค้า",
+    "แก้ไขงาน":"ปรับแก้ไขตามที่ลูกค้าแจ้ง",
+    "ส่งงานแล้ว":"ส่งมอบงานเรียบร้อย"
+  }[s];
+}
+function saveStatus(){
+  const j=jobs.find(x=>x.id===currentJobId);
+  j.status=tempStatus;
+  saveLocal();
+  openDetail(currentJobId);
+}
+function deleteCurrentJob(){
+  if(role!=="admin") return alert("เฉพาะ Admin เท่านั้น");
+  if(confirm("ต้องการลบคิวงานนี้ใช่ไหม?")){
+    jobs=jobs.filter(j=>j.id!==currentJobId);
+    saveLocal();
+    goPage("listPage");
+  }
+}
+function editCurrentJob(){
+  if(role!=="admin") return alert("เฉพาะ Admin เท่านั้น");
+  const j=jobs.find(x=>x.id===currentJobId);
+  fCustomer.value=j.customer;
+  fPhone.value=j.phone;
+  fChannel.value=j.channel;
+  fType.value=j.type;
+  fDetail.value=j.detail;
+  fStatus.value=j.status;
+  jobs=jobs.filter(x=>x.id!==currentJobId);
+  saveLocal();
+  goPage("addPage");
+}
+</script>
 </body>
 </html>
