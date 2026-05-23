@@ -1,757 +1,285 @@
 <!DOCTYPE html>
 <html lang="th">
 <head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>Himawari Studio Queue</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="format-detection" content="telephone=no">
+    <title>Himawari - Made with ♡</title>
+    <link href="https://fonts.googleapis.com/css2?family=Mitr:wght@300;400;500&family=Prompt:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-gradient: linear-gradient(135deg, #FFEBF3 0%, #FFFFFF 100%);
+            --main-pink: #F6A5C9;
+            --dark-pink: #E889B5;
+            --text-mauve: #E889B5;
+            --text-mauve-dark: #C46793;
+            --white: #FFFFFF;
+            --glass-bg: rgba(255, 255, 255, 0.75);
+            --glass-border: rgba(255, 255, 255, 0.5);
+            --glass-shadow: 0 8px 32px rgba(232, 137, 181, 0.15);
+            
+            --font-thai: 'Mitr', sans-serif;
+            --font-eng: 'Prompt', sans-serif;
+        }
 
-<link href="https://fonts.googleapis.com/css2?family=Prompt:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        
+        body {
+            font-family: var(--font-thai); 
+            background: var(--bg-gradient);
+            background-attachment: fixed;
+            color: var(--dark-pink);
+            display: flex;
+            justify-content: center;
+            align-items: flex-start;
+            min-height: 100vh;
+            padding: 20px 15px 80px;
+            overflow-x: hidden;
+        }
 
-<style>
-:root{
-  --pink:#f2528d;
-  --pink2:#ff8db6;
-  --soft:#fff3f8;
-  --soft2:#ffe4ee;
-  --text:#292633;
-  --muted:#8e8794;
-  --line:#ffd0df;
-  --blue:#66a9ff;
-  --orange:#ffae43;
-  --purple:#b48cff;
-  --green:#51ce8b;
-  --shadow:0 14px 35px rgba(242,82,141,.16);
-}
-*{box-sizing:border-box}
-body{
-  margin:0;
-font-family:"Prompt",sans-serif;
-  color:var(--text);
-  background:linear-gradient(160deg,#fff4f9,#fff,#ffeef5);
-}
-.app{
-  max-width:430px;
-  min-height:100vh;
-  margin:auto;
-  background:#fff;
-  position:relative;
-  overflow:hidden;
-}
-.page{
-  display:none;
-  padding:18px 18px 90px;
-  min-height:100vh;
-}
-.page.active{display:block}
-.logo-img{
-  height:42px;
-  object-fit:contain;
-}
-.logo-center{
-  display:block;
-  height:70px;
-  margin:0 auto 10px;
-}
-.card{
-  background:#fff;
-  border:1px solid var(--line);
-  border-radius:24px;
-  box-shadow:var(--shadow);
-  padding:16px;
-}
-.btn{
-  border:0;
-  border-radius:18px;
-  padding:13px 16px;
-  font-family:inherit;
-  font-weight:600;
-  cursor:pointer;
-  background:linear-gradient(135deg,var(--pink),var(--pink2));
-  color:#fff;
-  box-shadow:0 8px 20px rgba(242,82,141,.25);
-}
-.btn-light{
-  background:#fff;
-  color:var(--pink);
-  border:1px solid var(--line);
-  box-shadow:none;
-}
-input,select,textarea{
-  width:100%;
-  border:1px solid var(--line);
-  border-radius:16px;
-  padding:13px 14px;
-  font-family:inherit;
-  outline:none;
-  background:#fff;
-}
-textarea{min-height:90px;resize:none}
-h1,h2,h3,p{margin-top:0}
-.small{font-size:13px;color:var(--muted)}
-.row{display:flex;align-items:center;justify-content:space-between;gap:10px}
-.header{
-  display:flex;
-  align-items:center;
-  justify-content:space-between;
-  margin-bottom:16px;
-}
-.icon-btn{
-  width:38px;height:38px;
-  border-radius:14px;
-  border:1px solid var(--line);
-  background:#fff;
-  display:grid;
-  place-items:center;
-  cursor:pointer;
-}
-.hero{
-  background:linear-gradient(135deg,#ffe5ef,#fff8fb);
-  border-radius:24px;
-  padding:16px;
-  display:flex;
-  align-items:center;
-  justify-content:space-between;
-  border:1px solid var(--line);
-}
-.hero-art{
-  width:80px;height:80px;border-radius:50%;
-  background:linear-gradient(135deg,#ffd3e3,#fff);
-  display:grid;
-  place-items:center;
-}
-.stats{
-  display:grid;
-  grid-template-columns:repeat(2,1fr);
-  gap:12px;
-  margin:14px 0;
-}
-.stat{
-  border:1px solid var(--line);
-  border-radius:22px;
-  padding:14px;
-  background:#fff;
-  box-shadow:0 10px 24px rgba(242,82,141,.08);
-}
-.stat b{
-  display:block;
-  font-size:26px;
-  color:var(--pink);
-}
-.stat svg{width:28px;height:28px}
-.job{
-  display:flex;
-  gap:12px;
-  align-items:center;
-  border:1px solid var(--line);
-  border-radius:22px;
-  padding:13px;
-  margin-bottom:12px;
-  background:#fff;
-}
-.job-icon{
-  width:48px;height:48px;
-  border-radius:18px;
-  display:grid;
-  place-items:center;
-  flex:none;
-}
-.job-icon svg{width:26px;height:26px}
-.job-info{flex:1}
-.job-title{font-weight:700;font-size:14px}
-.badge{
-  display:inline-block;
-  padding:4px 10px;
-  border-radius:999px;
-  font-size:12px;
-  font-weight:600;
-}
-.wait{background:#ffe8ef;color:var(--pink)}
-.doing{background:#fff0d8;color:#ee8d19}
-.check{background:#e8f2ff;color:#347ddd}
-.edit{background:#f1e8ff;color:#8656dd}
-.done{background:#e6fff1;color:#25a860}
-.searchbox{
-  position:relative;
-  margin-bottom:12px;
-}
-.searchbox input{padding-left:42px}
-.searchbox svg{
-  position:absolute;
-  left:14px;
-  top:12px;
-  width:20px;
-  height:20px;
-  color:var(--muted);
-}
-.chips{
-  display:flex;
-  gap:8px;
-  overflow:auto;
-  padding-bottom:8px;
-}
-.chip{
-  white-space:nowrap;
-  border:1px solid var(--line);
-  background:#fff;
-  color:#555;
-  padding:8px 14px;
-  border-radius:999px;
-  font-size:13px;
-  cursor:pointer;
-}
-.chip.active{
-  background:var(--pink);
-  color:#fff;
-  border-color:var(--pink);
-}
-.bottom{
-  position:fixed;
-  left:50%;
-  transform:translateX(-50%);
-  bottom:0;
-  width:100%;
-  max-width:430px;
-  background:rgba(255,255,255,.96);
-  border-top:1px solid var(--line);
-  display:grid;
-  grid-template-columns:repeat(5,1fr);
-  padding:8px 6px 12px;
-  z-index:40;
-}
-.nav{
-  text-align:center;
-  font-size:11px;
-  color:#777;
-  cursor:pointer;
-}
-.nav svg{
-  width:21px;height:21px;
-  display:block;
-  margin:0 auto 2px;
-}
-.nav.active{color:var(--pink);font-weight:700}
-.fab{
-  width:56px;height:56px;
-  margin:-28px auto 0;
-  border-radius:50%;
-  background:linear-gradient(135deg,var(--pink),var(--pink2));
-  color:#fff;
-  display:grid;
-  place-items:center;
-  box-shadow:var(--shadow);
-}
-.fab svg{width:26px;height:26px}
-.login{
-  min-height:100vh;
-  padding:34px 24px;
-  display:flex;
-  flex-direction:column;
-  justify-content:center;
-}
-.login-title{text-align:center;margin-bottom:22px}
-.login-title h1{
-  color:var(--pink);
-  font-size:36px;
-  margin:0;
-}
-.mode-btn{
-  display:flex;
-  align-items:center;
-  gap:12px;
-  width:100%;
-  margin-bottom:12px;
-}
-.contact-item{
-  display:flex;
-  gap:12px;
-  align-items:center;
-  padding:13px 0;
-  border-bottom:1px solid #ffe5ee;
-}
-.contact-icon{
-  width:40px;height:40px;border-radius:50%;
-  background:var(--pink);
-  color:white;
-  display:grid;
-  place-items:center;
-}
-.status-list .status-option{
-  display:flex;
-  align-items:center;
-  gap:12px;
-  border:1px solid var(--line);
-  padding:12px;
-  border-radius:18px;
-  margin-bottom:10px;
-  cursor:pointer;
-}
-.status-option.active{background:#fff1f6;border-color:var(--pink)}
-.status-dot{
-  width:38px;height:38px;border-radius:15px;
-  display:grid;place-items:center;
-}
-.detail-top{
-  background:linear-gradient(135deg,var(--pink),#ff9bc0);
-  color:white;
-  margin:-18px -18px 0;
-  padding:22px 18px 44px;
-  border-radius:0 0 28px 28px;
-}
-.detail-card{
-  margin-top:-28px;
-  background:white;
-  border-radius:26px;
-  padding:18px;
-  box-shadow:var(--shadow);
-}
-.form-grid{display:grid;gap:12px}
-.filebox{
-  border:1px dashed var(--line);
-  background:#fff8fb;
-  padding:13px;
-  border-radius:16px;
-  text-align:center;
-  color:var(--pink);
-}
-.empty{
-  padding:22px;
-  text-align:center;
-  color:var(--muted);
-}
-svg{stroke:currentColor}
-</style>
+        /* --- HEARTS ANIMATION --- */
+        .background-hearts { position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; z-index: -1; pointer-events: none; }
+        .heart { position: absolute; background-image: url('heart.png'); background-size: contain; background-repeat: no-repeat; opacity: 0.6; animation: float-around ease-in-out infinite; }
+        @keyframes float-around { 0% { transform: translateY(0) translateX(0) scale(1); } 33% { transform: translateY(-30px) translateX(20px) scale(1.1); } 66% { transform: translateY(20px) translateX(-20px) scale(0.9); } 100% { transform: translateY(0) translateX(0) scale(1); } }
+        .heart-1 { top: 10%; left: 10%; width: 50px; height: 50px; animation-duration: 18s; } .heart-2 { top: 75%; left: 85%; width: 65px; height: 65px; animation-duration: 22s; } .heart-3 { top: 40%; left: 20%; width: 40px; height: 40px; animation-duration: 16s; animation-delay: -5s; }
+
+        .container { max-width: 480px; width: 100%; display: flex; flex-direction: column; gap: 20px; z-index: 1; }
+
+        /* --- GLASSMORPHISM CARDS --- */
+        .glass-card {
+            background: var(--glass-bg);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid var(--glass-border);
+            border-radius: 24px;
+            padding: 25px 20px;
+            box-shadow: var(--glass-shadow);
+            transition: transform 0.3s ease;
+        }
+
+        .section-title { font-family: var(--font-eng); color: var(--dark-pink); font-size: 18px; font-weight: 600; text-align: center; margin-bottom: 20px; display: flex; align-items: center; justify-content: center; gap: 8px; letter-spacing: 0.5px; }
+
+        /* --- HEADER --- */
+        .header { text-align: center; display: flex; flex-direction: column; align-items: center; gap: 10px; padding-top: 10px; }
+        .profile-img { width: 120px; height: 120px; border-radius: 50%; object-fit: cover; border: 4px solid var(--white); box-shadow: var(--glass-shadow); }
+        .brand-name { font-family: var(--font-eng); font-size: 32px; font-weight: 600; background: linear-gradient(45deg, #F6A5C9, #E889B5, #FFC1D9); background-size: 200%; -webkit-background-clip: text; -webkit-text-fill-color: transparent; animation: shift 3s ease infinite; }
+        @keyframes shift { 0% { background-position: 0% 50%; } 50% { background-position: 100% 50%; } 100% { background-position: 0% 50%; } }
+        .badge-wrap { display: flex; gap: 8px; justify-content: center; flex-wrap: wrap; margin-top: 5px; }
+        .badge { background: var(--white); color: var(--text-mauve-dark); border-radius: 50px; padding: 6px 14px; font-size: 13px; box-shadow: 0 2px 8px rgba(232, 137, 181, 0.1); border: 1px solid #FFEBF3; }
+
+        /* --- BUTTONS --- */
+        .btn-modern {
+            font-family: var(--font-eng); display: flex; align-items: center; justify-content: center; gap: 8px; width: 100%; padding: 16px; border-radius: 16px; font-weight: 500; font-size: 15px; text-decoration: none; cursor: pointer; border: none; transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+        }
+        .btn-primary { background: linear-gradient(135deg, #FFA6C9, #F385B4); color: var(--white); box-shadow: 0 8px 20px rgba(243, 133, 180, 0.3); }
+        .btn-primary:hover { transform: translateY(-3px); box-shadow: 0 12px 25px rgba(243, 133, 180, 0.4); }
+        .btn-outline { background: rgba(255, 255, 255, 0.8); color: var(--dark-pink); border: 1.5px dashed var(--main-pink); box-shadow: 0 4px 12px rgba(232, 137, 181, 0.05); }
+        .btn-outline:hover { transform: translateY(-2px); border-style: solid; background: var(--white); box-shadow: 0 8px 20px rgba(232, 137, 181, 0.15); }
+
+        /* --- APP TABS (GUEST / ADMIN) --- */
+        .tab-container { background: rgba(255, 255, 255, 0.6); border-radius: 20px; padding: 5px; display: flex; position: relative; margin-bottom: 20px; border: 1px solid var(--glass-border); }
+        .tab-btn { flex: 1; text-align: center; padding: 12px; font-family: var(--font-eng); font-size: 14px; font-weight: 500; color: var(--text-mauve-dark); cursor: pointer; border-radius: 16px; transition: 0.3s; z-index: 2; position: relative; }
+        .tab-btn.active { color: var(--white); }
+        .tab-indicator { position: absolute; top: 5px; left: 5px; width: calc(50% - 5px); height: calc(100% - 10px); background: linear-gradient(135deg, #FFA6C9, #F385B4); border-radius: 16px; transition: 0.3s cubic-bezier(0.25, 0.8, 0.25, 1); z-index: 1; box-shadow: 0 4px 10px rgba(243, 133, 180, 0.3); }
+
+        /* --- QUEUE SYSTEM (MOCKUP) --- */
+        .queue-box { background: var(--white); border-radius: 16px; padding: 15px; margin-bottom: 10px; border: 1px solid #FFEBF3; display: flex; justify-content: space-between; align-items: center; }
+        .q-info { display: flex; flex-direction: column; }
+        .q-name { font-family: var(--font-eng); font-weight: 600; color: var(--dark-pink); font-size: 15px; }
+        .q-type { font-size: 12px; color: var(--text-mauve-dark); }
+        .q-status { padding: 4px 12px; border-radius: 50px; font-size: 11px; font-family: var(--font-eng); font-weight: 500; }
+        .status-waiting { background: #FFF0F6; color: #F6A5C9; border: 1px solid #F6A5C9; }
+        .status-working { background: #E8F5E9; color: #4CAF50; border: 1px solid #4CAF50; }
+
+        /* Form Admin */
+        .admin-form { display: none; flex-direction: column; gap: 10px; }
+        .input-box { width: 100%; padding: 14px 16px; border-radius: 12px; border: 1px solid #FFEBF3; background: var(--white); font-family: var(--font-thai); color: var(--dark-pink); font-size: 14px; outline: none; }
+        .input-box:focus { border-color: var(--main-pink); box-shadow: 0 0 0 3px rgba(246, 165, 201, 0.2); }
+
+        /* --- HIDDEN SECTIONS --- */
+        .view-section { display: none; animation: fadeIn 0.4s ease; }
+        .view-section.active { display: block; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+
+        /* --- PRICES & LISTS --- */
+        .modern-list { display: flex; flex-direction: column; gap: 12px; }
+        .m-item { display: flex; align-items: flex-start; gap: 12px; font-size: 14px; line-height: 1.6; }
+        .m-icon { color: var(--main-pink); font-size: 18px; margin-top: -2px; }
+        .price-row { display: flex; justify-content: space-between; padding: 12px 0; border-bottom: 1px dashed #FFEBF3; }
+        .price-row:last-child { border-bottom: none; }
+        .p-price { font-family: var(--font-eng); font-weight: 500; background: var(--white); padding: 4px 12px; border-radius: 12px; box-shadow: 0 2px 8px rgba(0,0,0,0.04); color: var(--main-pink); }
+
+        /* --- GRIDS --- */
+        .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+        .showcase-card { background: var(--white); border-radius: 16px; padding: 8px; text-decoration: none; border: 1px solid #FFEBF3; transition: 0.3s; }
+        .showcase-card:hover { transform: translateY(-4px); border-color: var(--main-pink); box-shadow: 0 8px 15px rgba(232,137,181,0.15); }
+        .showcase-card img { width: 100%; height: 120px; object-fit: cover; border-radius: 12px; }
+        .showcase-text { text-align: center; padding: 8px 0 4px; }
+        .showcase-text h4 { font-family: var(--font-eng); font-size: 14px; color: var(--dark-pink); }
+        .showcase-text p { font-size: 11px; color: var(--text-mauve); }
+
+    </style>
 </head>
-
 <body>
-<div class="app">
 
-  <section id="loginPage" class="login">
-    <div class="login-title">
-      <img src="Logo.png" class="logo-center" onerror="this.style.display='none'">
-      <h1>Himawari</h1>
-      <p class="small">รับออกแบบป้าย โลโก้ สื่อออนไลน์ และงานกราฟิกทุกประเภท</p>
+    <div class="background-hearts">
+        <div class="heart heart-1"></div><div class="heart heart-2"></div><div class="heart heart-3"></div>
     </div>
 
-    <div class="card">
-      <h3>เข้าสู่ระบบ</h3>
-      <button class="btn mode-btn" onclick="loginGuest()">
-        <span id="icoUser"></span> Guest เข้าสู่ระบบ
-      </button>
-      <button class="btn btn-light mode-btn" onclick="showAdminLogin()">
-        <span id="icoLock"></span> Admin เข้าสู่ระบบ
-      </button>
+    <div class="container">
 
-      <div id="adminBox" style="display:none;margin-top:12px">
-        <input id="adminPass" type="password" placeholder="กรอกรหัส Admin">
-        <button class="btn" style="width:100%;margin-top:10px" onclick="loginAdmin()">ยืนยัน</button>
-        <p class="small">รหัสเริ่มต้น: 2001</p>
-      </div>
+        <div class="header">
+            <img src="pfp.png" alt="Profile" class="profile-img">
+            <h1 class="brand-name">Himawari</h1>
+            <p class="welcome">Welcome To Hima Store</p>
+            <div class="badge-wrap">
+                <div class="badge">✿ รับทำป้าย</div>
+                <div class="badge">✿ โลโก้ร้าน</div>
+                <div class="badge">✿ ลายน้ำ</div>
+            </div>
+        </div>
+
+        <div class="tab-container">
+            <div class="tab-indicator" id="tabIndicator"></div>
+            <div class="tab-btn active" onclick="switchTab('store')">🏠 หน้าร้าน</div>
+            <div class="tab-btn" onclick="switchTab('queue')">📋 คิวงาน</div>
+        </div>
+
+        <div id="view-store" class="view-section active">
+            
+            <div class="glass-card" style="margin-bottom: 20px;">
+                <h2 class="section-title">🌷 ขั้นตอนสั่งงาน</h2>
+                <div class="modern-list">
+                    <div class="m-item"><span class="m-icon">➊</span><div>แจ้งประเภทและแนวงานที่จะสั่งทำ</div></div>
+                    <div class="m-item"><span class="m-icon">➋</span><div>เลือกของทำป้ายแคปส่งให้ร้าน</div></div>
+                    <div class="m-item"><span class="m-icon">➌</span><div>บรีฟงานให้ละเอียด เช็คความถูกต้องให้ดี</div></div>
+                    <div class="m-item"><span class="m-icon">➍</span><div>ชำระเงินส่งสลิปและแจ้งชื่อเล่นเพื่อลงคิว</div></div>
+                    <div class="m-item"><span class="m-icon">➎</span><div>รอร้านลงคิวและส่งลิ้งค์คิวให้</div></div>
+                </div>
+                <a href="https://drive.google.com/drive/folders/10tyt8kxnPx5Cmu486YaeytlmyXPH0Lu2" target="_blank" class="btn-modern btn-primary" style="margin-top: 15px;">✿ เลือกของทำป้าย</a>
+            </div>
+
+            <div class="glass-card" style="margin-bottom: 20px;">
+                <h2 class="section-title">💸 ราคางานสั่งทำ</h2>
+                <div class="modern-list">
+                    <div class="price-row"><span>✿ แนวน่ารัก</span><span class="p-price">89 - 129.-</span></div>
+                    <div class="price-row"><span>✿ แนวออโรร่า&เพิร์ลเวฟ</span><span class="p-price">99 - 169.-</span></div>
+                    <div class="price-row"><span>✿ แนวADS</span><span class="p-price">99 - 250.-</span></div>
+                    <div class="price-row"><span>✿ รายละเอียดเยอะ/ยาก</span><span class="p-price">มีบวกเพิ่ม</span></div>
+                </div>
+            </div>
+
+            <div class="glass-card" style="margin-bottom: 20px;">
+                <h2 class="section-title">🎨 ผลงานร้านฮิมะ</h2>
+                <div class="grid-2">
+                    <a href="https://drive.google.com/drive/folders/1iCJoITdkAIy0YyIN2cGP2oY_boskefSB" target="_blank" class="showcase-card">
+                        <img src="cute.PNG" alt="Cute">
+                        <div class="showcase-text"><h4>Cute</h4><p>แนวน่ารัก</p></div>
+                    </a>
+                    <a href="https://drive.google.com/drive/folders/1lHXXeLsHyFte6gBxzd8fBYZ9oRCMtE8a" target="_blank" class="showcase-card">
+                        <img src="aurora.PNG" alt="Aurora">
+                        <div class="showcase-text"><h4>Aurora</h4><p>แนวออโรร่า</p></div>
+                    </a>
+                    <a href="https://drive.google.com/drive/folders/1lWey7mwXS9jjsZVfM_7HI8ijkdxYqRbG" target="_blank" class="showcase-card">
+                        <img src="pealwave.PNG" alt="Pearlwave">
+                        <div class="showcase-text"><h4>Pearlwave</h4><p>แนวเพิร์ลเวฟ</p></div>
+                    </a>
+                    <a href="https://drive.google.com/drive/folders/1CLxQT8kMLcJZEfde_wL5GodRRgqV9MLV" target="_blank" class="showcase-card">
+                        <img src="ads.PNG" alt="ADS">
+                        <div class="showcase-text"><h4>ADS</h4><p>แนวเกม/ทางการ</p></div>
+                    </a>
+                </div>
+            </div>
+
+            <div class="glass-card">
+                <h2 class="section-title">📞 ติดต่อ & ชำระเงิน</h2>
+                <div class="grid-2" style="margin-bottom: 15px;">
+                    <a href="https://lin.ee/XcbAB2v" target="_blank" class="btn-modern btn-outline">Line OA</a>
+                    <a href="https://www.facebook.com/himawari.378446" target="_blank" class="btn-modern btn-outline">Facebook</a>
+                </div>
+                <div style="font-size: 13px; text-align: center; color: var(--text-mauve-dark);">© 2026 Himawari — store ♡</div>
+            </div>
+
+        </div>
+
+        <div id="view-queue" class="view-section">
+            
+            <div class="glass-card">
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
+                    <h2 class="section-title" style="margin: 0;">📋 คิวงานวันนี้</h2>
+                    <label style="font-size: 12px; color: var(--text-mauve-dark); cursor: pointer; display: flex; align-items: center; gap: 5px;">
+                        <input type="checkbox" id="adminToggle" onchange="toggleAdminMode()" style="accent-color: var(--main-pink);"> Admin
+                    </label>
+                </div>
+
+                <div id="guest-view">
+                    <div class="queue-box">
+                        <div class="q-info"><span class="q-name">K. แบมบี้</span><span class="q-type">ป้ายบัญชี (คิวปกติ)</span></div>
+                        <div class="q-status status-working">กำลังทำ 🎨</div>
+                    </div>
+                    <div class="queue-box">
+                        <div class="q-info"><span class="q-name">K. พลอย</span><span class="q-type">โลโก้ (เร่ง 24 ชม.)</span></div>
+                        <div class="q-status status-waiting">รอคิว ⏳</div>
+                    </div>
+                    <p style="text-align: center; font-size: 12px; color: var(--text-mauve); margin-top: 15px;">อัปเดตล่าสุด: วันนี้</p>
+                </div>
+
+                <div id="admin-view" class="admin-form">
+                    <div style="padding: 10px; background: #FFF0F6; border-radius: 12px; font-size: 13px; color: var(--dark-pink); text-align: center; margin-bottom: 10px;">
+                        👑 โหมดผู้ดูแลระบบ (เพิ่มคิวใหม่)
+                    </div>
+                    <input type="text" class="input-box" placeholder="ชื่อลูกค้า...">
+                    <input type="text" class="input-box" placeholder="ประเภทงาน (เช่น ป้ายบัญชี)...">
+                    <select class="input-box">
+                        <option>สถานะ: รอคิว ⏳</option>
+                        <option>สถานะ: กำลังทำ 🎨</option>
+                    </select>
+                    <button class="btn-modern btn-primary" onclick="alert('ต้องเชื่อมต่อฐานข้อมูลก่อนถึงจะบันทึกได้ครับ!')">➕ เพิ่มคิวงาน</button>
+                </div>
+            </div>
+
+        </div>
+
     </div>
 
-    <div class="card" style="margin-top:16px">
-      <h3>ช่องทางการติดต่อ</h3>
-      <div class="contact-item"><span class="contact-icon" id="icoFb"></span><div><b>Facebook</b><br><span class="small">Himawari Studio</span></div></div>
-      <div class="contact-item"><span class="contact-icon" id="icoIg"></span><div><b>Instagram</b><br><span class="small">@himawari.studio</span></div></div>
-      <div class="contact-item"><span class="contact-icon" id="icoLine"></span><div><b>LINE Official</b><br><span class="small">@himawari.studio</span></div></div>
-      <div class="contact-item"><span class="contact-icon" id="icoPhone"></span><div><b>Phone</b><br><span class="small">089-123-4567</span></div></div>
-    </div>
-  </section>
+    <script>
+        // ระบบสลับแท็บ หน้าเว็บ / คิวงาน
+        function switchTab(tab) {
+            const indicator = document.getElementById('tabIndicator');
+            const btns = document.querySelectorAll('.tab-btn');
+            const views = document.querySelectorAll('.view-section');
 
-  <section id="homePage" class="page active">
-    <div class="header">
-      <button class="icon-btn" onclick="logout()" title="ออกจากระบบ"><span id="icoMenu"></span></button>
-      <img src="Logo.png" class="logo-img" onerror="this.outerHTML='<b style=color:#f2528d>Himawari</b>'">
-      <button class="icon-btn"><span id="icoBell"></span></button>
-    </div>
+            btns.forEach(btn => btn.classList.remove('active'));
+            views.forEach(view => view.classList.remove('active'));
 
-    <div class="hero">
-      <div>
-        <b id="welcomeText">สวัสดีค่ะ, Admin</b>
-        <p class="small" style="margin:4px 0 0">ยินดีต้อนรับกลับมา!</p>
-      </div>
-      <div class="hero-art"><span id="icoDesign"></span></div>
-    </div>
+            if(tab === 'store') {
+                indicator.style.left = '5px';
+                btns[0].classList.add('active');
+                document.getElementById('view-store').classList.add('active');
+            } else {
+                indicator.style.left = 'calc(50% + 0px)';
+                btns[1].classList.add('active');
+                document.getElementById('view-queue').classList.add('active');
+            }
+        }
 
-    <div class="card" style="margin-top:14px">
-      <p class="small">คิวงานทั้งหมด</p>
-      <h1 style="color:var(--pink);margin:0"><span id="totalJobs">0</span> <small style="font-size:15px;color:#777">รายการ</small></h1>
-    </div>
-
-    <div class="stats">
-      <div class="stat"><span id="icoClock"></span><b id="waitCount">0</b><span>รอคิว</span></div>
-      <div class="stat"><span id="icoPencil"></span><b id="doingCount">0</b><span>กำลังทำ</span></div>
-      <div class="stat"><span id="icoSearch"></span><b id="checkCount">0</b><span>รอเช็คงาน</span></div>
-      <div class="stat"><span id="icoPaper"></span><b id="doneCount">0</b><span>ส่งงานแล้ว</span></div>
-    </div>
-
-    <div class="row">
-      <h3>คิวงานล่าสุด</h3>
-      <button class="btn-light btn" onclick="goPage('listPage')">ดูทั้งหมด</button>
-    </div>
-    <div id="latestJobs"></div>
-  </section>
-
-  <section id="searchPage" class="page">
-    <div class="header">
-      <button class="icon-btn" onclick="goPage('homePage')"><span id="icoBack1"></span></button>
-      <h3 style="margin:0">ค้นหาคิวงาน</h3>
-      <button class="icon-btn"><span id="icoFilter"></span></button>
-    </div>
-
-    <div class="searchbox">
-      <span id="icoSearchInput"></span>
-      <input id="searchInput" placeholder="ค้นหาด้วย ชื่อ เบอร์โทร ประเภทงาน..." oninput="renderJobs()">
-    </div>
-
-    <div class="chips" id="filterChips"></div>
-    <div id="searchJobs"></div>
-  </section>
-
-  <section id="addPage" class="page">
-    <div class="header">
-      <button class="icon-btn" onclick="goPage('homePage')"><span id="icoBack2"></span></button>
-      <h3 style="margin:0">เพิ่มคิวงาน</h3>
-      <span></span>
-    </div>
-
-    <div class="form-grid">
-      <input id="fCustomer" placeholder="ชื่อลูกค้า">
-      <input id="fPhone" placeholder="เบอร์โทร">
-      <select id="fChannel">
-        <option value="LINE">LINE</option>
-        <option value="Facebook">Facebook</option>
-        <option value="Instagram">Instagram</option>
-        <option value="อื่นๆ">อื่นๆ</option>
-      </select>
-      <input id="fType" placeholder="ประเภทงาน เช่น ป้ายไวนิล / โลโก้ / แบนเนอร์">
-      <textarea id="fDetail" placeholder="รายละเอียดงาน"></textarea>
-      <select id="fStatus">
-        <option value="รอคิว">รอคิว</option>
-        <option value="กำลังทำ">กำลังทำ</option>
-        <option value="รอเช็คงาน">รอเช็คงาน</option>
-        <option value="แก้ไขงาน">แก้ไขงาน</option>
-        <option value="ส่งงานแล้ว">ส่งงานแล้ว</option>
-      </select>
-      <div class="filebox">+ แนบไฟล์ / ชื่อไฟล์ตัวอย่าง</div>
-      <button class="btn" onclick="saveJob()">บันทึกคิวงาน</button>
-    </div>
-  </section>
-
-  <section id="listPage" class="page">
-    <div class="header">
-      <button class="icon-btn" onclick="goPage('homePage')"><span id="icoBack3"></span></button>
-      <h3 style="margin:0">คิวงานทั้งหมด</h3>
-      <span></span>
-    </div>
-
-    <div class="chips" id="listChips"></div>
-    <div id="allJobs"></div>
-  </section>
-
-  <section id="detailPage" class="page">
-    <div class="detail-top">
-      <div class="row">
-        <button class="icon-btn" style="color:white;background:transparent;border-color:rgba(255,255,255,.4)" onclick="goPage('listPage')"><span id="icoBack4"></span></button>
-        <button class="icon-btn" style="color:white;background:transparent;border-color:rgba(255,255,255,.4)" onclick="deleteCurrentJob()"><span id="icoTrash"></span></button>
-      </div>
-      <h1 id="dNumber" style="margin:22px 0 4px">001</h1>
-      <span id="dBadge" class="badge wait">รอคิว</span>
-    </div>
-
-    <div class="detail-card">
-      <h3 id="dTitle">รายละเอียดงาน</h3>
-      <p class="small" id="dType"></p>
-
-      <hr style="border:0;border-top:1px solid #ffe1eb">
-
-      <p><b>ลูกค้า</b><br><span id="dCustomer"></span></p>
-      <p><b>เบอร์โทร</b><br><span id="dPhone"></span></p>
-      <p><b>ช่องทางติดต่อ</b><br><span id="dChannel"></span></p>
-      <p><b>วันที่สร้างงาน</b><br><span id="dDate"></span></p>
-      <p><b>รายละเอียดงาน</b><br><span id="dDetail"></span></p>
-
-      <div class="filebox" style="text-align:left">IMG_001.jpg <span style="float:right">ดาวน์โหลด</span></div>
-
-      <div class="actions" style="display:flex;gap:10px;margin-top:16px">
-        <button class="btn btn-light" style="flex:1" onclick="editCurrentJob()">แก้ไขคิวงาน</button>
-        <button class="btn" style="flex:1" onclick="openStatusPage()">อัปเดตสถานะ</button>
-      </div>
-    </div>
-  </section>
-
-  <section id="statusPage" class="page">
-    <div class="header">
-      <button class="icon-btn" onclick="goPage('detailPage')"><span id="icoBack5"></span></button>
-      <h3 style="margin:0">อัปเดตสถานะงาน</h3>
-      <span></span>
-    </div>
-
-    <div class="card">
-      <b id="statusJobNo">001</b>
-      <p class="small" id="statusJobName"></p>
-    </div>
-
-    <div class="status-list" style="margin-top:14px" id="statusOptions"></div>
-    <button class="btn" style="width:100%" onclick="saveStatus()">บันทึก</button>
-  </section>
-
-  <section id="contactPage" class="page">
-    <div class="header">
-      <button class="icon-btn" onclick="goPage('homePage')"><span id="icoBack6"></span></button>
-      <h3 style="margin:0">ติดต่อเรา</h3>
-      <span></span>
-    </div>
-
-    <div class="hero" style="margin-bottom:16px">
-      <div>
-        <b>สอบถามงานได้เลย</b>
-        <p class="small">พร้อมให้บริการค่ะ</p>
-      </div>
-      <div class="hero-art"><span id="icoChat"></span></div>
-    </div>
-
-    <div class="card">
-      <div class="contact-item"><span class="contact-icon" id="cFb"></span><div><b>Facebook</b><br><span class="small">Himawari Studio</span></div></div>
-      <div class="contact-item"><span class="contact-icon" id="cIg"></span><div><b>Instagram</b><br><span class="small">@himawari.studio</span></div></div>
-      <div class="contact-item"><span class="contact-icon" id="cLine"></span><div><b>LINE Official</b><br><span class="small">@himawari.studio</span></div></div>
-      <div class="contact-item"><span class="contact-icon" id="cEmail"></span><div><b>Email</b><br><span class="small">himawari.studio@gmail.com</span></div></div>
-      <div class="contact-item"><span class="contact-icon" id="cPhone"></span><div><b>Phone</b><br><span class="small">089-123-4567</span></div></div>
-    </div>
-  </section>
-
-  <nav id="bottomNav" class="bottom" style="display:none">
-    <div class="nav active" onclick="navGo('homePage',this)"><span id="navHome"></span>หน้าแรก</div>
-    <div class="nav" onclick="navGo('listPage',this)"><span id="navCal"></span>คิวงาน</div>
-    <div class="nav" onclick="goAdd()"><div class="fab"><span id="navPlus"></span></div></div>
-    <div class="nav" onclick="navGo('searchPage',this)"><span id="navSearch"></span>ค้นหา</div>
-    <div class="nav" onclick="navGo('contactPage',this)"><span id="navContact"></span>ติดต่อ</div>
-  </nav>
-
-</div>
-
-<script>
-const icons = {
-user:`<svg fill="none" viewBox="0 0 24 24"><path d="M20 21a8 8 0 0 0-16 0"/><circle cx="12" cy="7" r="4"/></svg>`,
-lock:`<svg fill="none" viewBox="0 0 24 24"><rect x="5" y="10" width="14" height="10" rx="2"/><path d="M8 10V7a4 4 0 0 1 8 0v3"/></svg>`,
-menu:`<svg fill="none" viewBox="0 0 24 24"><path d="M4 7h16M4 12h16M4 17h16"/></svg>`,
-bell:`<svg fill="none" viewBox="0 0 24 24"><path d="M18 8a6 6 0 0 0-12 0c0 7-3 7-3 9h18c0-2-3-2-3-9"/><path d="M10 21h4"/></svg>`,
-back:`<svg fill="none" viewBox="0 0 24 24"><path d="M15 18l-6-6 6-6"/></svg>`,
-filter:`<svg fill="none" viewBox="0 0 24 24"><path d="M4 5h16l-6 7v5l-4 2v-7z"/></svg>`,
-search:`<svg fill="none" viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3-3"/></svg>`,
-plus:`<svg fill="none" viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></svg>`,
-home:`<svg fill="none" viewBox="0 0 24 24"><path d="M3 11l9-8 9 8"/><path d="M5 10v10h14V10"/></svg>`,
-cal:`<svg fill="none" viewBox="0 0 24 24"><rect x="4" y="5" width="16" height="15" rx="2"/><path d="M8 3v4M16 3v4M4 10h16"/></svg>`,
-phone:`<svg fill="none" viewBox="0 0 24 24"><path d="M22 16.9v3a2 2 0 0 1-2.2 2 19.8 19.8 0 0 1-8.6-3.1 19.5 19.5 0 0 1-6-6A19.8 19.8 0 0 1 2.1 4.2 2 2 0 0 1 4.1 2h3a2 2 0 0 1 2 1.7c.1 1 .4 2 .7 2.8a2 2 0 0 1-.5 2.1L8 9.9a16 16 0 0 0 6 6l1.3-1.3a2 2 0 0 1 2.1-.5c.9.3 1.8.6 2.8.7a2 2 0 0 1 1.8 2.1z"/></svg>`,
-clock:`<svg fill="none" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 7v6l4 2"/></svg>`,
-pencil:`<svg fill="none" viewBox="0 0 24 24"><path d="M12 20h9"/><path d="M16.5 3.5a2.1 2.1 0 0 1 3 3L7 19l-4 1 1-4z"/></svg>`,
-paper:`<svg fill="none" viewBox="0 0 24 24"><path d="M22 2L11 13"/><path d="M22 2l-7 20-4-9-9-4z"/></svg>`,
-trash:`<svg fill="none" viewBox="0 0 24 24"><path d="M3 6h18M8 6V4h8v2M19 6l-1 14H6L5 6"/></svg>`,
-bag:`<svg fill="none" viewBox="0 0 24 24"><rect x="5" y="7" width="14" height="13" rx="2"/><path d="M9 7a3 3 0 0 1 6 0"/></svg>`,
-design:`<svg fill="none" viewBox="0 0 24 24"><path d="M4 20h16"/><rect x="6" y="4" width="12" height="10" rx="2"/><path d="M9 18h6"/></svg>`,
-chat:`<svg fill="none" viewBox="0 0 24 24"><path d="M21 15a4 4 0 0 1-4 4H8l-5 3V7a4 4 0 0 1 4-4h10a4 4 0 0 1 4 4z"/></svg>`
-};
-
-function setIcon(id,key){ const el=document.getElementById(id); if(el) el.innerHTML=icons[key]; }
-[
-["icoUser","user"],["icoLock","lock"],["icoMenu","menu"],["icoBell","bell"],["icoBack1","back"],["icoBack2","back"],["icoBack3","back"],["icoBack4","back"],["icoBack5","back"],["icoBack6","back"],["icoFilter","filter"],["icoSearchInput","search"],["icoTrash","trash"],["icoClock","clock"],["icoPencil","pencil"],["icoSearch","search"],["icoPaper","paper"],["icoDesign","design"],["icoChat","chat"],["navHome","home"],["navCal","cal"],["navPlus","plus"],["navSearch","search"],["navContact","phone"],["icoFb","phone"],["icoIg","phone"],["icoLine","phone"],["icoPhone","phone"],["cFb","phone"],["cIg","phone"],["cLine","phone"],["cEmail","phone"],["cPhone","phone"]
-].forEach(x=>setIcon(x[0],x[1]));
-
-const statuses = ["ทั้งหมด","รอคิว","กำลังทำ","รอเช็คงาน","แก้ไขงาน","ส่งงานแล้ว"];
-let currentFilter = "ทั้งหมด";
-let currentJobId = null;
-let tempStatus = null;
-let role = localStorage.getItem("himawari_role") || "";
-
-let jobs = JSON.parse(localStorage.getItem("himawari_jobs")) || [
-  {id:1,no:"032",customer:"คุณน้ำฝน",phone:"096-123-XXXX",channel:"LINE",type:"ออกแบบป้ายไวนิลร้านกาแฟ",detail:"ขนาด 2x1 เมตร โทนไม่น่าเบื่อ สดใส มินิมอล",status:"รอคิว",date:"20 พ.ค. 2567 14:30 น."},
-  {id:2,no:"031",customer:"คุณมายด์",phone:"082-345-XXXX",channel:"Facebook",type:"ออกแบบโลโก้แบรนด์เสื้อผ้า",detail:"แนว minimal สำหรับแบรนด์วัยรุ่น",status:"กำลังทำ",date:"20 พ.ค. 2567 11:15 น."},
-  {id:3,no:"030",customer:"คุณแอน",phone:"094-567-XXXX",channel:"Instagram",type:"ออกแบบแบนเนอร์ออนไลน์",detail:"ขนาด 1200x628 px สำหรับโปรโมชัน",status:"รอเช็คงาน",date:"19 พ.ค. 2567 16:40 น."},
-  {id:4,no:"029",customer:"คุณบี",phone:"061-789-XXXX",channel:"LINE",type:"แก้งานป้ายร้าน",detail:"ปรับโทนสีและข้อความ",status:"แก้ไขงาน",date:"19 พ.ค. 2567 09:20 น."}
-];
-
-function saveLocal(){ localStorage.setItem("himawari_jobs",JSON.stringify(jobs)); }
-
-function showAdminLogin(){ adminBox.style.display = adminBox.style.display==="none" ? "block" : "none"; }
-function loginGuest(){ role="guest"; localStorage.setItem("himawari_role",role); startApp(); }
-function loginAdmin(){
-  if(adminPass.value==="2001"){
-    role="admin"; localStorage.setItem("himawari_role",role); startApp();
-  }else alert("รหัสไม่ถูกต้อง");
-}
-function logout(){
-  localStorage.removeItem("himawari_role");
-  location.reload();
-}
-function startApp(){
-  loginPage.style.display="none";
-  bottomNav.style.display="grid";
-  welcomeText.innerText = role==="admin" ? "สวัสดีค่ะ, Admin" : "สวัสดีค่ะ, Guest";
-  renderAll();
-}
-if(role) startApp();
-
-function goPage(id){
-  document.querySelectorAll(".page").forEach(p=>p.classList.remove("active"));
-  document.getElementById(id).classList.add("active");
-  renderAll();
-}
-function navGo(id,el){
-  document.querySelectorAll(".nav").forEach(n=>n.classList.remove("active"));
-  el.classList.add("active");
-  goPage(id);
-}
-function goAdd(){
-  if(role!=="admin") return alert("Guest ดูข้อมูลได้อย่างเดียว ต้องเข้า Admin เพื่อเพิ่มคิวงาน");
-  goPage("addPage");
-}
-
-function statusClass(s){
-  return s==="รอคิว"?"wait":s==="กำลังทำ"?"doing":s==="รอเช็คงาน"?"check":s==="แก้ไขงาน"?"edit":"done";
-}
-function statusIcon(s){
-  if(s==="รอคิว") return icons.clock;
-  if(s==="กำลังทำ") return icons.pencil;
-  if(s==="รอเช็คงาน") return icons.search;
-  if(s==="แก้ไขงาน") return icons.pencil;
-  return icons.paper;
-}
-function makeJobCard(j){
-  return `
-  <div class="job" onclick="openDetail(${j.id})">
-    <div class="job-icon ${statusClass(j.status)}">${statusIcon(j.status)}</div>
-    <div class="job-info">
-      <div class="row">
-        <b style="color:var(--pink)">${j.no}</b>
-        <span class="badge ${statusClass(j.status)}">${j.status}</span>
-      </div>
-      <div class="job-title">${j.type}</div>
-      <div class="small">${j.customer}<br>${j.date}</div>
-    </div>
-  </div>`;
-}
-function renderChips(target){
-  document.getElementById(target).innerHTML = statuses.map(s=>`
-    <button class="chip ${currentFilter===s?'active':''}" onclick="currentFilter='${s}';renderAll()">${s}</button>
-  `).join("");
-}
-function filteredJobs(){
-  const q = (searchInput?.value || "").toLowerCase();
-  return jobs.filter(j=>{
-    const matchFilter = currentFilter==="ทั้งหมด" || j.status===currentFilter;
-    const text = `${j.no} ${j.customer} ${j.phone} ${j.channel} ${j.type} ${j.detail} ${j.status}`.toLowerCase();
-    return matchFilter && text.includes(q);
-  });
-}
-function renderJobs(){
-  const list = filteredJobs();
-  searchJobs.innerHTML = list.length ? list.map(makeJobCard).join("") : `<div class="empty">ไม่พบคิวงาน</div>`;
-  allJobs.innerHTML = list.length ? list.map(makeJobCard).join("") : `<div class="empty">ไม่มีรายการ</div>`;
-}
-function renderAll(){
-  totalJobs.innerText=jobs.length;
-  waitCount.innerText=jobs.filter(j=>j.status==="รอคิว").length;
-  doingCount.innerText=jobs.filter(j=>j.status==="กำลังทำ").length;
-  checkCount.innerText=jobs.filter(j=>j.status==="รอเช็คงาน").length;
-  doneCount.innerText=jobs.filter(j=>j.status==="ส่งงานแล้ว").length;
-  latestJobs.innerHTML = jobs.slice(0,3).map(makeJobCard).join("");
-  renderChips("filterChips");
-  renderChips("listChips");
-  renderJobs();
-}
-
-function saveJob(){
-  if(role!=="admin") return alert("เฉพาะ Admin เท่านั้น");
-  if(!fCustomer.value || !fType.value) return alert("กรอกชื่อลูกค้าและประเภทงานก่อนนะ");
-  const next = jobs.length ? Math.max(...jobs.map(j=>Number(j.no)))+1 : 1;
-  const no = String(next).padStart(3,"0");
-  const now = new Date();
-  const date = now.toLocaleDateString("th-TH",{day:"numeric",month:"short",year:"numeric"})+" "+now.toLocaleTimeString("th-TH",{hour:"2-digit",minute:"2-digit"})+" น.";
-  jobs.unshift({
-    id:Date.now(),
-    no,
-    customer:fCustomer.value,
-    phone:fPhone.value || "-",
-    channel:fChannel.value,
-    type:fType.value,
-    detail:fDetail.value || "-",
-    status:fStatus.value,
-    date
-  });
-  saveLocal();
-  fCustomer.value=fPhone.value=fType.value=fDetail.value="";
-  fChannel.value="LINE";
-  fStatus.value="รอคิว";
-  goPage("homePage");
-}
-function openDetail(id){
-  currentJobId=id;
-  const j=jobs.find(x=>x.id===id);
-  if(!j) return;
-  dNumber.innerText=j.no;
-  dBadge.innerText=j.status;
-  dBadge.className="badge "+statusClass(j.status);
-  dTitle.innerText=j.type;
-  dType.innerText=j.status;
-  dCustomer.innerText=j.customer;
-  dPhone.innerText=j.phone;
-  dChannel.innerText=j.channel;
-  dDate.innerText=j.date;
-  dDetail.innerText=j.detail;
-  goPage("detailPage");
-}
-function openStatusPage(){
-  if(role!=="admin") return alert("Guest ดูข้อมูลได้อย่างเดียว ต้องเข้า Admin เพื่ออัปเดตสถานะ");
-  const j=jobs.find(x=>x.id===currentJobId);
-  tempStatus=j.status;
-  statusJobNo.innerText=j.no;
-  statusJobName.innerText=j.type;
-  renderStatusOptions();
-  goPage("statusPage");
-}
-function renderStatusOptions(){
-  statusOptions.innerHTML = statuses.filter(s=>s!=="ทั้งหมด").map(s=>`
-    <div class="status-option ${tempStatus===s?'active':''}" onclick="tempStatus='${s}';renderStatusOptions()">
-      <div class="status-dot ${statusClass(s)}">${statusIcon(s)}</div>
-      <div><b>${s}</b><br><span class="small">${statusDesc(s)}</span></div>
-    </div>
-  `).join("");
-}
-function statusDesc(s){
-  return {
-    "รอคิว":"รอถึงคิวประมาณ 1-3 วัน",
-    "กำลังทำ":"กำลังออกแบบงานแล้ว",
-    "รอเช็คงาน":"รอตรวจสอบจากลูกค้า",
-    "แก้ไขงาน":"ปรับแก้ไขตามที่ลูกค้าแจ้ง",
-    "ส่งงานแล้ว":"ส่งมอบงานเรียบร้อย"
-  }[s];
-}
-function saveStatus(){
-  const j=jobs.find(x=>x.id===currentJobId);
-  j.status=tempStatus;
-  saveLocal();
-  openDetail(currentJobId);
-}
-function deleteCurrentJob(){
-  if(role!=="admin") return alert("เฉพาะ Admin เท่านั้น");
-  if(confirm("ต้องการลบคิวงานนี้ใช่ไหม?")){
-    jobs=jobs.filter(j=>j.id!==currentJobId);
-    saveLocal();
-    goPage("listPage");
-  }
-}
-function editCurrentJob(){
-  if(role!=="admin") return alert("เฉพาะ Admin เท่านั้น");
-  const j=jobs.find(x=>x.id===currentJobId);
-  fCustomer.value=j.customer;
-  fPhone.value=j.phone;
-  fChannel.value=j.channel;
-  fType.value=j.type;
-  fDetail.value=j.detail;
-  fStatus.value=j.status;
-  jobs=jobs.filter(x=>x.id!==currentJobId);
-  saveLocal();
-  goPage("addPage");
-}
-</script>
+        // ระบบจำลอง Admin รหัสผ่าน
+        function toggleAdminMode() {
+            const isChecked = document.getElementById('adminToggle').checked;
+            if (isChecked) {
+                const pwd = prompt("กรุณาใส่รหัสผ่าน Admin:");
+                if (pwd === "1234") { // ตั้งรหัสผ่านจำลองไว้ที่ 1234
+                    document.getElementById('guest-view').style.display = 'none';
+                    document.getElementById('admin-view').style.display = 'flex';
+                } else {
+                    alert("รหัสผ่านไม่ถูกต้อง!");
+                    document.getElementById('adminToggle').checked = false;
+                }
+            } else {
+                document.getElementById('guest-view').style.display = 'block';
+                document.getElementById('admin-view').style.display = 'none';
+            }
+        }
+    </script>
 </body>
 </html>
